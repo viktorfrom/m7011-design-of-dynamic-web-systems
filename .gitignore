@@ -1,0 +1,6 @@
+./simulation/node_modules
+./simulation/package-lock.json
+node_modules
+.DS_store
+
+timereport-anders.md
