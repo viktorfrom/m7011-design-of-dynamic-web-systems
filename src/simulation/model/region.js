@@ -1,6 +1,7 @@
 'use strict';
 
 let MathExpression = require("./mathexpression");
+let RegionSchema = require("../../schemas/regionschema");
 
 module.exports = class region {
 
@@ -45,6 +46,25 @@ module.exports = class region {
     getTemp() {
         return this.currentTemp;
     }
+
+    // TODO: figure out if mathExpression is supposed to be this.mathExpression or new MathExpression()
+    setRegionSchema() {
+        this.regionSchema = new RegionSchema({
+            timestamp: Date.now(),
+            name: this.name,
+            mathExpression: this.mathExpression,
+            maxWindSpeed: this.maxWindSpeed,
+            minWindSpeed: this.minWindSpeed,
+            currentWindSpeed: this.currentWindSpeed,
+            maxTemp: this.maxTemp,
+            currentTemp: this.currentTemp
+        }); 
+
+        this.regionSchema.save((err) => {
+            if(err) throw err;
+
+        });
+    }
     
     status() {
         console.log("Region: " + this.name + ", wind speed: " + this.currentWindSpeed.toPrecision(3) + 
@@ -56,6 +76,7 @@ module.exports = class region {
         this.setWindSpeed(this.currentWindSpeed + this.mathExpression.normalDistribution(0, 0.1));
         this.setTemp(this.currentTemp + this.mathExpression.normalDistribution(0, 0.1));
 
+        this.setRegionSchema();
         // this.status();
     }
 }
