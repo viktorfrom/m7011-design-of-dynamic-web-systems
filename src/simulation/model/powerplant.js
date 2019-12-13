@@ -2,6 +2,7 @@
 
 let MathExpression = require("./mathexpression");
 let Battery = require("./battery");
+let PowerPlantSchema = require("../../schemas/powerplantschema");
 
 module.exports = class powerplant {
 
@@ -92,6 +93,30 @@ module.exports = class powerplant {
         return this.currentProduction;
     }
 
+    setPowerPlantSchema() {
+        this.powerPlantSchema = new PowerPlantSchema({
+            timestamp: Date.now(),
+            name: this.name,
+            marketPrice: this.marketPrice,
+            region: this.location,
+            battery: this.battery,
+            mathExpression: this.mathExpression,
+            maxProduction: this.maxProduction,
+            minProduction: this.minProduction,
+            currentProduction: this.currentProduction,
+            conversionRate: this.conversionRate,
+            acceleration: this.acceleration,
+            statusMessage: this.statusMessage,
+            startUp: this.startUp,
+            powerOutage: this.powerOutage
+        }); 
+
+        this.powerPlantSchema.save((err) => {
+            if(err) throw err;
+
+        });
+    }
+
     status() {
         console.log("Power plant: " + this.name + ", Status: " + this.statusMessage + "\n" +
             "Current production = " + this.currentProduction.toPrecision(5) + " kWh" + ", Battery capacity: " +
@@ -106,6 +131,7 @@ module.exports = class powerplant {
         this.marketPrice.setTotalProduction(this.currentProduction);
         this.marketPrice.setMaxProduction(this.maxProduction);
 
+        this.setPowerPlantSchema();
         // this.startUpSeq();
         // this.shutdownSeq();
         // this.status();
