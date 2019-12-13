@@ -11,10 +11,11 @@ const signInRouter = require('./routes/signin');
 const signUpRouter = require('./routes/signup');
 const aboutUsRouter = require('./routes/aboutus');
 const apiRouter = require('./routes/api');
-const crudRouter = require('./routes/crud');
+// const crudRouter = require('./routes/crud');
 const bodyParser = require('body-parser');
 
 require('./schemas/houseschema')
+require('./schemas/marketpriceschema')
 const app = express();
 
 // view engine setup
@@ -39,7 +40,7 @@ app.use('/api', apiRouter);
 // app.use('/crud', crudRouter);
 
 // connect to db
-mongoose.connect('mongodb://localhost/DATABASE_GRID', {
+mongoose.connect('mongodb://localhost/GLE_DB', {
     useUnifiedTopology: true,
     useNewUrlParser: true
   },
