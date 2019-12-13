@@ -16,6 +16,8 @@ const bodyParser = require('body-parser');
 
 require('./schemas/houseschema')
 require('./schemas/marketpriceschema')
+require('./schemas/powerplantschema')
+require('./schemas/regionschema')
 const app = express();
 
 // view engine setup
