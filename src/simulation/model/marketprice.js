@@ -1,5 +1,7 @@
 "use strict";
 
+let MarketPriceSchema = require("../../schemas/marketpriceschema");
+
 module.exports = class marketprice {
 
     constructor(name) {
@@ -42,20 +44,39 @@ module.exports = class marketprice {
         return this.currentPrice;
     }
 
+    setMarketPrice() {
+        this.currentPrice = 1 / (10 * (this.currentProduction / this.maxTotalProduction) * this.electricityPrice);
+    }
+
+    setMarketPriceSchema() {
+        this.marketPriceSchema = new MarketPriceSchema({
+            timestamp: Date.now(),
+            name: this.name,
+            maxTotalProduction: this.maxTotalProduction,
+            minTotalProduction: this.minTotalProduction,
+            currentTotalProduction: this.currentTotalProduction,
+            electricityPrice: this.electricityPrice,
+            maxTotalProduction: this.maxTotalProduction,
+            // currentPrice: this.currentPrice
+        }); 
+
+        this.marketPriceSchema.save((err) => {
+            if(err) throw err;
+
+        });
+    }
+
     status() {
         console.log("Region: " + this.name + ", market production: " +
             this.currentProduction.toPrecision(5) + "/" + this.maxTotalProduction.toPrecision(5) + " kWh " +
             ", current market price: " + this.currentPrice.toPrecision(3) + " öre/kWh " + "\n");
     }
 
-    setMarketPrice() {
-        this.currentPrice = 1 / (10 * (this.currentProduction / this.maxTotalProduction) * this.electricityPrice);
-    }
-
     marketPrice() {
         this.setMarketPrice();
 
         // this.status();
+        this.setMarketPriceSchema();
         this.currentPrice = 0;
         this.maxTotalProduction = 0;
         this.currentProduction = 0;
