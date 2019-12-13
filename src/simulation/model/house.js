@@ -3,6 +3,7 @@
 let WindTurbine = require("./windturbine");
 let Battery = require("./battery");
 let MathExpression = require("./mathexpression");
+let HouseSchema = require("../../schemas/houseschema");
 
 module.exports = class house {
 
@@ -117,7 +118,31 @@ module.exports = class house {
 
         // this.status();
         
+        this.setHouseSchema();
+
         this.windTurbine.setExcessPowerZero();
+    }
+
+    setHouseSchema() {
+        this.houseSchema = new HouseSchema({
+                timestamp: Date.now(),
+                powerPlant: this.powerPlant,
+                marketPrice: this.marketPrice,
+                location: this.location,
+                owner: this.owner,
+                battery: new Battery(this.owner, this.batteryCapacity, this.currBatteryCapacity),
+                windTurbine: new WindTurbine(this.owner),
+                mathExpression: new MathExpression(),
+                maxHouseConsumption: this.maxHouseConsumption,
+                minConsumption: this.minConsumption,
+                houseConsumption: this.houseConsumption,
+                statusMessage: this.statusMessage
+        }); 
+
+        this.houseSchema.save((err) => {
+            if(err) throw err;
+
+        });
     }
 
 }
