@@ -1,0 +1,25 @@
+{
+  "name": "src",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "mocha ./simulation/tests/**/*.test.js",
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "gaussian": "^1.1.0",
+    "http-errors": "~1.6.3",
+    "mocha": "^6.2.2",
+    "mongoose": "^5.7.13",
+    "morgan": "~1.9.1",
+    "prompt": "^1.0.0",
+    "utils": "^0.3.1"
+  }
+}
