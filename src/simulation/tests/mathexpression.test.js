@@ -10,15 +10,6 @@ describe("mathExpressionNormDist", async () => {
     expect(testMathExpression.normalDistribution(0, 0.1)).to.be.above(-1);
 }); })
 
-// describe("mathExpressionRandomNum", async () => {
-//   it("interval of random num func", async () => {
-    
-//     let testMathExpression = new MathExpression();
-
-//     expect(testMathExpression.getRandomNum(50)).to.be.below(100);
-//     expect(testMathExpression.getRandomNum(50)).to.be.above(0);
-// }); })
-
 describe("mathExpressionTempIncrease", async () => {
   it("name of battery owner", async () => {
     
