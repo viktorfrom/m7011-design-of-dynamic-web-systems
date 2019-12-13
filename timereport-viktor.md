@@ -23,6 +23,6 @@ Viktor From, vikfro-6
 |  2019-12-09  | 3       | Postman queries, Vue                           |
 |  2019-12-11  | 6       | Scrapping vue for ejs, bootstrap               |
 |  2019-12-12  | 5       | Continued work on front-end and bootstrap      |
-|  2019-12-13  | 1       | Split of project, cont. work on back-end API   |
+|  2019-12-13  | 5       | Split of project, cont. work on back-end API   |
 | ------------ | ------- | ---------------------------------------------- | 
 |  Total:      | 89      |                                                |
