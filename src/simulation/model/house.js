@@ -92,13 +92,13 @@ module.exports = class house {
     setHouseSchema() {
         this.houseSchema = new HouseSchema({
                 timestamp: Date.now(),
-                powerPlant: this.powerPlant,
-                marketPrice: this.marketPrice,
-                location: this.location,
                 owner: this.owner,
-                battery: new Battery(this.owner, this.batteryCapacity, this.currBatteryCapacity),
-                windTurbine: new WindTurbine(this.owner),
-                mathExpression: new MathExpression(),
+                location: this.location.getName(),
+                powerPlant: this.powerPlant.getName(),
+                // marketPrice: this.marketPrice.get,
+                battery: this.battery,
+                windTurbine: this.windTurbine,
+                // mathExpression: this.mathExpression,
                 maxHouseConsumption: this.maxHouseConsumption,
                 minConsumption: this.minConsumption,
                 houseConsumption: this.houseConsumption,
@@ -138,7 +138,7 @@ module.exports = class house {
         this.consumeLocalBattery();
         this.blackoutCondition();
 
-        // this.status();
+        this.status();
         
         this.setHouseSchema();
 
