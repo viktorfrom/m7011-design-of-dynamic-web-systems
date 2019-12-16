@@ -97,18 +97,18 @@ module.exports = class powerplant {
         this.powerPlantSchema = new PowerPlantSchema({
             timestamp: Date.now(),
             name: this.name,
+            region: this.location.getName(),
             marketPrice: this.marketPrice,
-            region: this.location,
             battery: this.battery,
-            mathExpression: this.mathExpression,
+            // mathExpression: this.mathExpression,
             maxProduction: this.maxProduction,
             minProduction: this.minProduction,
             currentProduction: this.currentProduction,
-            conversionRate: this.conversionRate,
-            acceleration: this.acceleration,
+            // conversionRate: this.conversionRate,
+            // acceleration: this.acceleration,
             statusMessage: this.statusMessage,
-            startUp: this.startUp,
-            powerOutage: this.powerOutage
+            // startUp: this.startUp,
+            // powerOutage: this.powerOutage
         }); 
 
         this.powerPlantSchema.save((err) => {
@@ -134,6 +134,6 @@ module.exports = class powerplant {
         this.setPowerPlantSchema();
         // this.startUpSeq();
         // this.shutdownSeq();
-        // this.status();
+        this.status();
     }
 }
