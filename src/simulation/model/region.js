@@ -47,12 +47,11 @@ module.exports = class region {
         return this.currentTemp;
     }
 
-    // TODO: figure out if mathExpression is supposed to be this.mathExpression or new MathExpression()
     setRegionSchema() {
         this.regionSchema = new RegionSchema({
             timestamp: Date.now(),
             name: this.name,
-            mathExpression: this.mathExpression,
+            // mathExpression: this.mathExpression,
             maxWindSpeed: this.maxWindSpeed,
             minWindSpeed: this.minWindSpeed,
             currentWindSpeed: this.currentWindSpeed,
@@ -68,8 +67,7 @@ module.exports = class region {
     
     status() {
         console.log("Region: " + this.name + ", wind speed: " + this.currentWindSpeed.toPrecision(3) + 
-        " m/s " + "temp: " + this.currentTemp.toPrecision(3) + " °C" + ", Heat increase factor: " + 
-        this.mathExpression.getTempIncrease(this.currentTemp).toPrecision(4) + "\n");
+        " m/s " + "temp: " + this.currentTemp.toPrecision(3) + " °C" + "\n");
     }
     
     windspeed() {
@@ -77,6 +75,6 @@ module.exports = class region {
         this.setTemp(this.currentTemp + this.mathExpression.normalDistribution(0, 0.1));
 
         this.setRegionSchema();
-        // this.status();
+        this.status();
     }
 }
