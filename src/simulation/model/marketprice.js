@@ -11,6 +11,7 @@ module.exports = class marketprice {
         this.currentTotalProduction = 0;
         this.electricityPrice = 0.4825; // 48.25 öre/kWh
         this.maxTotalProduction = 0;
+        this.currentProduction = 0;
         this.currentPrice = 0;
     }
 
@@ -24,8 +25,8 @@ module.exports = class marketprice {
         }
     }
 
-    setMaxProduction(test) {
-        this.maxTotalProduction += test;
+    setMaxProduction(production) {
+        this.maxTotalProduction += production;
     }
 
     getName() {
@@ -75,7 +76,7 @@ module.exports = class marketprice {
     marketPrice() {
         this.setMarketPrice();
 
-        // this.status();
+        this.status();
         this.setMarketPriceSchema();
         this.currentPrice = 0;
         this.maxTotalProduction = 0;
