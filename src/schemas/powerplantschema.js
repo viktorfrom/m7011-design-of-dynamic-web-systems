@@ -6,15 +6,10 @@ const PowerPlantSchema = mongoose.Schema({
     region: String,
     marketPrice: Object,
     battery: Object,
-    // mathExpression: Object,
     maxProduction: Number,
     minProduction: Number,
     currentProduction: Number,
-    // conversionRate: Number,
-    // acceleration: Number,
     statusMessage: String,
-    // startUp: Boolean,
-    // powerOutage: Boolean
 });
 
 

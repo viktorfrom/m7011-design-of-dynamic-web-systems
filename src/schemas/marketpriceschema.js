@@ -9,7 +9,7 @@ const MarketPriceSchema = mongoose.Schema({
         currentTotalProduction: Number,
         electricityPrice: Number,
         maxTotalProduction: Number,
-        // currentPrice: Number
+        currentPrice: Number
 });
 
 

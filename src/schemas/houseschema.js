@@ -5,12 +5,11 @@ const HouseSchema = mongoose.Schema({
         owner: String,
         location: String,
         powerPlant: String,
-        // marketPrice: Object,
+        marketPrice: Object,
         battery: Object,
         windTurbine: Object,
-        // mathExpression: Object,
         maxHouseConsumption: Number,
-        minConsumption: Number,
+        minHouseConsumption: Number,
         houseConsumption: Number,
         statusMessage: String 
 });
