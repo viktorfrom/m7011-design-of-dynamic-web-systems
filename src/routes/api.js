@@ -1,21 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const House = require('../schemas/houseschema');
 const prompt = require('prompt');
+
+const House = require('../schemas/houseschema');
 
 prompt.start();
 
-// routes
-//get the request and respond
-router.get('/', (req, res) => {
-    prompt.get(["Owner", "Location"], function(err, result) {
-        console.log('User entered ' + result.Owner + ' as the owner \n');
-        console.log('User entered ' + result.Location + ' as location \n'); 
-    })
-});
-
-router.get('/specific', (req, res) => {
-    res.send('Specific post');
+router.get('/', async (req, res) => {
+    try {
+        const houses = await House.find();
+        res.json(houses);
+    } catch (err) {
+        res.json({message: err});
+        
+    }
 });
 
 router.post('/', (req, res) => {
