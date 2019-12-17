@@ -21,9 +21,10 @@ Viktor From, vikfro-6
 |  2019-12-05  | 5       | Update simulation to run while server is up    |
 |  2019-12-06  | 5       | DB misunderstanding, attempt to tie sim and DB |
 |  2019-12-09  | 3       | Postman queries, Vue                           |
-|  2019-12-11  | 6       | Scrapping vue for ejs, bootstrap               |
+|  2019-12-11  | 6       | Scrapping Vue for ejs, bootstrap               |
 |  2019-12-12  | 5       | Continued work on front-end and bootstrap      |
 |  2019-12-13  | 5       | Split of project, cont. work on back-end API   |
-|  2019-12-16  | 2       | Cont. work on db schemas                       |
+|  2019-12-16  | 2       | Cont. work on db schemas, update attributes    |
+|  2019-12-17  | 2       | Update schemas                                 |
 | ------------ | ------- | ---------------------------------------------- | 
-|  Total:      | 89      |                                                |
+|  Total:      | 98      |                                                |
