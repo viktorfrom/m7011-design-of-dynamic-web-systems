@@ -58,7 +58,7 @@ module.exports = class marketprice {
             currentTotalProduction: this.currentTotalProduction,
             electricityPrice: this.electricityPrice,
             maxTotalProduction: this.maxTotalProduction,
-            // currentPrice: this.currentPrice
+            currentPrice: this.currentPrice
         }); 
 
         this.marketPriceSchema.save((err) => {
@@ -76,7 +76,7 @@ module.exports = class marketprice {
     marketPrice() {
         this.setMarketPrice();
 
-        this.status();
+        // this.status();
         this.setMarketPriceSchema();
         this.currentPrice = 0;
         this.maxTotalProduction = 0;

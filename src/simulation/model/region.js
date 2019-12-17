@@ -75,6 +75,6 @@ module.exports = class region {
         this.setTemp(this.currentTemp + this.mathExpression.normalDistribution(0, 0.1));
 
         this.setRegionSchema();
-        this.status();
+        // this.status();
     }
 }

@@ -134,6 +134,6 @@ module.exports = class powerplant {
         this.setPowerPlantSchema();
         // this.startUpSeq();
         // this.shutdownSeq();
-        this.status();
+        // this.status();
     }
 }
