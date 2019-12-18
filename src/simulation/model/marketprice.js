@@ -57,7 +57,6 @@ module.exports = class marketprice {
             minTotalProduction: this.minTotalProduction,
             currentTotalProduction: this.currentTotalProduction,
             electricityPrice: this.electricityPrice,
-            maxTotalProduction: this.maxTotalProduction,
             currentPrice: this.currentPrice
         }); 
 
