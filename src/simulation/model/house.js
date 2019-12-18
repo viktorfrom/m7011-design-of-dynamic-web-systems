@@ -7,10 +7,10 @@ let HouseSchema = require("../../schemas/houseschema");
 
 module.exports = class house {
 
-    constructor(powerPlant, marketPrice, location, owner, batteryCapacity, currBatteryCapacity) {
+    constructor(powerPlant, marketPrice, region, owner, batteryCapacity, currBatteryCapacity) {
         this.powerPlant = powerPlant;
         this.marketPrice = marketPrice;
-        this.location = location;
+        this.region = region;
         this.owner = owner;
         this.battery = new Battery(owner, batteryCapacity, currBatteryCapacity);
         this.windTurbine = new WindTurbine(owner);
@@ -85,15 +85,15 @@ module.exports = class house {
         return this.houseConsumption;
     }
 
-    getLocation() {
-        return this.location.getName();
+    getregion() {
+        return this.region.getName();
     }
 
     setHouseSchema() {
         this.houseSchema = new HouseSchema({
             timestamp: Date.now(),
             owner: this.owner,
-            location: this.location.getName(),
+            region: this.region.getName(),
             powerPlant: this.powerPlant.getName(),
             marketPrice: this.marketPrice,
             battery: this.battery,
@@ -111,9 +111,9 @@ module.exports = class house {
     }
 
     status() {
-        console.log("House owner: " + this.owner + ", Location: " + this.location.getName() + 
-            ", Wind speed: " + this.location.getWindSpeed().toPrecision(3) + " m/s," + " Temp: " + 
-            this.location.getTemp().toPrecision(3) + " °C," + " Status: " + this.statusMessage +  "\n" + 
+        console.log("House owner: " + this.owner + ", region: " + this.region.getName() + 
+            ", Wind speed: " + this.region.getWindSpeed().toPrecision(3) + " m/s," + " Temp: " + 
+            this.region.getTemp().toPrecision(3) + " °C," + " Status: " + this.statusMessage +  "\n" + 
             "Power output: " + this.windTurbine.getCurrentPower().toPrecision(3) + " kWh" +
             ", (Excess power " + this.windTurbine.getExcessPower().toPrecision(3) + ")" +
             ", Battery capacity: " + this.battery.getCurrentCapacity().toPrecision(3) + "/" +
@@ -122,10 +122,10 @@ module.exports = class house {
     }
 
     electricityConsumption() {
-        this.windTurbine.windTurbineStatus(this.location.getWindSpeed());
+        this.windTurbine.windTurbineStatus(this.region.getWindSpeed());
         
         this.setHouseConsumption(this.houseConsumption * 
-            this.mathExpression.getTempIncrease(this.location.getTemp()) +
+            this.mathExpression.getTempIncrease(this.region.getTemp()) +
             this.mathExpression.normalDistribution(0, 0.05));
 
         this.storeExcessPower();

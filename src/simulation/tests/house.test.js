@@ -29,13 +29,13 @@ describe("houseConsumption", async () => {
     expect(testHouse.getHouseConsumption()).to.be.lessThan(1.36);
 }); })
 
-describe("houseLocation", async () => {
-  it("location of household", async () => {
+describe("houseregion", async () => {
+  it("region of household", async () => {
 
     let testMarketPrice = new MarketPrice("testMarketPrice");
     let testPowerPlant = new PowerPlant("testPowerPlant", this.marketPrice, "testRegion", 0, 30);
     let testRegion = new Region("testRegion");
     let testHouse = new House(testPowerPlant, testMarketPrice, testRegion, "testPerson", 0, 10);
 
-    expect(testHouse.getLocation()).equal("testRegion");
+    expect(testHouse.getregion()).equal("testRegion");
 }); })

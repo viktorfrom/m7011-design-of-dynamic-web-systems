@@ -6,10 +6,10 @@ let PowerPlantSchema = require("../../schemas/powerplantschema");
 
 module.exports = class powerplant {
 
-    constructor(name, marketPrice, location, batteryCapacity, currBatteryCapacity) {
+    constructor(name, marketPrice, region, batteryCapacity, currBatteryCapacity) {
         this.name = name;
         this.marketPrice = marketPrice;
-        this.location = location;
+        this.region = region;
         this.battery = new Battery(name, batteryCapacity, currBatteryCapacity);
         this.mathExpression = new MathExpression();
         this.maxProduction = 30;
@@ -97,7 +97,7 @@ module.exports = class powerplant {
         this.powerPlantSchema = new PowerPlantSchema({
             timestamp: Date.now(),
             name: this.name,
-            region: this.location.getName(),
+            region: this.region.getName(),
             marketPrice: this.marketPrice,
             battery: this.battery,
             // mathExpression: this.mathExpression,

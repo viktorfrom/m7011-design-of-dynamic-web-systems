@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const HouseSchema = mongoose.Schema({
         timestamp: { type: Date, default: Date.now() },
         owner: String,
-        location: String,
+        region: String,
         powerPlant: String,
         marketPrice: Object,
         battery: Object,

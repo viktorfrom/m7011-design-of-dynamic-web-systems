@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
     const house = new House({
         powerPlant: req.body.powerPlant,
         marketPrice: req.body.marketPrice,
-        location: req.body.location,
+        region: req.body.region,
         owner: req.body.owner,
         batteryId: req.body.batteryId,
         windTurbineId: req.body.windTurbineId,
@@ -75,7 +75,7 @@ router.patch('/:houseId', async (req, res) => {
             $set: {
                 powerPlant: req.body.powerPlant,
                 marketPrice: req.body.marketPrice,
-                location: req.body.location,
+                region: req.body.region,
                 owner: req.body.owner,
                 batteryId: req.body.batteryId,
                 windTurbineId: req.body.windTurbineId,
