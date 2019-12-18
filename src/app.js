@@ -15,7 +15,9 @@ const aboutUsRouter = require('./routes/aboutus');
 
 // api imports 
 const houseRouter = require('./routes/api/houseapi');
+const marketPriceRouter = require('./routes/api/marketpriceapi');
 const powerPlantRouter = require('./routes/api/powerplantapi');
+const regionRouter = require('./routes/api/regionapi');
 
 // db schema imports
 require('./schemas/houseschema')
@@ -47,7 +49,9 @@ app.use('/aboutus', aboutUsRouter);
 
 // api routing
 app.use('/api/house', houseRouter);
+app.use('/api/marketprice', marketPriceRouter);
 app.use('/api/powerplant', powerPlantRouter);
+app.use('/api/region', regionRouter);
 
 
 // connect to db
