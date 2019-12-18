@@ -46,6 +46,7 @@ router.post('/', (req, res) => {
         houseConsumption: req.body.houseConsumption,
         statusMessage: req.body.statusMessage
     })
+
     house.save().then(data => {
         res.json(data);
     });
@@ -54,7 +55,7 @@ router.post('/', (req, res) => {
 // delete house 
 router.delete('/:houseId', async (req, res) => {
     try {
-        const houseRemove = House.remove({
+        const houseRemove = await House.remove({
             _id: req.params.houseId
         });
         res.json(houseRemove);
@@ -81,7 +82,7 @@ router.patch('/:houseId', async (req, res) => {
                 maxHouseConsumption: req.body.maxHouseConsumption,
                 minHouseConsumption: req.body.minHouseConsumption,
                 houseConsumption: req.body.houseConsumption,
-                statusMessage: req.body.statusMessag
+                statusMessage: req.body.statusMessage
             }
         });
         res.json(houseUpdate);
