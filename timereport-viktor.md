@@ -25,6 +25,6 @@ Viktor From, vikfro-6
 |  2019-12-12  | 5       | Continued work on front-end and bootstrap      |
 |  2019-12-13  | 5       | Split of project, cont. work on back-end API   |
 |  2019-12-16  | 2       | Cont. work on db schemas, update attributes    |
-|  2019-12-17  | 2       | Update schemas                                 |
+|  2019-12-17  | 6       | Update schemas, cont. work in API, routing     |
 | ------------ | ------- | ---------------------------------------------- | 
-|  Total:      | 98      |                                                |
+|  Total:      | 102     |                                                |
