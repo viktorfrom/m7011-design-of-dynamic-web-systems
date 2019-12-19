@@ -2,13 +2,34 @@ const mongoose = require('mongoose');
 
 
 const MarketPriceSchema = mongoose.Schema({
-        timestamp: { type: Date, default: Date.now() },
-        name: String,
-        maxTotalProduction: Number, 
-        minTotalProduction: Number,
-        currentTotalProduction: Number,
-        electricityPrice: Number,
-        currentPrice: Number
+    timestamp: {
+        type: Date,
+        default: Date.now()
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    maxTotalProduction: {
+        type: Number,
+        required: true
+    },
+    minTotalProduction: {
+        type: Number,
+        required: true
+    },
+    currentTotalProduction: {
+        type: Number,
+        required: true
+    },
+    electricityPrice: {
+        type: Number,
+        required: true
+    },
+    currentPrice: {
+        type: Number,
+        required: true
+    }
 });
 
 
