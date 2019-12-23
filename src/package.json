@@ -7,7 +7,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "bcrypt": "^3.0.7",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "cookie-parser": "~1.4.4",
@@ -20,6 +20,8 @@
     "mocha": "^6.2.2",
     "mongoose": "^5.7.13",
     "morgan": "^1.9.1",
+    "nan": "^2.14.0",
+    "node-pre-gyp": "^0.14.0",
     "prompt": "^1.0.0",
     "utils": "^0.3.1"
   }
