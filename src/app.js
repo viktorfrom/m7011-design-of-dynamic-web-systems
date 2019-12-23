@@ -8,9 +8,7 @@ const bodyParser = require('body-parser');
 
 // views imports
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const signInRouter = require('./routes/signin');
-const signUpRouter = require('./routes/signup');
+const userRouter = require('./routes/users');
 const aboutUsRouter = require('./routes/aboutus');
 
 // api imports 
@@ -42,9 +40,7 @@ app.use(bodyParser.json());
 
 // views routing
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/signin', signInRouter);
-app.use('/signup', signUpRouter);
+app.use('/users', userRouter);
 app.use('/aboutus', aboutUsRouter);
 
 // api routing
@@ -85,5 +81,6 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;
