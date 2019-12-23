@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -10,7 +10,7 @@
   </head>
   <body>
     <div class="container">
-      <form class="row text-center col-8 mx-auto d-flex flex-column justify-content-center">
+      <form class="row text-center col-8 mx-auto d-flex flex-column justify-content-center" method="POST" action="/users/login">
         
       <div class="logo">
           <a href="/" class="go-back">
@@ -22,6 +22,7 @@
       <h1 class="h3 mb-3 font-weight-normal">Please enter information</h1>
       <h4 id="status" class="h3 font-weight-normal status d-none"></h4>
       <div class="form-group row">
+
           <div class="col-6">
               <div class="form-group row">
                   <label for="inputEmail" class="col-sm-2 col-form-label"></label>
@@ -51,7 +52,7 @@
               </div>
           </div>
       </div>
-      <a class="btn btn-lg btn-primary btn-block my-2" href="#" onclick="signUp()" role="button">Register</a>
+      <button type="submit" class="btn btn-lg btn-primary btn-block">Register</button>
       <a class="btn btn-lg btn-primary btn-block" href="/signin" role="button">Already a member?</a>
     </form>
       </form>
@@ -61,6 +62,44 @@
       <% include footer.ejs %>
     </footer>   
   </body>
+
+
+</html> -->
+
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link href="/stylesheets/style.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>  
+    <title><%= title %></title>
+  </head>
+  <body>
+
+    <form class="form-group" method="post" action="/users/signup">
+      <label for="">Name:</label>
+      <input type="text" name="name" value="">
+
+      <label for="">Email:</label>
+      <input type="text" name="email" value="">
+
+      <label for="">Username:</label>
+      <input type="text" name="username" value="">
+
+      <label for="">Password:</label>
+      <input type="password" name="password" value="">
+
+      <label for="">Confirm:</label>
+      <input type="password" name="password2" value="">
+
+      <input type="submit" value="Submit">
+      </form>
+    
+  </body>
+
 
 
 </html>
