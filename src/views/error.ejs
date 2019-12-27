@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -31,9 +32,10 @@
             <a href="mailto:support@greenmeanelectrics.com">support@greenmeanelectrics.com</a>.
           </p>
         </div>
-        <!-- <div class="btn-container">
-          <a href="/" class="btn my-2 btn-sm btn-outline-secondary" role="button">Take me back</a>
-        </div> -->
+        <% if (error) { %>
+          <!-- <%- JSON.stringify(error) %> -->
+          <%= error.message%>
+        <% } %>
       </div>
     </div>
   </body>

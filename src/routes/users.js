@@ -4,6 +4,7 @@ const {
   check,
   validationResult
 } = require('express-validator');
+
 const bcrypt = require('bcrypt');
 
 // Bring in User Model
@@ -11,8 +12,10 @@ let User = require('../schemas/userschema.js');
 
 // Register Form
 router.get('/signup', function (req, res, next) {
+
   res.render('signup', {
-    title: 'Green Lean Electrics'
+    title: 'Green Lean Electrics',
+    body: null
   });
 });
 
@@ -34,7 +37,12 @@ router.post('/signup', [
 
   // console.log(errors);
   if (!errors.isEmpty()) {
-    console.log(errors.errors);
+    // console.log(errors.errors);
+    res.render('signup', {
+      title: 'Green Lean Electrics',
+      body: errors
+    });
+    // res.redirect('/users/signup?failure=true');
     // res.redirect('/users/signup');
   } else {
     let newUser = new User({
@@ -44,7 +52,7 @@ router.post('/signup', [
       password: req.body.password
     });
 
-    
+
     bcrypt.genSalt(10, function (err, salt) {
       if (err) {
         console.log(err)
@@ -60,7 +68,7 @@ router.post('/signup', [
             console.log(err);
             return;
           } else {
-            res.redirect('/users/signin');
+            res.redirect('/users/signin?success=true');
           }
         });
       });
@@ -71,9 +79,12 @@ router.post('/signup', [
 
 // Login Form
 router.get('/signin', function (req, res, next) {
+  // console.log(query);
+
   res.render('signin', {
-    title: 'Green Lean Electrics'
+    title: 'Green Lean Electrics',
+    query: req.query ? req.query : null
   });
-});;
+});
 
 module.exports = router;
