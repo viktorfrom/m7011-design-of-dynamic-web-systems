@@ -26,7 +26,9 @@ Viktor From, vikfro-6
 |  2019-12-13  | 5       | Split of project, cont. work on back-end API   |
 |  2019-12-18  | 2       | Cont. work on db schemas, update attributes    |
 |  2019-12-19  | 6       | Update schemas, cont. work in API, routing     | 
-|  2019-12-20  | 7       | Sign ups, login,                               |          
-|  2019-12-23  | 2       | Encryption                                     |
+|  2019-12-20  | 7       | Sign ups, login,                               |
+|  2019-12-23  | 5       | Encryption                                     |
+|  2019-12-25  | 2       | Encryption, boostrap registration msg          |
+|  2019-12-27  | 2       | Login, sessions                                |
 | ------------ | ------- | ---------------------------------------------- | 
-|  Total:      | 111     |                                                |
+|  Total:      | 120     |                                                |
