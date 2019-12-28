@@ -4,7 +4,7 @@ const {
   check,
   validationResult
 } = require('express-validator');
-
+const passport = require('passport');
 const bcrypt = require('bcrypt');
 
 // Bring in User Model
@@ -19,10 +19,7 @@ router.get('/signup', function (req, res, next) {
   });
 });
 
-
-
 router.post('/signup', [
-  // username must be an email
   check('name').notEmpty(),
   check('email').isEmail(),
   check('email').notEmpty(),
@@ -30,20 +27,23 @@ router.post('/signup', [
   check('password').isLength({
     min: 5
   })
+  // .matches(
+  //   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&]/,
+  // )
+
 ], (req, res) => {
   // console.log(req.body);
-  // Finds the validation errors in this request and wraps them in an object with handy functions
+
   const errors = validationResult(req);
 
-  // console.log(errors);
+  console.log(errors);
   if (!errors.isEmpty()) {
     // console.log(errors.errors);
+
     res.render('signup', {
       title: 'Green Lean Electrics',
       body: errors
     });
-    // res.redirect('/users/signup?failure=true');
-    // res.redirect('/users/signup');
   } else {
     let newUser = new User({
       name: req.body.name,
@@ -83,8 +83,37 @@ router.get('/signin', function (req, res, next) {
 
   res.render('signin', {
     title: 'Green Lean Electrics',
-    query: req.query ? req.query : null
+    query: req.query ? req.query : null,
+    body: null
   });
+});
+
+router.post('/signin', [
+  check('username').notEmpty(),
+  check('password').notEmpty()
+], (req, res, next) => {
+  // console.log(req.body);
+
+  const errors = validationResult(req);
+
+  // console.log(errors);
+
+  if (!errors.isEmpty()) {
+    // console.log(errors.errors);
+
+    res.render('signin', {
+      title: 'Green Lean Electrics',
+      query: req.query ? req.query : null,
+      body: errors
+    });
+  } else {
+    passport.authenticate('local', {
+
+      successRedirect: '/',
+      failureRedirect: '/users/signin'
+    })(req, res, next);
+
+  }
 });
 
 module.exports = router;
