@@ -29,6 +29,7 @@ Viktor From, vikfro-6
 |  2019-12-20  | 7       | Sign ups, login,                               |
 |  2019-12-23  | 5       | Encryption                                     |
 |  2019-12-25  | 2       | Encryption, boostrap registration msg          |
-|  2019-12-27  | 2       | Login, sessions                                |
+|  2019-12-27  | 5       | Login, authentication                          |
+|  2019-12-27  | 5       | Login, authentication                          |
 | ------------ | ------- | ---------------------------------------------- | 
-|  Total:      | 120     |                                                |
+|  Total:      | 126     |                                                |
