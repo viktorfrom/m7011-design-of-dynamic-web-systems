@@ -1,9 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const {
-  check,
-  validationResult
-} = require('express-validator');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 
@@ -14,68 +10,77 @@ let User = require('../schemas/userschema.js');
 router.get('/signup', function (req, res, next) {
 
   res.render('signup', {
-    title: 'Green Lean Electrics',
-    body: null
+    title: 'Green Lean Electrics'
   });
 });
 
-router.post('/signup', [
-  check('name').notEmpty(),
-  check('email').isEmail(),
-  check('email').notEmpty(),
-  check('username').notEmpty(),
-  check('password').isLength({
-    min: 5
-  })
-  // .matches(
-  //   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&]/,
-  // )
+// Register
+router.post('/signup', (req, res) => {
+  const { name, email, password, password2, region, username } = req.body;
+  let errors = [];
 
-], (req, res) => {
-  // console.log(req.body);
+  if (!name || !email || !password || !password2 || !region || !username) {
+    errors.push({ msg: 'Please enter all fields' });
+  }
 
-  const errors = validationResult(req);
+  if (password != password2) {
+    errors.push({ msg: 'Passwords do not match' });
+  }
 
-  console.log(errors);
-  if (!errors.isEmpty()) {
-    // console.log(errors.errors);
+  if (password.length < 6) {
+    errors.push({ msg: 'Password must be at least 6 characters' });
+  }
 
+  if (errors.length > 0) {
     res.render('signup', {
       title: 'Green Lean Electrics',
-      body: errors
+      errors,
+      name,
+      email,
+      password,
+      password2,
+      region,
+      username
     });
   } else {
-    let newUser = new User({
-      name: req.body.name,
-      email: req.body.email,
-      username: req.body.username,
-      password: req.body.password
-    });
-
-
-    bcrypt.genSalt(10, function (err, salt) {
-      if (err) {
-        console.log(err)
-        return
-      }
-      bcrypt.hash(newUser.password, salt, function (err, hash) {
-        if (err) {
-          console.log(err);
-        }
-        newUser.password = hash;
-        newUser.save(function (err) {
-          if (err) {
-            console.log(err);
-            return;
-          } else {
-            res.redirect('/users/signin?success=true');
-          }
+    User.findOne({ email: email }).then(user => {
+      if (user) {
+        errors.push({ msg: 'Email already exists' });
+        res.render('signup', {
+          title: 'Green Lean Electrics',
+          errors,
+          name,
+          email,
+          password,
+          password2,
+          region,
+          username
         });
-      });
+      } else {
+        const newUser = new User({
+          name,
+          email,
+          password,
+          region,
+          username
+        });
+
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser
+              .save()
+              .then(user => {
+                res.redirect('/users/signin?success=true');
+              })
+              .catch(err => console.log(err));
+          });
+        });
+      }
     });
   }
 });
-
 
 // Login Form
 router.get('/signin', function (req, res, next) {
@@ -83,15 +88,12 @@ router.get('/signin', function (req, res, next) {
 
   res.render('signin', {
     title: 'Green Lean Electrics',
-    query: req.query ? req.query : null,
-    body: null
+    query: req.query ? req.query : null
+    // body: null
   });
 });
 
-router.post('/signin', [
-  check('username').notEmpty(),
-  check('password').notEmpty()
-], (req, res, next) => {
+router.post('/signin', (req, res, next) => {
   // console.log(req.body);
 
   const errors = validationResult(req);
@@ -103,8 +105,8 @@ router.post('/signin', [
 
     res.render('signin', {
       title: 'Green Lean Electrics',
-      query: req.query ? req.query : null,
-      body: errors
+      query: req.query ? req.query : null
+      // body: errors
     });
   } else {
     passport.authenticate('local', {

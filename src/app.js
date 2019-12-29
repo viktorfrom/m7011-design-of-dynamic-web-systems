@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const config = require('./config/dbconfig.js');
+const passport = require('passport');
 
 // views imports
 const indexRouter = require('./routes/index');
@@ -51,7 +53,7 @@ app.use('/api/region', regionRouter);
 
 
 // connect to db
-mongoose.connect('mongodb://localhost/GLE_DB', {
+mongoose.connect(config.database, {
     useUnifiedTopology: true,
     useNewUrlParser: true
   }).then(() => {
@@ -65,6 +67,13 @@ mongoose.connect('mongodb://localhost/GLE_DB', {
 // let Simulation = require('./simulation/model/simulation.js')
 // this.simulation = new Simulation();
 // this.simulation.runSimulation();
+
+// Passport config
+require('./config/passport')(passport);
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
