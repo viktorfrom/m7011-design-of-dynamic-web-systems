@@ -9,7 +9,6 @@ router.get('/signup', function (req, res, next) {
 
   res.render('signup', {
     title: 'Green Lean Electrics',
-    login: req.login ? req.login : null
   });
 });
 
@@ -102,20 +101,19 @@ router.get('/signin', function (req, res, next) {
   res.render('signin', {
     title: 'Green Lean Electrics',
     query: req.query ? req.query : null,
-    login: req.login ? req.login : null
   });
 });
 
 router.post('/signin', (req, res, next) => {
   passport.authenticate('local', {
-    successRedirect: '/dashboard?login=true',
+    successRedirect: '/dashboard',
     failureRedirect: '/users/signin?failure=true'
   })(req, res, next);
 });
 
 router.get('/signout', (req, res) => {
   req.logout();
-  res.redirect('/users/signin?login=false');
+  res.redirect('/users/signin');
 });
 
 
