@@ -16,19 +16,32 @@ router.get('/signup', function (req, res, next) {
 
 // Register
 router.post('/signup', (req, res) => {
-  const { name, email, password, password2, region, username } = req.body;
+  const {
+    name,
+    email,
+    password,
+    password2,
+    region,
+    username
+  } = req.body;
   let errors = [];
 
   if (!name || !email || !password || !password2 || !region || !username) {
-    errors.push({ msg: 'Please enter all fields' });
+    errors.push({
+      msg: 'Please enter all fields'
+    });
   }
 
   if (password != password2) {
-    errors.push({ msg: 'Passwords do not match' });
+    errors.push({
+      msg: 'Passwords do not match'
+    });
   }
 
   if (password.length < 6) {
-    errors.push({ msg: 'Password must be at least 6 characters' });
+    errors.push({
+      msg: 'Password must be at least 6 characters'
+    });
   }
 
   if (errors.length > 0) {
@@ -43,9 +56,13 @@ router.post('/signup', (req, res) => {
       username
     });
   } else {
-    User.findOne({ email: email }).then(user => {
+    User.findOne({
+      email: email
+    }).then(user => {
       if (user) {
-        errors.push({ msg: 'Email already exists' });
+        errors.push({
+          msg: 'Email already exists'
+        });
         res.render('signup', {
           title: 'Green Lean Electrics',
           errors,
@@ -94,28 +111,17 @@ router.get('/signin', function (req, res, next) {
 });
 
 router.post('/signin', (req, res, next) => {
-  // console.log(req.body);
-
-  const errors = validationResult(req);
-
-  // console.log(errors);
-
-  if (!errors.isEmpty()) {
-    // console.log(errors.errors);
-
-    res.render('signin', {
-      title: 'Green Lean Electrics',
-      query: req.query ? req.query : null
-      // body: errors
-    });
-  } else {
-    passport.authenticate('local', {
-
-      successRedirect: '/',
-      failureRedirect: '/users/signin'
-    })(req, res, next);
-
-  }
+  passport.authenticate('local', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/users/signin?failure=true'
+  })(req, res, next);
 });
+
+router.get('/signout', (req, res) => {
+  req.logout();
+  // req.flash('success_msg', 'You are logged out');
+  res.redirect('/users/signin');
+});
+
 
 module.exports = router;
