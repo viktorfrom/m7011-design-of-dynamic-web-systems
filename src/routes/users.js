@@ -3,18 +3,16 @@ const router = express.Router();
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 
-// Bring in User Model
 let User = require('../schemas/userschema.js');
 
-// Register Form
 router.get('/signup', function (req, res, next) {
 
   res.render('signup', {
-    title: 'Green Lean Electrics'
+    title: 'Green Lean Electrics',
+    login: req.login ? req.login : null
   });
 });
 
-// Register
 router.post('/signup', (req, res) => {
   const {
     name,
@@ -99,28 +97,25 @@ router.post('/signup', (req, res) => {
   }
 });
 
-// Login Form
 router.get('/signin', function (req, res, next) {
-  // console.log(query);
 
   res.render('signin', {
     title: 'Green Lean Electrics',
-    query: req.query ? req.query : null
-    // body: null
+    query: req.query ? req.query : null,
+    login: req.login ? req.login : null
   });
 });
 
 router.post('/signin', (req, res, next) => {
   passport.authenticate('local', {
-    successRedirect: '/dashboard',
+    successRedirect: '/dashboard?login=true',
     failureRedirect: '/users/signin?failure=true'
   })(req, res, next);
 });
 
 router.get('/signout', (req, res) => {
   req.logout();
-  // req.flash('success_msg', 'You are logged out');
-  res.redirect('/users/signin');
+  res.redirect('/users/signin?login=false');
 });
 
 
