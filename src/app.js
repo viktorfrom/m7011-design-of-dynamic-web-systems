@@ -1,5 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
+const session = require('express-session');
+
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -19,12 +21,26 @@ const marketPriceRouter = require('./routes/api/marketpriceapi');
 const powerPlantRouter = require('./routes/api/powerplantapi');
 const regionRouter = require('./routes/api/regionapi');
 
-// db schema imports
+// dbschema imports
 require('./schemas/houseschema')
 require('./schemas/marketpriceschema')
 require('./schemas/powerplantschema')
 require('./schemas/regionschema')
 const app = express();
+
+// passport config
+require('./config/passport')(passport);
+
+// db config
+mongoose.connect(config.database, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+  }).then(() => {
+  console.log("Successful connection to db established");    
+}).catch(err => {
+  console.log('Error...', err);
+  process.exit();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,7 +54,21 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(bodyParser.json());
+// Express body parser
+app.use(express.urlencoded({ extended: true }));
+
+// Express session
+app.use(
+  session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+  })
+);
+
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // views routing
 app.use('/', indexRouter);
@@ -51,28 +81,10 @@ app.use('/api/marketprice', marketPriceRouter);
 app.use('/api/powerplant', powerPlantRouter);
 app.use('/api/region', regionRouter);
 
-
-// connect to db
-mongoose.connect(config.database, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true
-  }).then(() => {
-  console.log("Successful connection to db established");    
-}).catch(err => {
-  console.log('Error...', err);
-  process.exit();
-});
-
 // run simulation
 // let Simulation = require('./simulation/model/simulation.js')
 // this.simulation = new Simulation();
 // this.simulation.runSimulation();
-
-// Passport config
-require('./config/passport')(passport);
-// Passport Middleware
-app.use(passport.initialize());
-app.use(passport.session());
 
 
 // catch 404 and forward to error handler
