@@ -1,7 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <link href="/stylesheets/style.css" rel="stylesheet"> 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>  
@@ -9,8 +10,8 @@
   </head>
   <body>
     <div class="container">
-      <form class="row text-center col-8 mx-auto d-flex flex-column justify-content-center">
-        
+      <% include ./messages %>
+      <form class="row text-center col-8 mx-auto d-flex flex-column justify-content-center" method="POST" action="/users/signup">
       <div class="logo">
           <a href="/" class="go-back">
               <i class="fas fa-arrow-left"></i>
@@ -25,13 +26,32 @@
               <div class="form-group row">
                   <label for="inputEmail" class="col-sm-2 col-form-label"></label>
                   <div class="col-sm-12">
-                      <input type="email" class="form-control" id="inputEmail" placeholder="Email" onblur="emailExists()">
+                      <input 
+                      type="text" 
+                      name='email' 
+                      class="form-control" 
+                      placeholder="Email" 
+                      value="<%= typeof email != 'undefined' ? email : '' %>">
                   </div>
               </div>
               <div class="form-group row">
                   <label for="inputPassword" class="col-sm-2 col-form-label"></label>
                   <div class="col-sm-12">
-                      <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                      <input 
+                      type="password" 
+                      name='password' 
+                      class="form-control" 
+                      placeholder="Password">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="inputPassword" class="col-sm-2 col-form-label"></label>
+                  <div class="col-sm-12">
+                      <input 
+                       type="password" 
+                       name='password2' 
+                       class="form-control" 
+                       placeholder="Confirm">
                   </div>
               </div>
           </div>
@@ -39,19 +59,30 @@
               <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label"></label>
                   <div class="col-sm-12">
-                      <input type="text" class="form-control" id="inputName" placeholder="Name">
+                      <input 
+                       type="text" 
+                       name='name' 
+                       class="form-control" 
+                       placeholder="Name" 
+                       value="<%= typeof name != 'undefined' ? name : '' %>">
                   </div>
               </div>
               <div class="form-group row">
                   <label for="inputRegion" class="col-sm-2 col-form-label"></label>
                   <div class="col-sm-12">
-                      <input type="text" class="form-control" id="inputRegion" placeholder="Region">
+                    <input type="text" name='region' class="form-control" placeholder="Region" value="<%= typeof region != 'undefined' ? region : '' %>">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="inputUsername" class="col-sm-2 col-form-label"></label>
+                  <div class="col-sm-12">
+                    <input type="text" name='username' class="form-control" placeholder="Username" value="<%= typeof username != 'undefined' ? username : '' %>">
                   </div>
               </div>
           </div>
       </div>
-      <a class="btn btn-lg btn-primary btn-block my-2" href="#" onclick="signUp()" role="button">Register</a>
-      <a class="btn btn-lg btn-primary btn-block" href="/signin" role="button">Already a member?</a>
+      <button type="submit" class="btn btn-lg btn-primary btn-block">Register</button>
+      <a class="btn btn-lg btn-primary btn-block" href="/users/signin" role="button">Already a member?</a>
     </form>
       </form>
     </div>
@@ -60,6 +91,4 @@
       <% include footer.ejs %>
     </footer>   
   </body>
-
-
 </html>

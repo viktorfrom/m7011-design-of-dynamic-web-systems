@@ -1,9 +1,21 @@
 const express = require('express');
 const router = express.Router();
+const {
+  ensureAuthenticated
+} = require('../config/auth');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Green Lean Electrics' });
+
+router.get('/', function (req, res, next) {
+  res.render('index', {
+    title: 'Green Lean Electrics'
+  });
+});
+
+router.get('/dashboard', ensureAuthenticated, function (req, res, next) {
+  res.render('dashboard', {
+    title: 'Green Lean Electrics',
+    user: req.user
+  });
 });
 
 module.exports = router;

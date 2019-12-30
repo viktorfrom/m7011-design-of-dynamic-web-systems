@@ -1,16 +1,18 @@
 const createError = require('http-errors');
 const express = require('express');
+const session = require('express-session');
+
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const config = require('./config/dbconfig.js');
+const passport = require('passport');
 
 // views imports
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const signInRouter = require('./routes/signin');
-const signUpRouter = require('./routes/signup');
+const userRouter = require('./routes/users');
 const aboutUsRouter = require('./routes/aboutus');
 
 // api imports 
@@ -19,12 +21,26 @@ const marketPriceRouter = require('./routes/api/marketpriceapi');
 const powerPlantRouter = require('./routes/api/powerplantapi');
 const regionRouter = require('./routes/api/regionapi');
 
-// db schema imports
+// dbschema imports
 require('./schemas/houseschema')
 require('./schemas/marketpriceschema')
 require('./schemas/powerplantschema')
 require('./schemas/regionschema')
 const app = express();
+
+// passport config
+require('./config/passport')(passport);
+
+// db config
+mongoose.connect(config.database, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+  }).then(() => {
+  console.log("Successful connection to db established");    
+}).catch(err => {
+  console.log('Error...', err);
+  process.exit();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,13 +54,25 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(bodyParser.json());
+// Express body parser
+app.use(express.urlencoded({ extended: true }));
+
+// Express session
+app.use(
+  session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+  })
+);
+
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // views routing
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/signin', signInRouter);
-app.use('/signup', signUpRouter);
+app.use('/users', userRouter);
 app.use('/aboutus', aboutUsRouter);
 
 // api routing
@@ -53,22 +81,11 @@ app.use('/api/marketprice', marketPriceRouter);
 app.use('/api/powerplant', powerPlantRouter);
 app.use('/api/region', regionRouter);
 
-
-// connect to db
-mongoose.connect('mongodb://localhost/GLE_DB', {
-    useUnifiedTopology: true,
-    useNewUrlParser: true
-  }).then(() => {
-  console.log("Successful connection to db established");    
-}).catch(err => {
-  console.log('Error...', err);
-  process.exit();
-});
-
 // run simulation
 // let Simulation = require('./simulation/model/simulation.js')
 // this.simulation = new Simulation();
 // this.simulation.runSimulation();
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -83,7 +100,8 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', { error: err });
 });
+
 
 module.exports = app;
