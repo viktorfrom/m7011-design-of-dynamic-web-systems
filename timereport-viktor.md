@@ -29,7 +29,8 @@ Viktor From, vikfro-6
 |  2019-12-20  | 7       | Sign ups, login,                               |
 |  2019-12-23  | 5       | Encryption                                     |
 |  2019-12-25  | 2       | Encryption, boostrap registration msg          |
-|  2019-12-27  | 5       | Login, authentication                          |
-|  2019-12-27  | 5       | Login, authentication                          |
+|  2019-12-27  | 5       | Login view, login route, Passport auth.        |
+|  2019-12-29  | 4       | Passport auth.                                 |
+|  2019-12-30  | 5       | Passport auth., dashboard view/route           | // 130
 | ------------ | ------- | ---------------------------------------------- | 
-|  Total:      | 126     |                                                |
+|  Total:      | 130     |                                                |
