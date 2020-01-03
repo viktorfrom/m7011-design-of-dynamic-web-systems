@@ -24,7 +24,7 @@ Viktor From, vikfro-6
 |  2019-12-11  | 6       | Scrapping Vue for ejs, bootstrap               |
 |  2019-12-12  | 5       | Continued work on front-end and bootstrap      |
 |  2019-12-13  | 5       | Split of project, cont. work on back-end API   |
-|  2019-12-17  | 7       | Bootstrap, front end views                      |
+|  2019-12-17  | 7       | Bootstrap, front end views                     |
 |  2019-12-18  | 2       | Cont. work on db schemas, update attributes    |
 |  2019-12-19  | 6       | Update schemas, cont. work in API, routing     | 
 |  2019-12-20  | 7       | Sign ups, login,                               |
@@ -32,7 +32,9 @@ Viktor From, vikfro-6
 |  2019-12-25  | 2       | Encryption, boostrap registration msg          |
 |  2019-12-27  | 5       | Login view, login route, Passport auth.        |
 |  2019-12-29  | 4       | Passport auth.                                 |
-|  2019-12-30  | 5       | Passport auth., dashboard view/route           | // 130
+|  2019-12-30  | 5       | Passport auth., dashboard view/route           | 
+|  2019-12-30  | 2       | RestAPI url auth.                              | 
+|  2019-01-02  | 2       | Session sign in/out button                     | 
 | ------------ | ------- | ---------------------------------------------- | 
-|  Total:      | 137     |                                                |
+|  Total:      | 141     |                                                |
 
