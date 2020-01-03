@@ -7,7 +7,8 @@ const {
 
 router.get('/', function (req, res, next) {
   res.render('index', {
-    title: 'Green Lean Electrics'
+    title: 'Green Lean Electrics',
+    user: req.user
   });
 });
 

@@ -6,9 +6,8 @@ const bcrypt = require('bcrypt');
 let User = require('../schemas/userschema.js');
 
 router.get('/signup', function (req, res, next) {
-
   res.render('signup', {
-    title: 'Green Lean Electrics',
+    title: 'Green Lean Electrics'
   });
 });
 
