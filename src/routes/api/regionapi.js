@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const prompt = require('prompt');
-
+const auth = require('../../config/auth.js')
 const Region = require('../../schemas/regionschema');
 
 prompt.start();
 
 // get single region
-router.get('/:regionId', async (req, res) => {
+router.get('/:regionId', auth.check_user, async (req, res) => {
     try {
         const oneRegion = await Region.findById(req.params.regionId);
         res.json(oneRegion);
@@ -20,7 +20,7 @@ router.get('/:regionId', async (req, res) => {
 });
 
 // get all regions
-router.get('/', async (req, res) => {
+router.get('/', auth.check_user, async (req, res) => {
     try {
         const allRegions = await Region.find();
         res.json(allRegions);

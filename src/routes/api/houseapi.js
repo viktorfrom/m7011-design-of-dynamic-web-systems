@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const prompt = require('prompt');
-
+const auth = require('../../config/auth.js')
 const House = require('../../schemas/houseschema');
 
 prompt.start();
 
 // get single house
-router.get('/:houseId', async (req, res) => {
+router.get('/:houseId', auth.check_user, async (req, res) => {
     try {
         const oneHouse = await House.findById(req.params.houseId);
         res.json(oneHouse);
@@ -20,7 +20,7 @@ router.get('/:houseId', async (req, res) => {
 });
 
 // get all houses
-router.get('/', async (req, res) => {
+router.get('/', auth.check_user, async (req, res) => {
     try {
         const allHouses = await House.find();
         res.json(allHouses);
@@ -30,6 +30,7 @@ router.get('/', async (req, res) => {
         });
     }
 });
+
 
 
 // post house

@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const prompt = require('prompt');
-
+const auth = require('../../config/auth.js')
 const MarketPrice = require('../../schemas/marketpriceschema');
 
 prompt.start();
 
 // get single market price
-router.get('/:marketPriceId', async (req, res) => {
+router.get('/:marketPriceId', auth.check_user, async (req, res) => {
     try {
         const oneMarketPrice = await MarketPrice.findById(req.params.marketPriceId);
         res.json(oneMarketPrice);
@@ -20,7 +20,7 @@ router.get('/:marketPriceId', async (req, res) => {
 });
 
 // get all market prices
-router.get('/', async (req, res) => {
+router.get('/', auth.check_user, async (req, res) => {
     try {
         const allMarketPrices = await MarketPrice.find();
         res.json(allMarketPrices);

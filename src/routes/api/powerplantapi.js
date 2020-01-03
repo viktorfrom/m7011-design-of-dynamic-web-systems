@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const prompt = require('prompt');
-
+const auth = require('../../config/auth.js')
 const PowerPlant = require('../../schemas/powerplantschema');
 
 prompt.start();
 
 // get single power plant
-router.get('/:powerPlantId', async (req, res) => {
+router.get('/:powerPlantId', auth.check_user, async (req, res) => {
     try {
         const onePowerPlant = await PowerPlant.findById(req.params.powerPlantId);
         res.json(onePowerPlant);
@@ -20,7 +20,7 @@ router.get('/:powerPlantId', async (req, res) => {
 });
 
 // get all power plants
-router.get('/', async (req, res) => {
+router.get('/', auth.check_user, async (req, res) => {
     try {
         const allPowerPlants = await PowerPlant.find();
         res.json(allPowerPlants);
