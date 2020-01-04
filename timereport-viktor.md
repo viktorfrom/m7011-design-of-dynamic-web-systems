@@ -35,6 +35,7 @@ Viktor From, vikfro-6
 |  2019-12-30  | 5       | Passport auth., dashboard view/route           | 
 |  2019-12-30  | 2       | RestAPI url auth.                              | 
 |  2019-01-02  | 2       | Session sign in/out button                     | 
+|  2019-01-02  | 7       | Retrieve users from db, instantiate objects    | 
 | ------------ | ------- | ---------------------------------------------- | 
 |  Total:      | 141     |                                                |
 
