@@ -3,34 +3,38 @@ const bcrypt = require('bcrypt');
 
 const User = require('../schemas/userschema.js');
 
-module.exports = function(passport) {
+module.exports = function (passport) {
   passport.use(
-    new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+    new LocalStrategy({
+      usernameField: 'email'
+    }, (email, password, done) => {
       User.findOne({
         email: email
       }).then(user => {
         if (!user) {
           return done(null, false);
-        }
+        };
 
         bcrypt.compare(password, user.password, (err, isMatch) => {
-          if (err) throw err;
+          if (err) {
+            throw err;
+          };
           if (isMatch) {
             return done(null, user);
           } else {
             return done(null, false);
-          }
+          };
         });
       });
     })
   );
 
-  passport.serializeUser(function(user, done) {
+  passport.serializeUser(function (user, done) {
     done(null, user.id);
   });
 
-  passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
+  passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
       done(err, user);
     });
   });
