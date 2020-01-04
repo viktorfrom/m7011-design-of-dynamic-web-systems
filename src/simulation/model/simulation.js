@@ -9,6 +9,8 @@ module.exports = class simulation {
 
     runSimulation() {
         this.init = new Init();
-        this.init.timespan();
+        this.init.retrieveUsers();
+
+        // this.init.timespan();
     }
 }
