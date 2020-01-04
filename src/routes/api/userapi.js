@@ -6,10 +6,10 @@ const User = require('../../schemas/userschema');
 
 prompt.start();
 
-// get single house
+// get single user
 router.get('/:userId', async (req, res) => {
     try {
-        const oneUser = await Uesr.findById(req.params.userId);
+        const oneUser = await User.findById(req.params.userId);
         res.json(oneUser);
     } catch (err) {
         res.json({
@@ -19,7 +19,7 @@ router.get('/:userId', async (req, res) => {
     }
 });
 
-// get all houses
+// get all users
 router.get('/', async (req, res) => {
     try {
         const allUsers = await User.find();

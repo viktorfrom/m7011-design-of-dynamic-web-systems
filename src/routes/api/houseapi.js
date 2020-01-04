@@ -31,8 +31,6 @@ router.get('/', auth.check_user, async (req, res) => {
     }
 });
 
-
-
 // post house
 router.post('/', (req, res) => {
     const house = new House({
