@@ -7,15 +7,27 @@ const House = require('../../schemas/houseschema');
 prompt.start();
 
 // get single house
-router.get('/:houseId', auth.check_user, async (req, res) => {
+// router.get('/:houseId', async (req, res) => {
+//     try {
+//         const oneHouse = await House.findById(req.params.houseId);
+//         res.json(oneHouse);
+//     } catch (err) {
+//         res.json({
+//             message: err
+//         });
+
+//     }
+// });
+
+// get single house
+router.get('/:userEmail', async (req, res) => {
     try {
-        const oneHouse = await House.findById(req.params.houseId);
+        const oneHouse = await House.findOne({ owner : req.params.userEmail }).sort({ timestamp: -1 });
         res.json(oneHouse);
     } catch (err) {
         res.json({
             message: err
         });
-
     }
 });
 
