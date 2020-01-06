@@ -13,16 +13,16 @@ router.get('/signup', function (req, res, next) {
 
 router.post('/signup', (req, res) => {
   const {
-    name,
+    firstName,
+    lastName,
     email,
     password,
     password2,
-    region,
-    username
+    region
   } = req.body;
   let errors = [];
 
-  if (!name || !email || !password || !password2 || !region || !username) {
+  if (!firstName || !lastName || !email || !password || !password2 || !region) {
     errors.push({
       msg: 'Please enter all fields'
     });
@@ -44,12 +44,12 @@ router.post('/signup', (req, res) => {
     res.render('signup', {
       title: 'Green Lean Electrics',
       errors,
-      name,
+      firstName,
+      lastName,
       email,
       password,
       password2,
-      region,
-      username
+      region
     });
   } else {
     User.findOne({
@@ -62,21 +62,22 @@ router.post('/signup', (req, res) => {
         res.render('signup', {
           title: 'Green Lean Electrics',
           errors,
-          name,
+          firstName,
+          lastName,
           email,
           password,
           password2,
-          region,
-          username
+          region
         });
       } else {
         const newUser = new User({
-          name,
+          firstName,
+          lastName,
           email,
           password,
-          region,
-          username
+          region
         });
+        console.log(newUser);
 
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
