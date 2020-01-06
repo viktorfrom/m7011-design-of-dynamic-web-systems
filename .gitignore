@@ -2,6 +2,5 @@
 ./simulation/package-lock.json
 node_modules
 .DS_store
-./config/dbconfig.js
 
 timereport-anders.md
