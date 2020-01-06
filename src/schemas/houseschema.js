@@ -13,19 +13,19 @@ const HouseSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    powerPlant: {
-        type: String,
-        required: true
-    },
-    marketPrice: {
-        type: Object,
-        required: true
-    },
     battery: {
         type: Object,
         required: true
     },
     windTurbine: {
+        type: Object,
+        required: true
+    },
+    powerPlant: {
+        type: String,
+        required: true
+    },
+    marketPrice: {
         type: Object,
         required: true
     },
