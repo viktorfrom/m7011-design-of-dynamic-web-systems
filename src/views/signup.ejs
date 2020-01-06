@@ -57,26 +57,26 @@
           </div>
           <div class="col-6">
               <div class="form-group row">
-                  <label for="inputName" class="col-sm-2 col-form-label"></label>
+                  <label for="inputFirstName" class="col-sm-2 col-form-label"></label>
                   <div class="col-sm-12">
                       <input 
                        type="text" 
-                       name='name' 
+                       name='firstName' 
                        class="form-control" 
-                       placeholder="Name" 
-                       value="<%= typeof name != 'undefined' ? name : '' %>">
+                       placeholder="First name" 
+                       value="<%= typeof firstName != 'undefined' ? firstName : '' %>">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="inputLastName" class="col-sm-2 col-form-label"></label>
+                  <div class="col-sm-12">
+                    <input type="text" name='lastName' class="form-control" placeholder="Last name" value="<%= typeof lastName != 'undefined' ? lastName : '' %>">
                   </div>
               </div>
               <div class="form-group row">
                   <label for="inputRegion" class="col-sm-2 col-form-label"></label>
                   <div class="col-sm-12">
                     <input type="text" name='region' class="form-control" placeholder="Region" value="<%= typeof region != 'undefined' ? region : '' %>">
-                  </div>
-              </div>
-              <div class="form-group row">
-                  <label for="inputUsername" class="col-sm-2 col-form-label"></label>
-                  <div class="col-sm-12">
-                    <input type="text" name='username' class="form-control" placeholder="Username" value="<%= typeof username != 'undefined' ? username : '' %>">
                   </div>
               </div>
           </div>
