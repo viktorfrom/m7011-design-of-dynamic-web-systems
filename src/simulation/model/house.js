@@ -8,12 +8,12 @@ let HouseSchema = require("../../schemas/houseschema");
 module.exports = class house {
 
     constructor(powerPlant, marketPrice, region, owner, batteryCapacity, currBatteryCapacity) {
-        this.powerPlant = powerPlant;
-        this.marketPrice = marketPrice;
-        this.region = region;
         this.owner = owner;
+        this.region = region;
         this.battery = new Battery(owner, batteryCapacity, currBatteryCapacity);
         this.windTurbine = new WindTurbine(owner);
+        this.powerPlant = powerPlant;
+        this.marketPrice = marketPrice;
         this.mathExpression = new MathExpression();
         this.maxHouseConsumption = 1.35;
         this.minHouseConsumption = 0;
@@ -94,10 +94,10 @@ module.exports = class house {
             timestamp: Date.now(),
             owner: this.owner,
             region: this.region.getName(),
-            powerPlant: this.powerPlant.getName(),
-            marketPrice: this.marketPrice,
             battery: this.battery,
             windTurbine: this.windTurbine,
+            powerPlant: this.powerPlant.getName(),
+            marketPrice: this.marketPrice,
             maxHouseConsumption: this.maxHouseConsumption,
             minHouseConsumption: this.minHouseConsumption,
             houseConsumption: this.houseConsumption,

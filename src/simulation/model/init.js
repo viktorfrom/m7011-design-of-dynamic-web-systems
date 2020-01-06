@@ -30,7 +30,7 @@ module.exports = class init {
         this.timeSpan = 24 * 7;
     }
 
-    async timespan() {
+    async timespan(marketPrice, regions, powerPlant, houses) {
         console.log("Simulation running...");
         for (let i = 0; i < this.timeSpan; i++) {
             setTimeout(() => {
@@ -52,18 +52,53 @@ module.exports = class init {
                 // this.house6.electricityConsumption();
 
                 // this.marketPrice.marketPrice(); // Needs to run last to get accurate readings.
+
+                powerPlant.electricityProduction();
+
+                regions.forEach(function (region) {
+                    region.windSpeed();
+                });
+
+                houses.forEach(function (house) {
+                    house.electricityConsumption();
+                });
+
+
+                marketPrice.marketPrice(); // Needs to run last to get accurate readings.
             }, i * 10000)
         }
     }
 
     async retrieveUsers() {
-        // return await User.find().then(users => {return users});
         try {
             await User.find().then(users => {
+                let marketPrice = new MarketPrice("Generic county");
+
+                let regions = [];
                 if (users) {
-                    console.log(users)
+                    users.forEach(function (user) {
+                        if (!regions.includes(user.region)) {
+                            regions.push(new Region(user.region.toLowerCase()));
+                        }
+                    });
                 }
-                this.timespan();
+
+                let powerPlant = new PowerPlant("Generic power station", marketPrice, regions[0], 0, 30);
+
+                let houses = [];
+                if (users) {
+                    users.forEach(function (user) {
+                        let regionObj = regions.filter(obj => obj.name == user.region.toLowerCase())
+
+                        houses.push(new House(powerPlant, marketPrice, regionObj[0], user.email, 0, 5));
+                    });
+                }
+
+                // console.log(marketPrice);
+                // console.log(regions);
+                // console.log(powerPlant);
+                // console.log(houses);
+                this.timespan(marketPrice, regions, powerPlant, houses);
             });
         } catch (err) {
             console.log("Error: user db appears to be empty!")
