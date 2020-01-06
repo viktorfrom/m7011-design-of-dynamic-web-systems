@@ -70,7 +70,7 @@ module.exports = class region {
         " m/s " + "temp: " + this.currentTemp.toPrecision(3) + " °C" + "\n");
     }
     
-    windspeed() {
+    windSpeed() {
         this.setWindSpeed(this.currentWindSpeed + this.mathExpression.normalDistribution(0, 0.1));
         this.setTemp(this.currentTemp + this.mathExpression.normalDistribution(0, 0.1));
 
