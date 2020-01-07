@@ -8,19 +8,44 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>  
     <title><%= title %></title>
   <body>
-    <div class="container">    
       <% include header.ejs %> 
+    <div class="container">    
+      <div class="row">
+         <div class="col-sm">
+          <h1 class="mt-4">Dashboard</h1>
+          <p class="lead mb-3">Welcome user <%= user.firstName %> <%= user.lastName %></p>
+          <p>email: <%= user.email %> </p>
+          <p>region: <%= user.region %> </p>
+        </div>
+        <div class="col-sm">
+          <h1 class="mt-4">House stats</h1>
+          <p>owner: <span id='owner'></span></p>
+          <p>region: <span id='region'></span></p>
+          <p>consumption: <span id='houseConsumption'></span> / <span id='maxHouseConsumption'></span></p>
+
+          <h1 class="mt-4">Battery stats</h1>
+          <p>capacity: <span id='batteryCurrCapacity'></span> / <span id='batteryMaxCapacity'></span></p>
+
+          <h1 class="mt-4">Windturbine stats</h1>
+          <p>power: <span id='windTurbineCurrPower'></span> / <span id='windTurbineMaxPower'></span>,  
+            Excess power: <span id='windTurbineExcessPower'></span></p>
+          <p>current status: <span id='statusMessage'></span></p>
+
+
+          <h1 class="mt-4">Power plant stats</h1>
+          <p>Power plant: <span id='powerPlant'><></p>
+
+          <h1 class="mt-4">Market price stats</h1>
+          <p>name: <span id='marketPriceName'><></p>
+          <p>base price: <span id='marketPriceElectricityPrice'><></p>
+          <p>current price: <span id='marketPriceCurrentPrice'><></p>
+        </div>
+      </div>
     </div> 
-
-    <h1 class="mt-4">Dashboard</h1>
-    <p class="lead mb-3">Welcome user <%= user.name %></p>
-    <p>username: <%= user.username %> </p>
-    <p>email: <%= user.email %> </p>
-    <p>region: <%= user.region %> </p>
-
     <footer class="blog-footer mt-5">
       <% include footer.ejs %>
     </footer>
+    <script src= 'javascripts/house.js'></script>
   </body>
 </html>
 
