@@ -4,6 +4,7 @@ const prompt = require('prompt');
 const auth = require('../../config/auth.js')
 const House = require('../../schemas/houseschema');
 
+
 prompt.start();
 
 // get single house
@@ -30,6 +31,7 @@ router.get('/:userEmail', async (req, res) => {
         });
     }
 });
+
 
 // get all houses
 router.get('/', auth.check_user, async (req, res) => {
