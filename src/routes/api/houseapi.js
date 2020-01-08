@@ -21,9 +21,10 @@ prompt.start();
 // });
 
 // get single house
-router.get('/:userEmail', async (req, res) => {
+router.get('/users/current', auth.ensureAuthenticated, async (req, res) => {
     try {
-        const oneHouse = await House.findOne({ owner : req.params.userEmail }).sort({ timestamp: -1 });
+        // console.log(JSON.stringify(req.user));
+        const oneHouse = await House.findOne({ owner : req.user.email }).sort({ timestamp: -1 });
         res.json(oneHouse);
     } catch (err) {
         res.json({
@@ -34,7 +35,7 @@ router.get('/:userEmail', async (req, res) => {
 
 
 // get all houses
-router.get('/', auth.check_user, async (req, res) => {
+router.get('/', auth.ensureAuthenticated, async (req, res) => {
     try {
         const allHouses = await House.find();
         res.json(allHouses);
