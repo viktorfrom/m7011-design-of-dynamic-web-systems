@@ -97,16 +97,21 @@ router.post('/signup', (req, res) => {
 });
 
 router.get('/signin', function (req, res, next) {
+  const path = '/users/signin';
+  const redirect =  req.query.redirect ? req.query.redirect : null;
 
   res.render('signin', {
     title: 'Green Lean Electrics',
     query: req.query ? req.query : null,
+    action: redirect ? `${path}?redirect=${redirect}` : path
   });
 });
 
 router.post('/signin', (req, res, next) => {
+  const redirectUrl = req.query.redirect ? req.query.redirect : '/dashboard'
+
   passport.authenticate('local', {
-    successRedirect: '/dashboard',
+    successRedirect: redirectUrl,
     failureRedirect: '/users/signin?failure=true'
   })(req, res, next);
 });

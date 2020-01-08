@@ -12,6 +12,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/dashboard', ensureAuthenticated, function (req, res, next) {
+  // console.log(JSON.stringify(req.user));
   res.render('dashboard', {
     title: 'Green Lean Electrics',
     user: req.user
