@@ -37,7 +37,8 @@ Viktor From, vikfro-6
 |  2019-01-02  | 2       | Session sign in/out button                     | 
 |  2019-01-03  | 7       | Retrieve users from db, instantiate objects    | 
 |  2019-01-05  | 2       | Retrieve users from db, instantiate objects    | 
-|  2019-01-05  | 7       | Fetch retrieve house attributes from API       | 
+|  2019-01-06  | 7       | Fetch retrieve house attributes from API       | 
+|  2019-01-07  | 9       | Fetch, user dashboard                          | 
 | ------------ | ------- | ---------------------------------------------- | 
-|  Total:      | 148     |                                                |
+|  Total:      | 157     |                                                |
 
