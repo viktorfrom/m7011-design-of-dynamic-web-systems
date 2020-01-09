@@ -18,6 +18,7 @@
     "gaussian": "^1.1.0",
     "http-errors": "~1.6.3",
     "mocha": "^6.2.2",
+    "moment": "^2.24.0",
     "mongoose": "^5.7.13",
     "morgan": "^1.9.1",
     "nan": "^2.14.0",
