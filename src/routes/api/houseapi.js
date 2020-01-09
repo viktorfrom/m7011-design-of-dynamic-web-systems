@@ -38,7 +38,7 @@ router.get('/users/current', auth.ensureAuthenticated, async (req, res) => {
 });
 
 // get 10 last houses
-router.get('/users/test', auth.ensureAuthenticated, async (req, res) => {
+router.get('/users/houses', auth.ensureAuthenticated, async (req, res) => {
     try {
         // console.log(JSON.stringify(req.user));
         const houses = await House.find({

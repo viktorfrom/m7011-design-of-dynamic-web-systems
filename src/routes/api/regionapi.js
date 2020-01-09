@@ -3,20 +3,58 @@ const router = express.Router();
 const prompt = require('prompt');
 const auth = require('../../config/auth.js')
 const Region = require('../../schemas/regionschema');
+const moment = require('moment');
 
 prompt.start();
 
-// get single region
-router.get('/:regionId', auth.check_user, async (req, res) => {
+// // get single region
+// router.get('/:regionId', auth.check_user, async (req, res) => {
+//     try {
+//         const oneRegion = await Region.findById(req.params.regionId);
+//         res.json(oneRegion);
+//     } catch (err) {
+//         res.json({
+//             message: err
+//         });
+
+//     }
+// });
+
+// get 10 last regions
+router.get('/users/regions', auth.ensureAuthenticated, async (req, res) => {
     try {
-        const oneRegion = await Region.findById(req.params.regionId);
-        res.json(oneRegion);
+        // console.log(JSON.stringify(req.user));
+        const regions = await Region.find({ name: req.user.region.toLowerCase() }).sort({
+            timestamp: -1
+        }).limit(10);
+
+        regions.sort((a, b) => {
+            if (a.timestamp < b.timestamp) {
+                return -1;
+            } else if (a.timestamp > b.timestamp) {
+
+                return 1;
+            }
+            return 0;
+        });
+
+        const timestamp = regions.map(x => moment(x.timestamp).format('YYYY-MM-DD hh:mm:ss'));
+        const currentWindSpeed = regions.map(x => x.currentWindSpeed);
+        const currentTemp = regions.map(x => x.currentTemp);
+
+        const result = {
+            timestamp: timestamp,
+            currentWindSpeed: currentWindSpeed,
+            currentTemp: currentTemp
+        };
+
+        res.json(result);
     } catch (err) {
         res.json({
             message: err
         });
-
     }
+    return;
 });
 
 // get all regions

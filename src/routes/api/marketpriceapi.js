@@ -3,20 +3,56 @@ const router = express.Router();
 const prompt = require('prompt');
 const auth = require('../../config/auth.js')
 const MarketPrice = require('../../schemas/marketpriceschema');
+const moment = require('moment');
 
 prompt.start();
 
-// get single market price
-router.get('/:marketPriceId', auth.check_user, async (req, res) => {
+// // get single market price
+// router.get('/:marketPriceId', auth.check_user, async (req, res) => {
+//     try {
+//         const oneMarketPrice = await MarketPrice.findById(req.params.marketPriceId);
+//         res.json(oneMarketPrice);
+//     } catch (err) {
+//         res.json({
+//             message: err
+//         });
+
+//     }
+// });
+
+// get 10 last market prices
+router.get('/users/marketprices', auth.ensureAuthenticated, async (req, res) => {
     try {
-        const oneMarketPrice = await MarketPrice.findById(req.params.marketPriceId);
-        res.json(oneMarketPrice);
+        // console.log(JSON.stringify(req.user));
+        const marketPrices = await MarketPrice.find().sort({
+            timestamp: -1
+        }).limit(10);
+
+        marketPrices.sort((a, b) => {
+            if (a.timestamp < b.timestamp) {
+                return -1;
+            } else if (a.timestamp > b.timestamp) {
+
+                return 1;
+            }
+            return 0;
+        });
+
+        const timestamp = marketPrices.map(x => moment(x.timestamp).format('YYYY-MM-DD hh:mm:ss'));
+        const currentPrice = marketPrices.map(x => x.currentPrice);
+
+        const result = {
+            timestamp: timestamp,
+            currentPrice: currentPrice
+        };
+
+        res.json(result);
     } catch (err) {
         res.json({
             message: err
         });
-
     }
+    return;
 });
 
 // get all market prices
