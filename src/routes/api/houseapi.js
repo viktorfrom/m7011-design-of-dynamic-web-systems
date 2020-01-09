@@ -3,7 +3,7 @@ const router = express.Router();
 const prompt = require('prompt');
 const auth = require('../../config/auth.js')
 const House = require('../../schemas/houseschema');
-
+const moment = require('moment');
 
 prompt.start();
 
@@ -24,13 +24,56 @@ prompt.start();
 router.get('/users/current', auth.ensureAuthenticated, async (req, res) => {
     try {
         // console.log(JSON.stringify(req.user));
-        const oneHouse = await House.findOne({ owner : req.user.email }).sort({ timestamp: -1 });
+        const oneHouse = await House.findOne({
+            owner: req.user.email
+        }).sort({
+            timestamp: -1
+        });
         res.json(oneHouse);
     } catch (err) {
         res.json({
             message: err
         });
     }
+});
+
+// get 10 last houses
+router.get('/users/test', auth.ensureAuthenticated, async (req, res) => {
+    try {
+        // console.log(JSON.stringify(req.user));
+        const houses = await House.find({
+            owner: req.user.email
+        }).sort({
+            timestamp: -1
+        }).limit(10);
+
+        houses.sort((a, b) => {
+            if (a.timestamp < b.timestamp) {
+                return -1;
+            } else if (a.timestamp > b.timestamp) {
+
+                return 1;
+            }
+            return 0;
+        });
+
+        const timestamp = houses.map(x => moment(x.timestamp).format('YYYY-MM-DD hh:mm:ss'));
+        const consumption = houses.map(x => x.houseConsumption);
+        const production = houses.map(x => x.windTurbine.currentPower);
+
+        const result = {
+            timestamp: timestamp,
+            consumption: consumption,
+            production: production
+        };
+
+        res.json(result);
+    } catch (err) {
+        res.json({
+            message: err
+        });
+    }
+    return;
 });
 
 
