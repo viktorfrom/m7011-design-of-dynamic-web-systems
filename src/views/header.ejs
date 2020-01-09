@@ -11,10 +11,16 @@
         <a class="p-2" href="/aboutus">About us</a>
         <form class="form-inline my-2 my-lg-0">
         <% if (!user) { %>
-          <a class="btn btn-sm btn-primary" href="/users/signin">Sign in</a>
-          <a class="btn btn-sm btn-primary btnmargin" href="/users/signup">Sign up</a>
+          <a class="btn btn-sm btn-primary" href="/users/signin">Sign in
+            <span data-feather="log-in"></span><script>feather.replace()</script> 
+          </a>
+          <a class="btn btn-sm btn-primary btnmargin" href="/users/signup">Sign up
+            <span data-feather="feather"></span><script>feather.replace()</script> 
+          </a>
         <% } else { %>
-          <a class="btn btn-sm btn-primary" href="/users/signout">Sign out</a>
+          <a class="btn btn-sm btn-primary" href="/users/signout">Sign out
+            <span data-feather="log-out"></span><script>feather.replace()</script> 
+          </a>
         <% } %>
         </form>
       </nav>
