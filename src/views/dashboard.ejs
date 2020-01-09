@@ -1,158 +1,154 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <link href="/stylesheets/style.css" rel="stylesheet"> 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>  
-    <script src="https://unpkg.com/feather-icons"></script> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-
-    <style>
-    canvas{
+<head>
+  <meta charset="utf-8">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <link href="/stylesheets/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+  </script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <style>
+    canvas {
       -moz-user-select: none;
       -webkit-user-select: none;
       -ms-user-select: none;
     }
-    </style>
-
-
-
-    <title><%= title %></title>
-  </head>
-  <body>
-      <% include header.ejs %> 
-    <div class="container mt-4">
-      <div class="row">
-      <% include sidebar.ejs %> 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Dashboard</h1> 
+  </style>
+  <title><%= title %></title>
+</head>
+<body>
+  <% include header.ejs %>
+  <div class="container mt-4">
+    <div class="row">
+      <% include sidebar.ejs %>
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <div
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Dashboard</h1>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              <p class="lead mb-3">Welcome <%= user.firstName %> <%= user.lastName %></p>
+              <p>Email: <%= user.email %> </p>
+              <p>Region: <%= user.region %> </p>
+            </div>
+            <div class="col-sm">
+            </div>
           </div>
-    <div class="container">    
-      <div class="row">
-         <div class="col-sm">
-          <p class="lead mb-3">Welcome <%= user.firstName %> <%= user.lastName %></p>
-          <p>Email: <%= user.email %> </p>
-          <p>Region: <%= user.region %> </p>
         </div>
-        <div class="col-sm">
+        <div class="ml-3 my-2">
+          <p>Wind Turbine Status: <span class="badge badge-success" id='statusMessage'></span></p>
+          <p>Simulation: <span class="badge badge-success" id="running-status">Running</span></p>
         </div>
-      </div>
-    </div> 
-
-    <div class="ml-3 my-2">
-      Wind Turbine Status: <span class="badge badge-success" id='statusMessage'></span>
-      Simulation: <span class="badge badge-success" id="running-status">Running</span>
-    </div>
-    <div style="width:100%;">
-      <canvas id="myChart"></canvas>
-    </div>
-
-      <% include test.ejs %> 
-
-
-      <h2>Section title</h2>
-      <div class="table-responsive">
-        <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Household production (kWh)</th>
-              <th>Household consumption (kWh)</th>
-              <th>Excess power (kWh)</th>
-              <th>Battery capacity (Ah)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span id='time'></span> </td> 
-              <td><span id='windTurbineCurrPower'></span> / <span id='windTurbineMaxPower'></span></td>
-              <td><span id='houseConsumption'></span> / <span id='maxHouseConsumption'></span</td>
-              <td><span id='windTurbineExcessPower'></span></td>
-              <td><span id='batteryCurrCapacity'></span> / <span id='batteryMaxCapacity'></span></td>
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>amet</td>
-              <td>consectetur</td>
-              <td>adipiscing</td>
-              <td>elit</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <div style="width:100%;">
+          <canvas id="myChart"></canvas>
+        </div>
+        <h2>Section title</h2>
+        <div class="table-responsive">
+          <table class="table table-striped table-sm">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Household production (kWh)</th>
+                <th>Household consumption (kWh)</th>
+                <th>Excess power (kWh)</th>
+                <th>Battery capacity (Ah)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span id='time'></span> </td>
+                <td><span id='windTurbineCurrPower'></span> / <span id='windTurbineMaxPower'></span></td>
+                <td><span id='houseConsumption'></span> / <span id='maxHouseConsumption'></span</td> <td><span
+                      id='windTurbineExcessPower'></span></td>
+                <td><span id='batteryCurrCapacity'></span> / <span id='batteryMaxCapacity'></span></td>
+              </tr>
+              <tr>
+                <td>1,002</td>
+                <td>amet</td>
+                <td>consectetur</td>
+                <td>adipiscing</td>
+                <td>elit</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
     </div>
   </div>
-    <footer class="blog-footer mt-5">
-      <% include footer.ejs %>
-    </footer>
-    <script src= '../javascripts/house.js'></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', (event) => {
-        getHouse();
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'line',
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                },
-                animation: false
-            }
-        });
-        const runningStatus = document.getElementById('running-status');
-        const interval = 1000;
-        const animateRunning = () => { runningStatus.innerHTML = 'Running'
-              setTimeout(() => {
-                  runningStatus.innerHTML = 'Running.'
-              }, interval)
-              setTimeout(() => {
-                  runningStatus.innerHTML = 'Running..'
-              }, interval*2)
-              setTimeout(() => {
-                  runningStatus.innerHTML = 'Running...'
-              }, interval*3);
+  <footer class="blog-footer mt-5">
+    <% include footer.ejs %>
+  </footer>
+  <script src='../javascripts/house.js'></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      getHouse();
+      const ctx = document.getElementById('myChart').getContext('2d');
+      const myChart = new Chart(ctx, {
+        type: 'line',
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          },
+          animation: false
+        }
+      });
+      const runningStatus = document.getElementById('running-status');
+      const interval = 1000;
+      const animateRunning = () => {
+        runningStatus.innerHTML = 'Running'
+        setTimeout(() => {
+          runningStatus.innerHTML = 'Running.'
+        }, interval)
+        setTimeout(() => {
+          runningStatus.innerHTML = 'Running..'
+        }, interval * 2)
+        setTimeout(() => {
+          runningStatus.innerHTML = 'Running...'
+        }, interval * 3);
 
-        };
-        animateRunning();
-          setInterval(animateRunning, interval*4);
-
-        
+      };
+      animateRunning();
+      setInterval(animateRunning, interval * 4);
       const fetchData = () => {
-      getHouses().then(houses => {
-        myChart.data = {
-          labels: houses.timestamp, 
-          datasets: [
-            {
+        getHouses().then(houses => {
+          myChart.data = {
+            labels: houses.timestamp,
+            datasets: [{
                 label: 'Consumption (kWh)',
                 backgroundColor: 'rgba(255, 159, 64, 0.2)',
                 borderColor: 'rgba(255, 99, 132, 1)',
-                data: houses.consumption, 
+                data: houses.consumption,
                 fill: true,
-            },
-            {
+              },
+              {
                 label: 'Production (kWh)',
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
-                data: houses.production, 
+                data: houses.production,
                 fill: true,
-            }
-          ]
-        }
-        myChart.update();
-      });
+              }
+            ]
+          }
+          myChart.update();
+        });
       }
       fetchData();
       setInterval(fetchData, 3000)
-      })
-    </script>
-  </body>
+    })
+  </script>
+</body>
+
 </html>
