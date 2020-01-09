@@ -19,4 +19,20 @@ router.get('/dashboard', ensureAuthenticated, function (req, res, next) {
   });
 });
 
+router.get('/dashboard/region', ensureAuthenticated, function (req, res, next) {
+  // console.log(JSON.stringify(req.user));
+  res.render('region', {
+    title: 'Green Lean Electrics',
+    user: req.user
+  });
+});
+
+router.get('/dashboard/marketprice', ensureAuthenticated, function (req, res, next) {
+  // console.log(JSON.stringify(req.user));
+  res.render('marketprice', {
+    title: 'Green Lean Electrics',
+    user: req.user
+  });
+});
+
 module.exports = router;
