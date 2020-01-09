@@ -2,14 +2,8 @@ function getHouse() {
     fetch('http://127.0.0.1:3000/api/house/users/current')
         .then(res => res.json())
         .then(house => {
-            const yy = house.timestamp.slice(0, 4);
-            const mm = house.timestamp.slice(5, 7);
-            const dd = house.timestamp.slice(8, 10);
-            const h = house.timestamp.slice(11, 13);
-            const m = house.timestamp.slice(14, 16);
-            const s = house.timestamp.slice(17, 19);
 
-            document.getElementById('time').innerHTML = yy + "/" + mm + "/" + dd + " - " + h + "/" + m + "/" + s;
+            document.getElementById('time').innerHTML = house.timestamp;
 
             // document.getElementById('owner').innerHTML = house.owner;
             // document.getElementById('region').innerHTML = house.region;
@@ -35,12 +29,6 @@ function getHouse() {
 }
 
 function getHouses() {
-    return fetch('http://127.0.0.1:3000/api/house/users/test')
+    return fetch('http://127.0.0.1:3000/api/house/users/houses')
         .then(res => res.json())
-        // .then(houses => {
-            // document.getElementById('consumption').innerHTML = houses.consumption;
-            // document.getElementById('production').innerHTML = houses.production;
-
-        // })
-        // .catch(err => console.log(err));
 }
