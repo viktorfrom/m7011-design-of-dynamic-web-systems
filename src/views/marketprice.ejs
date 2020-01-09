@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link href="/stylesheets/style.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>  
+    <script src="https://unpkg.com/feather-icons"></script> 
+    <title><%= title %></title>
+  </head>
+  <body>
+      <% include header.ejs %> 
+    <div class="container mt-4">
+      <div class="row">
+
+      <% include sidebar.ejs %> 
+    
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Dashboard</h1> 
+            <!-- <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="btn-group mr-2">
+                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+              </div>
+              <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                <span data-feather="calendar"></span>
+                This week
+              </button>
+            </div> -->
+          </div>
+    
+    <div class="container">    
+      <div class="row">
+         <div class="col-sm">
+          <p class="lead mb-3">Welcome <%= user.firstName %> <%= user.lastName %></p>
+          <p>email: <%= user.email %> </p>
+          <p>region: <%= user.region %> </p>
+
+            tests!!!
+          <!-- <p class="lead mb-3">House statistics</p> -->
+          <!-- <p>owner: <span id='owner'></span></p> 
+          <p>region: <span id='region'></span></p> -->
+          <!-- <p>consumption: <span id='houseConsumption'></span> / <span id='maxHouseConsumption'></span></p> -->
+
+          <!-- <p class="lead mb-3">Battery statistics</p> -->
+          <!-- <p>capacity: <span id='batteryCurrCapacity'></span> / <span id='batteryMaxCapacity'></span></p> -->
+        </div>
+        <div class="col-sm">
+
+          <!-- <p class="lead mb-3">Wind turbine statistics</p> -->
+          <!-- <p>power: <span id='windTurbineCurrPower'></span> / <span id='windTurbineMaxPower'></span>,   -->
+            <!-- Excess power: <span id='windTurbineExcessPower'></span></p> -->
+          <!-- <p>current status: <span id='statusMessage'></span></p> -->
+
+          <!-- <p class="lead mb-3">Power plant statistics</p> -->
+          <!-- <p>Power plant: <span id='powerPlant'></span></p> -->
+
+          <!-- <p class="lead mb-3">Market price statistics</p> -->
+          <!-- <p>name: <span id='marketPriceName'></span></p>
+          <p>base price: <span id='marketPriceElectricityPrice'></span></p>
+          <p>current price: <span id='marketPriceCurrentPrice'></span></p> -->
+        </div>
+      </div>
+    </div> 
+          <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>   -->
+      <h2>Section title</h2>
+      <div class="table-responsive">
+
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Power output (kWh)</th>
+              <th>Household consumption (kWh)</th>
+              <th>Excess power (kWh)</th>
+              <th>Battery capacity (Ah)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span id='time'></span> </td> 
+              <td><span id='windTurbineCurrPower'></span> / <span id='windTurbineMaxPower'></span></td>
+              <td> <span id='houseConsumption'></span> / <span id='maxHouseConsumption'></span</td>
+              <td><span id='windTurbineExcessPower'></span></td>
+              <td> <span id='batteryCurrCapacity'></span> / <span id='batteryMaxCapacity'></span></td>
+            </tr>
+            <tr>
+              <td>1,002</td>
+              <td>amet</td>
+              <td>consectetur</td>
+              <td>adipiscing</td>
+              <td>elit</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+    <footer class="blog-footer mt-5">
+
+      <% include footer.ejs %>
+    </footer>
+    <script>
+      document.addEventListener('DOMContentLoaded', (event) => {
+        getHouse();
+      })
+    </script>
+    <script src= '../javascripts/house.js'></script>
+  </body>
+</html>
