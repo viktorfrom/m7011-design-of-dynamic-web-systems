@@ -126,7 +126,7 @@ module.exports = class house {
         
         this.setHouseConsumption(this.houseConsumption * 
             this.mathExpression.getTempIncrease(this.region.getTemp()) +
-            this.mathExpression.normalDistribution(0, 0.05));
+            this.mathExpression.normalDistribution(0, 0.10));
 
         this.storeExcessPower();
         // TODO, set to 70% Battery, 30% Market

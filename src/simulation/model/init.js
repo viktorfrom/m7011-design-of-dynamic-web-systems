@@ -27,7 +27,7 @@ module.exports = class init {
         // this.house5 = new House(this.powerPlant, this.marketPrice, this.region4, "Sara", 2, 5);
         // this.house6 = new House(this.powerPlant, this.marketPrice, this.region5, "Aron", 0, 0);
 
-        this.timeSpan = 24 * 7;
+        this.timeSpan = 24 * 10000;
     }
 
     async timespan(marketPrice, regions, powerPlant, houses) {
@@ -65,7 +65,7 @@ module.exports = class init {
 
 
                 marketPrice.marketPrice(); // Needs to run last to get accurate readings.
-            }, i * 10000)
+            }, i * 3000)
         }
     }
 
