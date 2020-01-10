@@ -39,7 +39,8 @@ Viktor From, vikfro-6
 |  2019-01-05  | 2       | Retrieve users from db, instantiate objects    | 
 |  2019-01-06  | 7       | Fetch retrieve house attributes from API       | 
 |  2019-01-07  | 10      | Fetch, user dashboard                          | 
-|  2019-01-07  | 11      | User dashboard, feather-icons, chartjs         | 
+|  2019-01-08  | 11      | User dashboard, feather-icons, chartjs         | 
+|  2019-01-09  | 8      | User dashboard, tables                         | 
 | ------------ | ------- | ---------------------------------------------- | 
 |  Total:      | 162     |                                                |
 
