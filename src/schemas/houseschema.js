@@ -41,6 +41,10 @@ const HouseSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    netProduction: {
+        type: Number,
+        required: true
+    },
     statusMessage: {
         type: String,
         required: true
