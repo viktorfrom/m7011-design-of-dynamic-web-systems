@@ -18,7 +18,7 @@ const MarketPriceSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    currentTotalProduction: {
+    currentProduction: {
         type: Number,
         required: true
     },
