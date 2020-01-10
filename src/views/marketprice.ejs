@@ -46,26 +46,60 @@
             <thead>
               <tr>
                 <th>Date (GMT+1)</th>
-                <th>Household production (kWh)</th>
-                <th>Household consumption (kWh)</th>
-                <th>Excess power (kWh)</th>
-                <th>Battery capacity (Ah)</th>
+                <th>Price (SEK)</th>
+                <th>Current demand (kWh)</th>
               </tr>
-            </thead>
-            <tbody>
+              </thead>
+              <tbody>
               <tr>
-                <td><span id='time'></span> </td>
-                <td><span id='windTurbineCurrPower'></span> / <span id='windTurbineMaxPower'></span></td>
-                <td><span id='houseConsumption'></span> / <span id='maxHouseConsumption'></span</td> <td><span
-                      id='windTurbineExcessPower'></span></td>
-                <td><span id='batteryCurrCapacity'></span> / <span id='batteryMaxCapacity'></span></td>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentPrice'></span></td> 
+                <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
               </tr>
               <tr>
-                <td>1,002</td>
-                <td>amet</td>
-                <td>consectetur</td>
-                <td>adipiscing</td>
-                <td>elit</td>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentPrice'></span></td> 
+                <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentPrice'></span></td> 
+                <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentPrice'></span></td> 
+                <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentPrice'></span></td> 
+                <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentPrice'></span></td> 
+                <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentPrice'></span></td> 
+                <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentPrice'></span></td> 
+                <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentPrice'></span></td> 
+                <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentPrice'></span></td> 
+                <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
               </tr>
             </tbody>
           </table>
@@ -109,8 +143,19 @@
       };
       animateRunning();
       setInterval(animateRunning, interval * 4);
+      const timestamp = document.getElementsByClassName('timestamp');
+      const currentPrice = document.getElementsByClassName('currentPrice');
+      const currentProduction = document.getElementsByClassName('currentProduction');
+      const maxTotalProduction= document.getElementsByClassName('maxTotalProduction');
       const fetchData = () => {
         getMarketPrices().then(marketPrices => {
+          for (let i = 0; i < (marketPrices.timestamp.length); i++) {
+            const length = marketPrices.timestamp.length - 1;
+            timestamp[length - i].innerHTML = marketPrices.timestamp[i];
+            currentPrice[length - i].innerHTML = marketPrices.currentPrice[i].toPrecision(4);
+            currentProduction[length - i].innerHTML = marketPrices.currentProduction[i].toPrecision(4);
+            maxTotalProduction[length - i].innerHTML = marketPrices.maxTotalProduction[i].toPrecision(4);
+          }
           myChart.data = {
             labels: marketPrices.timestamp,
             datasets: [{

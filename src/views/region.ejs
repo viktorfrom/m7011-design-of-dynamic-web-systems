@@ -46,28 +46,61 @@
             <thead>
               <tr>
                 <th>Date (GMT+1)</th>
-                <th>Household production (kWh)</th>
-                <th>Household consumption (kWh)</th>
-                <th>Excess power (kWh)</th>
-                <th>Battery capacity (Ah)</th>
-              </tr>
+                <th>Wind speed (m/s)</th>
+                <th>Temperature (C°)</th>
             </thead>
-            <tbody>
+            <tbody>  
               <tr>
-                <td><span id='time'></span> </td>
-                <td><span id='windTurbineCurrPower'></span> / <span id='windTurbineMaxPower'></span></td>
-                <td><span id='houseConsumption'></span> / <span id='maxHouseConsumption'></span</td> <td><span
-                      id='windTurbineExcessPower'></span></td>
-                <td><span id='batteryCurrCapacity'></span> / <span id='batteryMaxCapacity'></span></td>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentWindSpeed'></span> / <span class='maxWindSpeed'></span></td>
+                <td><span class='currentTemp'></span></td> 
               </tr>
               <tr>
-                <td>1,002</td>
-                <td>amet</td>
-                <td>consectetur</td>
-                <td>adipiscing</td>
-                <td>elit</td>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentWindSpeed'></span> / <span class='maxWindSpeed'></span></td>
+                <td><span class='currentTemp'></span></td> 
               </tr>
-            </tbody>
+              <tr>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentWindSpeed'></span> / <span class='maxWindSpeed'></span></td>
+                <td><span class='currentTemp'></span></td> 
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentWindSpeed'></span> / <span class='maxWindSpeed'></span></td>
+                <td><span class='currentTemp'></span></td> 
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentWindSpeed'></span> / <span class='maxWindSpeed'></span></td>
+                <td><span class='currentTemp'></span></td> 
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentWindSpeed'></span> / <span class='maxWindSpeed'></span></td>
+                <td><span class='currentTemp'></span></td> 
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentWindSpeed'></span> / <span class='maxWindSpeed'></span></td>
+                <td><span class='currentTemp'></span></td> 
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentWindSpeed'></span> / <span class='maxWindSpeed'></span></td>
+                <td><span class='currentTemp'></span></td> 
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentWindSpeed'></span> / <span class='maxWindSpeed'></span></td>
+                <td><span class='currentTemp'></span></td> 
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>                
+                <td><span class='currentWindSpeed'></span> / <span class='maxWindSpeed'></span></td>
+                <td><span class='currentTemp'></span></td> 
+              </tr>
+            </tbody>  
           </table>
         </div>
     </div>
@@ -109,8 +142,19 @@
       };
       animateRunning();
       setInterval(animateRunning, interval * 4);
+      const timestamp = document.getElementsByClassName('timestamp');
+      const maxWindSpeed = document.getElementsByClassName('maxWindSpeed');
+      const currentWindSpeed = document.getElementsByClassName('currentWindSpeed');
+      const currentTemp = document.getElementsByClassName('currentTemp');
       const fetchData = () => {
         getRegions().then(regions => {
+          for (let i = 0; i < (regions.timestamp.length); i++) {
+            const length = regions.timestamp.length - 1;
+            timestamp[length - i].innerHTML = regions.timestamp[i];
+            maxWindSpeed[length - i].innerHTML = regions.maxWindSpeed[i].toPrecision(4);
+            currentWindSpeed[length - i].innerHTML = regions.currentWindSpeed[i].toPrecision(4);
+            currentTemp[length - i].innerHTML = regions.currentTemp[i].toPrecision(4);
+          }
           myChart.data = {
             labels: regions.timestamp,
             datasets: [{
