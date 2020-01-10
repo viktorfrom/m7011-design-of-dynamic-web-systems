@@ -39,11 +39,15 @@ router.get('/users/regions', auth.ensureAuthenticated, async (req, res) => {
         });
 
         const timestamp = regions.map(x => moment(x.timestamp).format('YYYY-MM-DD hh:mm:ss'));
+        const name = regions.map(x => x.name);
         const currentWindSpeed = regions.map(x => x.currentWindSpeed);
+        const maxWindSpeed = regions.map(x => x.maxWindSpeed);
         const currentTemp = regions.map(x => x.currentTemp);
 
         const result = {
             timestamp: timestamp,
+            name: name,
+            maxWindSpeed: maxWindSpeed,
             currentWindSpeed: currentWindSpeed,
             currentTemp: currentTemp
         };

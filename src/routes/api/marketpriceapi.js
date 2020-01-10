@@ -39,10 +39,14 @@ router.get('/users/marketprices', auth.ensureAuthenticated, async (req, res) => 
         });
 
         const timestamp = marketPrices.map(x => moment(x.timestamp).format('YYYY-MM-DD hh:mm:ss'));
+        const maxTotalProduction = marketPrices.map(x => x.maxTotalProduction);
+        const currentProduction = marketPrices.map(x => x.currentProduction);
         const currentPrice = marketPrices.map(x => x.currentPrice);
 
         const result = {
             timestamp: timestamp,
+            maxTotalProduction: maxTotalProduction,
+            currentProduction: currentProduction,
             currentPrice: currentPrice
         };
 
