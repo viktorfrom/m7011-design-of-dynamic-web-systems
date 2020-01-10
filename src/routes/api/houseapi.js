@@ -7,7 +7,7 @@ const moment = require('moment');
 
 prompt.start();
 
-// get single house
+// // get single house
 // router.get('/:houseId', async (req, res) => {
 //     try {
 //         const oneHouse = await House.findById(req.params.houseId);
@@ -20,22 +20,22 @@ prompt.start();
 //     }
 // });
 
-// get single house
-router.get('/users/current', auth.ensureAuthenticated, async (req, res) => {
-    try {
-        // console.log(JSON.stringify(req.user));
-        const oneHouse = await House.findOne({
-            owner: req.user.email
-        }).sort({
-            timestamp: -1
-        });
-        res.json(oneHouse);
-    } catch (err) {
-        res.json({
-            message: err
-        });
-    }
-});
+// // get single house
+// router.get('/users/current', auth.ensureAuthenticated, async (req, res) => {
+//     try {
+//         // console.log(JSON.stringify(req.user));
+//         const oneHouse = await House.findOne({
+//             owner: req.user.email
+//         }).sort({
+//             timestamp: -1
+//         });
+//         res.json(oneHouse);
+//     } catch (err) {
+//         res.json({
+//             message: err
+//         });
+//     }
+// });
 
 // get 10 last houses
 router.get('/users/houses', auth.ensureAuthenticated, async (req, res) => {
@@ -58,14 +58,61 @@ router.get('/users/houses', auth.ensureAuthenticated, async (req, res) => {
         });
 
         const timestamp = houses.map(x => moment(x.timestamp).format('YYYY-MM-DD hh:mm:ss'));
-        const consumption = houses.map(x => x.houseConsumption);
-        const production = houses.map(x => x.windTurbine.currentPower);
+        
+        const maxCapacity = houses.map(x => x.battery.maxCapacity);
+        const currentCapacity = houses.map(x => x.battery.currentCapacity);
+
+        const currentPower = houses.map(x => x.windTurbine.currentPower);
+        const maxPower = houses.map(x => x.windTurbine.maxPower);
+
+        const maxHouseConsumption = houses.map(x => x.maxHouseConsumption);
+        const houseConsumption = houses.map(x => x.houseConsumption);
+        const netProduction = houses.map(x => x.netProduction);
+        const statusMessage = houses.map(x => x.statusMessage);
 
         const result = {
             timestamp: timestamp,
-            consumption: consumption,
-            production: production
+
+            maxCapacity: maxCapacity,
+            currentCapacity: currentCapacity,
+
+            currentPower: currentPower,
+            maxPower: maxPower,
+            
+            maxHouseConsumption: maxHouseConsumption,
+            houseConsumption: houseConsumption,
+            netProduction: netProduction,
+            statusMessage: statusMessage
         };
+
+
+        // const timestamp = houses.map(x => moment(x.timestamp).format('YYYY-MM-DD hh:mm:ss'));
+        
+        // const maxCapacity = house.map(x => x.battery.maxCapacity);
+        // const currentCapacity = house.map(x => x.battery.currentCapacity);
+
+        // const currentPower = houses.map(x => x.windTurbine.currentPower);
+        // const maxPower = houses.map(x => x.windTurbine.maxPower);
+
+        // const houseConsumption = houses.map(x => x.houseConsumption);
+        // const netProduction = houses.map(x => x.netProduction);
+        // const statusMessage = houses.map(x => x.statusMessage);
+
+        // const result = {
+        //     timestamp: timestamp,
+
+        //     maxCapacity: maxCapacity,
+        //     currentCapacity: currentCapacity,
+
+        //     currentPower: currentPower,
+        //     maxPower: maxPower,
+            
+        //     houseConsumption: houseConsumption,
+        //     netProduction: netProduction,
+        //     statusMessage: statusMessage
+        // };
+
+
 
         res.json(result);
     } catch (err) {
