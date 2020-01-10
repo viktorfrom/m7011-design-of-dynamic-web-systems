@@ -101,6 +101,7 @@ module.exports = class house {
             maxHouseConsumption: this.maxHouseConsumption,
             minHouseConsumption: this.minHouseConsumption,
             houseConsumption: this.houseConsumption,
+            netProduction: this.windTurbine.getCurrentPower() - this.houseConsumption,
             statusMessage: this.statusMessage
         }); 
 

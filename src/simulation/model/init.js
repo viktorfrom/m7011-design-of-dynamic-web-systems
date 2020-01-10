@@ -37,11 +37,11 @@ module.exports = class init {
                 // console.clear();
                 // this.powerPlant.electricityProduction();
 
-                // this.region1.windspeed();
-                // this.region2.windspeed();
-                // this.region3.windspeed();
-                // this.region4.windspeed();
-                // this.region5.windspeed();
+                // this.region1.windSpeed();
+                // this.region2.windSpeed();
+                // this.region3.windSpeed();
+                // this.region4.windSpeed();
+                // this.region5.windSpeed();
 
                 // this.house1.electricityConsumption();
                 // this.house2.electricityConsumption();
@@ -63,7 +63,6 @@ module.exports = class init {
                     house.electricityConsumption();
                 });
 
-
                 marketPrice.marketPrice(); // Needs to run last to get accurate readings.
             }, i * 3000)
         }
@@ -75,6 +74,11 @@ module.exports = class init {
                 let marketPrice = new MarketPrice("Generic county");
 
                 let regions = [];
+
+                if (users.length == 0) {
+                    regions.push(new Region("testRegion"));
+                }
+
                 if (users) {
                     users.forEach(function (user) {
                         if (!regions.includes(user.region)) {
