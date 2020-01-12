@@ -17,6 +17,8 @@ a {
 
 .btnmargin { margin-left: 0.2rem }
 
+.btnwidth { width: 45%}
+
 .center {
   display: block;
   margin-left: auto;
@@ -26,4 +28,9 @@ a {
 
 .img-container > img{
   max-width: 500px;
+}
+
+.img {
+  width: 45%;
+  height: 45%;
 }
