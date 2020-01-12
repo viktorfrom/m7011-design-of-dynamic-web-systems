@@ -85,35 +85,6 @@ router.get('/users/houses', auth.ensureAuthenticated, async (req, res) => {
             statusMessage: statusMessage
         };
 
-
-        // const timestamp = houses.map(x => moment(x.timestamp).format('YYYY-MM-DD hh:mm:ss'));
-        
-        // const maxCapacity = house.map(x => x.battery.maxCapacity);
-        // const currentCapacity = house.map(x => x.battery.currentCapacity);
-
-        // const currentPower = houses.map(x => x.windTurbine.currentPower);
-        // const maxPower = houses.map(x => x.windTurbine.maxPower);
-
-        // const houseConsumption = houses.map(x => x.houseConsumption);
-        // const netProduction = houses.map(x => x.netProduction);
-        // const statusMessage = houses.map(x => x.statusMessage);
-
-        // const result = {
-        //     timestamp: timestamp,
-
-        //     maxCapacity: maxCapacity,
-        //     currentCapacity: currentCapacity,
-
-        //     currentPower: currentPower,
-        //     maxPower: maxPower,
-            
-        //     houseConsumption: houseConsumption,
-        //     netProduction: netProduction,
-        //     statusMessage: statusMessage
-        // };
-
-
-
         res.json(result);
     } catch (err) {
         res.json({
