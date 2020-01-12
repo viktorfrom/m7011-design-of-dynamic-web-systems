@@ -9,15 +9,6 @@ describe("marketPriceName", async () => {
     expect(testMarketPrice.getName()).equal("testMarketPrice");
 }); })
 
-describe("marketPriceCurrentTotalProduction", async () => {
-  it("total production in all regions covered by market price", async () => {
-    
-    let testMarketPrice = new MarketPrice("testMarketPrice");
-
-    expect(testMarketPrice.getCurrentTotalProduction()).equal(0);
-    expect(testMarketPrice.getCurrentTotalProduction()).to.be.below(100);
-}); })
-
 describe("marketPriceElectricityPrice", async () => {
   it("base price of market price", async () => {
     
