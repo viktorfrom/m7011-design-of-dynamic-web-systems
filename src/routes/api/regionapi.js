@@ -62,7 +62,7 @@ router.get('/users/regions', auth.ensureAuthenticated, async (req, res) => {
 });
 
 // get all regions
-router.get('/', auth.check_user, async (req, res) => {
+router.get('/', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
     try {
         const allRegions = await Region.find();
         res.json(allRegions);

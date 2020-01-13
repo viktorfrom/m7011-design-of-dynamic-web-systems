@@ -96,7 +96,7 @@ router.get('/users/houses', auth.ensureAuthenticated, async (req, res) => {
 
 
 // get all houses
-router.get('/', auth.ensureAuthenticated, async (req, res) => {
+router.get('/', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
     try {
         const allHouses = await House.find();
         res.json(allHouses);

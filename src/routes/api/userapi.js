@@ -3,6 +3,7 @@ const router = express.Router();
 const prompt = require('prompt');
 const multer = require('multer');
 const mongoose = require("mongoose");
+
 const auth = require('../../config/auth.js')
 const User = require('../../schemas/userschema');
 const Image = require('../../schemas/imageschema.js');
@@ -35,7 +36,7 @@ const upload = multer({
 prompt.start();
 
 // get single user
-router.get('/:userId', async (req, res) => {
+router.get('/:userId', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
     try {
         const oneUser = await User.findById(req.params.userId);
         res.json(oneUser);
@@ -48,7 +49,7 @@ router.get('/:userId', async (req, res) => {
 });
 
 // get all users
-router.get('/', async (req, res) => {
+router.get('/', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
     try {
         const allUsers = await User.find();
         res.json(allUsers);
@@ -60,7 +61,7 @@ router.get('/', async (req, res) => {
 });
 
 // upload image
-router.post("/image", upload.single('image'), (req, res, next) => {
+router.post("/image", auth.ensureAuthenticated, upload.single('image'), (req, res, next) => {
     try {
         const image = new Image({
             _id: new mongoose.Types.ObjectId(),
@@ -94,7 +95,7 @@ router.post("/image", upload.single('image'), (req, res, next) => {
 });
 
 // update user
-router.patch('/test/:userId', async (req, res) => {
+router.patch('/:userId', async (req, res) => {
     try {
         const userUpdate = await User.updateOne({
             _id: req.params.userId

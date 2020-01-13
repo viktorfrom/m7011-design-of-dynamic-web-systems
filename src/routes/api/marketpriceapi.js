@@ -60,7 +60,7 @@ router.get('/users/marketprices', auth.ensureAuthenticated, async (req, res) => 
 });
 
 // get all market prices
-router.get('/', auth.check_user, async (req, res) => {
+router.get('/', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
     try {
         const allMarketPrices = await MarketPrice.find();
         res.json(allMarketPrices);
