@@ -12,12 +12,12 @@ module.exports = {
   },
 
   check_user(req, res, next) {
-    if (req.user != 'admin') {
-    // if (false) {
+    if (req.user.role == "admin" || req.user.role == "manager") {
+      next();
+    } else {
       return res.json({
         message: 'Permission to view URL is missing'
       });
-    }
-    next();
+    };
   }
 };
