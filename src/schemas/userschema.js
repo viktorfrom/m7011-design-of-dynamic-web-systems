@@ -2,25 +2,33 @@ const mongoose = require('mongoose');
 
 // User Schema
 const UserSchema = mongoose.Schema({
-  firstName:{
+  timestamp: {
+    type: Date,
+    default: Date.now()
+  },
+  firstName: {
     type: String,
     required: true
   },
-  lastName:{
+  lastName: {
     type: String,
     required: true
   },
-  email:{
+  email: {
     type: String,
     required: true
   },
-  region:{
+  region: {
     type: String,
     required: true
   },
-  password:{
+  password: {
     type: String,
     required: true
+  },
+  image: {
+    data: Buffer,
+    type: String
   }
 });
 
