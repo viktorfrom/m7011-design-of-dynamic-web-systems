@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-
 let User = require('../schemas/userschema.js');
 
 router.get('/signup', function (req, res, next) {
@@ -75,9 +74,10 @@ router.post('/signup', (req, res) => {
           firstName,
           lastName,
           email,
+          role: "prosumer",
           password,
           region,
-          image: "../images/defaultUser.png"
+          image: "../images/defaultHouse.png"
         });
         console.log(newUser);
 
@@ -100,7 +100,7 @@ router.post('/signup', (req, res) => {
 
 router.get('/signin', function (req, res, next) {
   const path = '/users/signin';
-  const redirect =  req.query.redirect ? req.query.redirect : null;
+  const redirect = req.query.redirect ? req.query.redirect : null;
 
   res.render('signin', {
     title: 'Green Lean Electrics',
@@ -110,12 +110,27 @@ router.get('/signin', function (req, res, next) {
 });
 
 router.post('/signin', (req, res, next) => {
-  const redirectUrl = req.query.redirect ? req.query.redirect : '/dashboard'
-
-  passport.authenticate('local', {
-    successRedirect: redirectUrl,
-    failureRedirect: '/users/signin?failure=true'
-  })(req, res, next);
+  try {
+    User.findOne({
+      email: req.body.email
+    }).then(user => {
+      if (user.role == "admin" || user.role == "manager") {
+        passport.authenticate('local', {
+          successRedirect: req.query.redirect ? req.query.redirect : '/dashboard',
+          failureRedirect: '/users/signin?failure=true'
+        })(req, res, next);
+      } else {
+        passport.authenticate('local', {
+          successRedirect: req.query.redirect ? req.query.redirect : '/dashboard',
+          failureRedirect: '/users/signin?failure=true'
+        })(req, res, next);
+      }
+    }).catch(err => {
+      res.redirect('/users/signin?failure=true');
+    });
+  } catch (err) {
+    res.redirect('/users/signin?failure=true');
+  }
 });
 
 router.get('/signout', (req, res) => {
