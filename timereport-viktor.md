@@ -40,7 +40,10 @@ Viktor From, vikfro-6
 |  2019-01-06  | 7       | Fetch retrieve house attributes from API       | 
 |  2019-01-07  | 10      | Fetch, user dashboard                          | 
 |  2019-01-08  | 11      | User dashboard, feather-icons, chartjs         | 
-|  2019-01-09  | 8      | User dashboard, tables                         | 
+|  2019-01-09  | 8       | User dashboard, tables                         | 
+|  2019-01-10  | 8       | Tables, house picture upload                   | 
+|  2019-01-12  | 6       | Prosumer picture upload                        | 
+|  2019-01-13  | 3       | Prosumer picture upload                        | 
 | ------------ | ------- | ---------------------------------------------- | 
 |  Total:      | 162     |                                                |
 
