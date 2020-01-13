@@ -23,6 +23,7 @@ const usersRouter = require('./routes/api/userapi');
 
 // dbschema imports
 require('./schemas/houseschema')
+require('./schemas/imageschema')
 require('./schemas/marketpriceschema')
 require('./schemas/powerplantschema')
 require('./schemas/regionschema')
