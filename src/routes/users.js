@@ -71,11 +71,13 @@ router.post('/signup', (req, res) => {
         });
       } else {
         const newUser = new User({
+          timestamp: Date.now(),
           firstName,
           lastName,
           email,
           password,
-          region
+          region,
+          image: "../images/defaultUser.png"
         });
         console.log(newUser);
 

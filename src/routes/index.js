@@ -15,6 +15,7 @@ router.get('/dashboard', ensureAuthenticated, function (req, res, next) {
   // console.log(JSON.stringify(req.user));
   res.render('dashboard', {
     title: 'Green Lean Electrics',
+    query: req.query ? req.query : null,
     user: req.user
   });
 });
