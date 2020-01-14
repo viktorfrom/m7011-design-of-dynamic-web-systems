@@ -12,7 +12,6 @@ const passport = require('passport');
 // views imports
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/users');
-const aboutUsRouter = require('./routes/aboutus');
 
 // api imports 
 const housesRouter = require('./routes/api/houseapi');
@@ -75,7 +74,6 @@ app.use(passport.session());
 // views routing
 app.use('/', indexRouter);
 app.use('/users', userRouter);
-app.use('/aboutus', aboutUsRouter);
 
 // api routing
 app.use('/api/house', housesRouter);
