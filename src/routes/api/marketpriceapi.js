@@ -9,17 +9,17 @@ const MarketPrice = require('../../schemas/marketpriceschema');
 prompt.start();
 
 // // get single market price
-// router.get('/:marketPriceId', auth.check_user, async (req, res) => {
-//     try {
-//         const oneMarketPrice = await MarketPrice.findById(req.params.marketPriceId);
-//         res.json(oneMarketPrice);
-//     } catch (err) {
-//         res.json({
-//             message: err
-//         });
+router.get('/:marketPriceId', auth.ensureAuthenticated ,auth.check_user, async (req, res) => {
+    try {
+        const oneMarketPrice = await MarketPrice.findById(req.params.marketPriceId);
+        res.json(oneMarketPrice);
+    } catch (err) {
+        res.json({
+            message: err
+        });
 
-//     }
-// });
+    }
+});
 
 // get 10 last market prices
 router.get('/users/marketprices', auth.ensureAuthenticated, async (req, res) => {
@@ -88,7 +88,7 @@ router.post('/', (req, res) => {
 });
 
 // delete market price
-router.delete('/:marketPriceId', async (req, res) => {
+router.delete('/:marketPriceId', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
     try {
         const marketPriceRemove = await MarketPrice.remove({
             _id: req.params.marketPriceId
@@ -102,7 +102,7 @@ router.delete('/:marketPriceId', async (req, res) => {
 });
 
 // update market price
-router.patch('/:marketPriceId', async (req, res) => {
+router.patch('/:marketPriceId', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
 
     try {
         const marketPriceUpdate = await MarketPrice.updateOne({

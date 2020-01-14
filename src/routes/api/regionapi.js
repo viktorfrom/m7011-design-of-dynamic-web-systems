@@ -9,17 +9,17 @@ const Region = require('../../schemas/regionschema');
 prompt.start();
 
 // // get single region
-// router.get('/:regionId', auth.check_user, async (req, res) => {
-//     try {
-//         const oneRegion = await Region.findById(req.params.regionId);
-//         res.json(oneRegion);
-//     } catch (err) {
-//         res.json({
-//             message: err
-//         });
+router.get('/:regionId', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
+    try {
+        const oneRegion = await Region.findById(req.params.regionId);
+        res.json(oneRegion);
+    } catch (err) {
+        res.json({
+            message: err
+        });
 
-//     }
-// });
+    }
+});
 
 // get 10 last regions
 router.get('/users/regions', auth.ensureAuthenticated, async (req, res) => {
@@ -75,7 +75,7 @@ router.get('/', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
 });
 
 // post region
-router.post('/', (req, res) => {
+router.post('/', auth.ensureAuthenticated, auth.check_user, (req, res) => {
     const region = new Region({
         name: req.body.name,
         maxWindSpeed: req.body.maxWindSpeed,
@@ -91,7 +91,7 @@ router.post('/', (req, res) => {
 });
 
 // delete region
-router.delete('/:regionId', async (req, res) => {
+router.delete('/:regionId', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
     try {
         const regionRemove = await Region.remove({
             _id: req.params.regionId
@@ -105,7 +105,7 @@ router.delete('/:regionId', async (req, res) => {
 });
 
 // update region
-router.patch('/:regionId', async (req, res) => {
+router.patch('/:regionId', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
     try {
         const regionUpdate = await Region.updateOne({
             _id: req.params.regionId

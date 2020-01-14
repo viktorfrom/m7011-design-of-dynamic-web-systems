@@ -92,7 +92,7 @@ router.get('/', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
 });
 
 // post house
-router.post('/', (req, res) => {
+router.post('/', auth.ensureAuthenticated, auth.check_user, (req, res) => {
     const house = new House({
         powerPlant: req.body.powerPlant,
         marketPrice: req.body.marketPrice,
@@ -112,7 +112,7 @@ router.post('/', (req, res) => {
 });
 
 // delete house 
-router.delete('/:houseId', async (req, res) => {
+router.delete('/:houseId', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
     try {
         const houseRemove = await House.remove({
             _id: req.params.houseId
@@ -126,7 +126,7 @@ router.delete('/:houseId', async (req, res) => {
 });
 
 // update house
-router.patch('/:houseId', async (req, res) => {
+router.patch('/:houseId', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
     try {
         const houseUpdate = await House.updateOne({
             _id: req.params.houseId

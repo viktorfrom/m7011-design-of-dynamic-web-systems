@@ -83,7 +83,7 @@ router.get('/', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
 });
 
 // post power plant
-router.post('/', (req, res) => {
+router.post('/', auth.ensureAuthenticated, auth.check_user, (req, res) => {
     const powerPlant = new PowerPlant({
         name: req.body.name,
         region: req.body.region,
@@ -101,7 +101,7 @@ router.post('/', (req, res) => {
 });
 
 // delete powerplant 
-router.delete('/:powerPlantId', async (req, res) => {
+router.delete('/:powerPlantId', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
     try {
         const powerPlantRemove = await PowerPlant.remove({
             _id: req.params.powerPlantId

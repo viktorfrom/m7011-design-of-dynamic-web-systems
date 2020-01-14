@@ -104,7 +104,7 @@ router.post("/image", auth.ensureAuthenticated, upload.single('image'), (req, re
 });
 
 // update user
-router.patch('/:userId', async (req, res) => {
+router.patch('/:userId', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
     try {
         const userUpdate = await User.updateOne({
             _id: req.params.userId
