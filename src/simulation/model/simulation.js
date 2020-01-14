@@ -2,15 +2,10 @@
 
 let Init = require("./init.js");
 
-module.exports = class simulation {
+module.exports = {
 
-    constructor() {
-    }
-
-    runSimulation() {
+    runSimulation: function() {
         this.init = new Init();
         this.init.retrieveUsers();
-
-        // this.init.timespan();
     }
 }

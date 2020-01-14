@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-let User = require('../schemas/userschema.js');
+const User = require('../schemas/userschema.js');
+const Simulation = require('../simulation/model/simulation.js');
 
 router.get('/signup', function (req, res, next) {
   res.render('signup', {
@@ -79,7 +80,6 @@ router.post('/signup', (req, res) => {
           region,
           image: "../images/defaultHouse.png"
         });
-        console.log(newUser);
 
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -88,6 +88,8 @@ router.post('/signup', (req, res) => {
             newUser
               .save()
               .then(user => {
+                Simulation.init.stopInterval();
+                Simulation.init.retrieveUsers(); // re-initiate new user
                 res.redirect('/users/signin?success=true');
               })
               .catch(err => console.log(err));

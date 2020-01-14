@@ -83,9 +83,8 @@ app.use('/api/region', regionsRouter);
 app.use('/api/user', usersRouter);
 
 // run simulation
-let Simulation = require('./simulation/model/simulation.js')
-this.simulation = new Simulation();
-this.simulation.runSimulation();
+const Simulation = require('./simulation/model/simulation.js')
+Simulation.runSimulation();
 
 
 // catch 404 and forward to error handler
