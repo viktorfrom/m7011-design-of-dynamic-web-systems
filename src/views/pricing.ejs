@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link href="/stylesheets/style.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>  
+    <script src="https://unpkg.com/feather-icons"></script> 
+    <title><%= title %></title>
+  </head>
+  <body>
+    <% include header.ejs %>
+
+
+    <div class="container">    
+        <div class="row">
+          <div class="col-md">
+            <div class="img-container my-5">
+                <img class="img-fluid mx-auto" title="Sad dog" src="/images/money.jpg" alt="Image of a sad dog">
+              </div>
+          </div>
+          <div class="col-md my-5">
+            <p>When you buy your electricity from our power plant you can be ensured all electricity 
+              is made from 100% natural resources and no waste material is produced. Further, no animal 
+              wild life was harmed during it's production.
+            </p>
+            <p>Green lean electrics operates at a base price of 0.4825 SEK per kWh, this means at standard 
+                procedure there may be yield price variations depending on total supply and demand from 
+                customers and the power plant may look like at any given time. As a customer you are also
+                allowed to sell electricity to the market, meaning no electricity goes wasted and you can 
+                reduce your personal monthly bill.
+            </p>
+          </div> 
+        </div>
+      </div>
+    <footer class="blog-footer mt-5">
+      <% include footer.ejs %>
+    </footer>   
+  </body>
+</html>

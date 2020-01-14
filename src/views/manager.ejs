@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <link href="/stylesheets/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+  </script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <style>
+    canvas {
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+    }
+  </style>
+  <title><%= title %></title>
+</head>
+<body>
+  <% include header.ejs %>
+  <div class="container mt-4">
+    <div class="row">
+      <% include sidebar.ejs %>
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <div
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Dashboard</h1>
+        </div>
+        <% if (query && query.success) { %>
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Image upload successful!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>     
+        <% } %>
+        <% if (query && query.failure) { %>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Invalid input!</strong> Please select a file before uploading.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>     
+        <% } %>
+        <div class="container">
+          <p class="lead mb-5">Welcome <%= user.firstName %> <%= user.lastName %></p>
+          <div class="row">
+            <div class="col-sm">
+              <div class="img-container">
+                <img class="img-fd mx-auto img mb-3" title="House" src=<%= user.image %> alt="Image of users house">
+              </div>
+              <form method="POST" action="/api/user/image" enctype="multipart/form-data">
+                <div>
+                  <input type='file' name='image' />
+                </div>
+                <div>
+                  <button type="submit" class="btn-sm btnwidth btn-primary mt-2">Upload image</button>
+                </div>
+              </form>
+            </div>
+            <div class="col-sm">
+              <p>First Name: <%= user.firstName %> </p>
+              <p>Last Name: <%= user.lastName %> </p>
+              <p>Email: <%= user.email %> </p>
+              <p>Role: <%= user.role %> </p>
+              <p>Region: <%= user.region %> </p>
+            </div>
+          </div>
+        </div>
+        <div class="ml-3 mt-5">
+          <p>Power Plant Status: <span class="badge badge-success" id='powerplant-status'></span></p>
+          <p>Simulation: <span class="badge badge-success" id="running-status">Running</span></p>
+        </div>
+        <div style="width:100%;">
+          <canvas id="myChart"></canvas>
+        </div>
+        <div class="container mt-5">
+          <h2><span id='powerplant-name'></span> status</h2>
+        <div class="table-responsive">
+          <table class="table table-striped table-sm">
+            <thead>
+              <tr>
+                <th>Date (GMT+1)</th>
+                <th>Production (kWh)</th>
+                <th>Total market production (kWh)</th>
+                <th>Battery capacity (Ah)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentProduction'></span> / <span class='maxProduction'></span></td>
+                <td><span class='currentTotalProduction'></span> / <span class='maxTotalProduction'></span></td>
+                <td><span class='batteryCurrCapacity'></span> / <span class='batteryMaxCapacity'></span></td>
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentProduction'></span> / <span class='maxProduction'></span></td>
+                <td><span class='currentTotalProduction'></span> / <span class='maxTotalProduction'></span></td>
+                <td><span class='batteryCurrCapacity'></span> / <span class='batteryMaxCapacity'></span></td>
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentProduction'></span> / <span class='maxProduction'></span></td>
+                <td><span class='currentTotalProduction'></span> / <span class='maxTotalProduction'></span></td>
+                <td><span class='batteryCurrCapacity'></span> / <span class='batteryMaxCapacity'></span></td>
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentProduction'></span> / <span class='maxProduction'></span></td>
+                <td><span class='currentTotalProduction'></span> / <span class='maxTotalProduction'></span></td>
+                <td><span class='batteryCurrCapacity'></span> / <span class='batteryMaxCapacity'></span></td>
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentProduction'></span> / <span class='maxProduction'></span></td>
+                <td><span class='currentTotalProduction'></span> / <span class='maxTotalProduction'></span></td>
+                <td><span class='batteryCurrCapacity'></span> / <span class='batteryMaxCapacity'></span></td>
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentProduction'></span> / <span class='maxProduction'></span></td>
+                <td><span class='currentTotalProduction'></span> / <span class='maxTotalProduction'></span></td>
+                <td><span class='batteryCurrCapacity'></span> / <span class='batteryMaxCapacity'></span></td>
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentProduction'></span> / <span class='maxProduction'></span></td>
+                <td><span class='currentTotalProduction'></span> / <span class='maxTotalProduction'></span></td>
+                <td><span class='batteryCurrCapacity'></span> / <span class='batteryMaxCapacity'></span></td>
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentProduction'></span> / <span class='maxProduction'></span></td>
+                <td><span class='currentTotalProduction'></span> / <span class='maxTotalProduction'></span></td>
+                <td><span class='batteryCurrCapacity'></span> / <span class='batteryMaxCapacity'></span></td>
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentProduction'></span> / <span class='maxProduction'></span></td>
+                <td><span class='currentTotalProduction'></span> / <span class='maxTotalProduction'></span></td>
+                <td><span class='batteryCurrCapacity'></span> / <span class='batteryMaxCapacity'></span></td>
+              </tr>
+              <tr>
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentProduction'></span> / <span class='maxProduction'></span></td>
+                <td><span class='currentTotalProduction'></span> / <span class='maxTotalProduction'></span></td>
+                <td><span class='batteryCurrCapacity'></span> / <span class='batteryMaxCapacity'></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer mt-5">
+    <% include footer.ejs %>
+  </footer>
+  <script src='../javascripts/powerplant.js'></script>
+  <script src='../javascripts/marketprice.js'></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      const ctx = document.getElementById('myChart').getContext('2d');
+      const myChart = new Chart(ctx, {
+        type: 'line',
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          },
+          animation: false
+        }
+      });
+      const runningStatus = document.getElementById('running-status');
+      const interval = 1000;
+      const animateRunning = () => {
+        runningStatus.innerHTML = 'Running'
+        setTimeout(() => {
+          runningStatus.innerHTML = 'Running.'
+        }, interval)
+        setTimeout(() => {
+          runningStatus.innerHTML = 'Running..'
+        }, interval * 2)
+        setTimeout(() => {
+          runningStatus.innerHTML = 'Running...'
+        }, interval * 3);
+      };
+      animateRunning();
+      setInterval(animateRunning, interval * 4);
+      const powerPlantStatus = document.getElementById('powerplant-status');
+
+      const powerPlantName = document.getElementById('powerplant-name');
+
+      const timestamp = document.getElementsByClassName('timestamp');
+      const batteryCurrCapacity = document.getElementsByClassName('batteryCurrCapacity');
+      const batteryMaxCapacity = document.getElementsByClassName('batteryMaxCapacity');
+      const currentProduction = document.getElementsByClassName('currentProduction');
+      const maxProduction = document.getElementsByClassName('maxProduction');
+
+      const currentTotalProduction = document.getElementsByClassName('currentTotalProduction');
+      const maxTotalProduction= document.getElementsByClassName('maxTotalProduction');
+      const fetchChartData = () => {
+        getMarketPrices().then(marketPrices => {
+            for (let i = 0; i < (marketPrices.timestamp.length); i++) {
+            const length = marketPrices.timestamp.length - 1;
+            currentTotalProduction[length - i].innerHTML = marketPrices.currentProduction[i].toPrecision(4);
+            maxTotalProduction[length - i].innerHTML = marketPrices.maxTotalProduction[i].toPrecision(4);
+          }
+        });
+        getPowerPlants().then(powerPlant => {
+          powerPlantName.innerHTML = powerPlant.name[powerPlant.name.length - 1];
+
+          powerPlantStatus.innerHTML = powerPlant.statusMessage[powerPlant.statusMessage.length - 1];
+          if (powerPlant.statusMessage[powerPlant.statusMessage.length - 1] == "FULLY OPERATIONAL") {
+            powerPlantStatus.style.background = '#28A745';
+          } else {
+            powerPlantStatus.style.background = '#DC3545';
+          }
+          for (let i = 0; i < (powerPlant.timestamp.length); i++) {
+            const length = powerPlant.timestamp.length - 1;
+            timestamp[length - i].innerHTML = powerPlant.timestamp[i];
+            batteryCurrCapacity[length - i].innerHTML = powerPlant.currentCapacity[i].toPrecision(4);
+            batteryMaxCapacity[length - i].innerHTML = powerPlant.maxCapacity[i].toPrecision(4);
+            currentProduction[length - i].innerHTML = powerPlant.currentProduction[i].toPrecision(4);
+            maxProduction[length - i].innerHTML = powerPlant.maxProduction[i].toPrecision(4);
+          }
+          myChart.data = {
+            labels: powerPlant.timestamp,
+            datasets: [{
+                label: 'Production (kWh)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                data: powerPlant.currentProduction,
+                fill: true,
+              }
+            ]
+          }
+          myChart.update();
+        });
+      }
+      fetchChartData();
+      setInterval(fetchChartData, 3000);
+    })
+  </script>
+</body>
+</html>

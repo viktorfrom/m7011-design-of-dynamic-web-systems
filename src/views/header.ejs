@@ -5,9 +5,14 @@
 <div>
 <nav class="navbar navbar-dark bg-light navbar-right">
         <a class="navbar-brand text-muted" href="/"><%= title %></a>
-        <a class="p-2" href="/">Info</a>
-        <a class="p-2" href="/aboutus">Pricing</a>
-        <a class="p-2" href="/dashboard/">Dashboard</a>
+        <a class="p-2" href="/pricing">Pricing</a>
+        <% if (!user) { %>
+          <a class="p-2" href="/users/signin?permission=true">Dashboard</a>
+        <% } else if (user.role == "admin" || user.role == "manager"){ %>
+          <a class="p-2" href="/dashboard/manager">Dashboard</a>
+        <% } else { %>
+          <a class="p-2" href="/dashboard/prosumer">Dashboard</a>
+        <% } %>
         <a class="p-2" href="/aboutus">About us</a>
         <form class="form-inline my-2 my-lg-0">
         <% if (!user) { %>
