@@ -116,12 +116,12 @@ router.post('/signin', (req, res, next) => {
     }).then(user => {
       if (user.role == "admin" || user.role == "manager") {
         passport.authenticate('local', {
-          successRedirect: req.query.redirect ? req.query.redirect : '/dashboard',
+          successRedirect: req.query.redirect ? req.query.redirect : '/dashboard/manager',
           failureRedirect: '/users/signin?failure=true'
         })(req, res, next);
       } else {
         passport.authenticate('local', {
-          successRedirect: req.query.redirect ? req.query.redirect : '/dashboard',
+          successRedirect: req.query.redirect ? req.query.redirect : '/dashboard/prosumer',
           failureRedirect: '/users/signin?failure=true'
         })(req, res, next);
       }
