@@ -75,8 +75,13 @@ router.post("/image", auth.ensureAuthenticated, upload.single('image'), (req, re
 
                 user.image = "../" + data.image.slice(7);
 
-                user.save().then(
-                        res.redirect('/dashboard/prosumer?success=true')
+                user.save().then(user => {
+                            if (user.role == "admin" || user.role == "manager") {
+                                res.redirect('/dashboard/manager?success=true')
+                            } else {
+                                res.redirect('/dashboard/prosumer?success=true')
+                            }
+                        }
                     )
                     .catch(err => {
                         res.json({
@@ -90,7 +95,11 @@ router.post("/image", auth.ensureAuthenticated, upload.single('image'), (req, re
                 });
             })
     } catch (err) {
-        res.redirect( '/dashboard/prosumer?failure=true');
+        if (req.user.role == "admin" || req.user.role == "manager") {
+            res.redirect('/dashboard/manager?failure=true');
+        } else {
+            res.redirect('/dashboard/prosumer?failure=true');
+        }
     }
 });
 
