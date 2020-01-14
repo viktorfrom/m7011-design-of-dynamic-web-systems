@@ -34,3 +34,8 @@ a {
   width: 55%;
   height: 55%;
 }
+
+.jumbotron {
+  background-image: url("/images/road.jpg");
+  background-size: cover;
+}
