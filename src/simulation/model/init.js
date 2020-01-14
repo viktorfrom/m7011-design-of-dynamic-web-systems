@@ -64,7 +64,7 @@ module.exports = class init {
                 });
 
                 marketPrice.marketPrice(); // Needs to run last to get accurate readings.
-            }, i * 3000)
+            }, i * 3000);
         }
     }
 
