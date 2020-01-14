@@ -5,15 +5,27 @@
                 <span>Statistics</span>
             </h6>
             <ul class="nav flex-column mb-2">
-                <li class="nav-item">
-                    <a class="nav-link active" href="/dashboard/prosumer">
-                        <span data-feather="home"></span>
-                        <script>
-                            feather.replace()
-                        </script>
-                        Dashboard
-                    </a>
-                </li>
+                <% if (user.role == "admin" || user.role == "manager"){ %>
+                    <li class="nav-item"></li>
+                        <a class="nav-link active" href="/dashboard/manager">
+                            <span data-feather="home"></span>
+                            <script>
+                                feather.replace()
+                            </script>
+                            Dashboard
+                        </a>
+                    </li>
+                <% } else { %>
+                    <li class="nav-item"></li>
+                        <a class="nav-link active" href="/dashboard/prosumer">
+                            <span data-feather="home"></span>
+                            <script>
+                                feather.replace()
+                            </script>
+                            Dashboard
+                        </a>
+                    </li>
+                <% } %>
                 <li class="nav-item">
                     <a class="nav-link active" href="/dashboard/region">
                         <span data-feather="book"></span>
