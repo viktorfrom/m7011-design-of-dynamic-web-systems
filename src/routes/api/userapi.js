@@ -76,7 +76,7 @@ router.post("/image", auth.ensureAuthenticated, upload.single('image'), (req, re
                 user.image = "../" + data.image.slice(7);
 
                 user.save().then(
-                        res.redirect('/dashboard?success=true')
+                        res.redirect('/dashboard/prosumer?success=true')
                     )
                     .catch(err => {
                         res.json({
@@ -90,7 +90,7 @@ router.post("/image", auth.ensureAuthenticated, upload.single('image'), (req, re
                 });
             })
     } catch (err) {
-        res.redirect( '/dashboard?failure=true');
+        res.redirect( '/dashboard/prosumer?failure=true');
     }
 });
 

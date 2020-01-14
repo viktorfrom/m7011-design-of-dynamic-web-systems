@@ -1,41 +1,25 @@
 const express = require('express');
 const router = express.Router();
 const prompt = require('prompt');
+const moment = require('moment');
+
 const auth = require('../../config/auth.js')
 const House = require('../../schemas/houseschema');
-const moment = require('moment');
 
 prompt.start();
 
 // // get single house
-// router.get('/:houseId', async (req, res) => {
-//     try {
-//         const oneHouse = await House.findById(req.params.houseId);
-//         res.json(oneHouse);
-//     } catch (err) {
-//         res.json({
-//             message: err
-//         });
+router.get('/:houseId', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
+    try {
+        const oneHouse = await House.findById(req.params.houseId);
+        res.json(oneHouse);
+    } catch (err) {
+        res.json({
+            message: err
+        });
 
-//     }
-// });
-
-// // get single house
-// router.get('/users/current', auth.ensureAuthenticated, async (req, res) => {
-//     try {
-//         // console.log(JSON.stringify(req.user));
-//         const oneHouse = await House.findOne({
-//             owner: req.user.email
-//         }).sort({
-//             timestamp: -1
-//         });
-//         res.json(oneHouse);
-//     } catch (err) {
-//         res.json({
-//             message: err
-//         });
-//     }
-// });
+    }
+});
 
 // get 10 last houses
 router.get('/users/houses', auth.ensureAuthenticated, async (req, res) => {

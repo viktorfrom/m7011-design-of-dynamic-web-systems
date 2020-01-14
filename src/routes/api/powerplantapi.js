@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const prompt = require('prompt');
+const moment = require('moment');
+
 const auth = require('../../config/auth.js')
 const PowerPlant = require('../../schemas/powerplantschema');
 
@@ -17,6 +19,55 @@ router.get('/:powerPlantId', auth.ensureAuthenticated, auth.check_user, async (r
         });
 
     }
+});
+
+
+// get 10 last power plants
+router.get('/users/powerplants', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
+    try {
+        // console.log(JSON.stringify(req.user));
+        const powerPlants = await PowerPlant.find().sort({
+            timestamp: -1
+        }).limit(10);
+
+        powerPlants.sort((a, b) => {
+            if (a.timestamp < b.timestamp) {
+                return -1;
+            } else if (a.timestamp > b.timestamp) {
+                return 1;
+            }
+            return 0;
+        });
+
+        const timestamp = powerPlants.map(x => moment(x.timestamp).format('YYYY-MM-DD hh:mm:ss'));
+        const name = powerPlants.map(x => x.name);
+        const region = powerPlants.map(x => x.region);
+
+        const maxCapacity = powerPlants.map(x => x.battery.maxCapacity);
+        const currentCapacity = powerPlants.map(x => x.battery.currentCapacity);
+
+        const maxProduction = powerPlants.map(x => x.maxProduction);
+        const currentProduction = powerPlants.map(x => x.currentProduction);
+        const statusMessage = powerPlants.map(x => x.statusMessage);
+
+        const result = {
+            timestamp: timestamp,
+            name: name,
+            region: region,
+            maxCapacity: maxCapacity,
+            currentCapacity: currentCapacity,
+            maxProduction: maxProduction,
+            currentProduction: currentProduction,
+            statusMessage: statusMessage
+        };
+
+        res.json(result);
+    } catch (err) {
+        res.json({
+            message: err
+        });
+    }
+    return;
 });
 
 // get all power plants

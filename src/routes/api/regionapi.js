@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const prompt = require('prompt');
+const moment = require('moment');
+
 const auth = require('../../config/auth.js')
 const Region = require('../../schemas/regionschema');
-const moment = require('moment');
 
 prompt.start();
 

@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const prompt = require('prompt');
+const moment = require('moment');
+
 const auth = require('../../config/auth.js')
 const MarketPrice = require('../../schemas/marketpriceschema');
-const moment = require('moment');
 
 prompt.start();
 
@@ -32,7 +33,6 @@ router.get('/users/marketprices', auth.ensureAuthenticated, async (req, res) => 
             if (a.timestamp < b.timestamp) {
                 return -1;
             } else if (a.timestamp > b.timestamp) {
-
                 return 1;
             }
             return 0;
