@@ -43,7 +43,7 @@ Viktor From, vikfro-6
 |  2019-01-09  | 8       | User dashboard, tables                         | 
 |  2019-01-10  | 8       | Tables, house picture upload                   | 
 |  2019-01-12  | 6       | Prosumer picture upload                        | 
-|  2019-01-13  | 3       | Prosumer picture upload                        | 
+|  2019-01-13  | 10      | Prosumer picture upload, user roles, views     | 
 | ------------ | ------- | ---------------------------------------------- | 
-|  Total:      | 162     |                                                |
+|  Total:      | 169     |                                                |
 
