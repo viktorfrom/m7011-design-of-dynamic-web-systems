@@ -34,6 +34,47 @@
           class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2">Market price</h1>
         </div>
+
+
+          <% if (user.role == "admin" || user.role == "manager"){ %>
+          <div class="container mt-3 ">
+
+            <h1 class="h2">Controls</h1>
+            <% if (query && query.production) { %>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong>Invalid input!</strong> Production cannot be negative. 
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <% } %>
+            <div class="row">
+              <div class="col">
+                <form method="POST" action="/api/simulation/users/productionControl">
+                  <label for="inputNumber" class="col-sm-2 col-form-label"></label>
+                  <div>
+                    <input type="number" name='number' class="form-control" placeholder="Set production"
+                      value="<%= typeof number != 'undefined' ? number : '' %>">
+                  </div>
+                  <div>
+                    <button type="submit" class="btn-sm btn-primary mt-2">Confirm</button>
+                  </div>
+                </form>
+              </div>
+              <div class="col-md">
+                <form method="POST" action="/api/simulation/users/productionReset">
+                  <label for="inputNumber" class="col-sm-2 col-form-label"></label>
+                  <div>
+                    <button type="submit" class="btn-sm btn-primary ">Reset</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <% } %> 
+
+
+
         <div class="ml-3 my-4">
           <p>Simulation: <span class="badge badge-success" id="running-status">Running</span></p>
         </div>
