@@ -51,6 +51,7 @@ router.get('/dashboard/region', auth.ensureAuthenticated, function (req, res, ne
 router.get('/dashboard/marketprice', auth.ensureAuthenticated, function (req, res, next) {
   res.render('marketprice', {
     title: 'Green Lean Electrics',
+    query: req.query ? req.query : null,
     user: req.user
   });
 });
