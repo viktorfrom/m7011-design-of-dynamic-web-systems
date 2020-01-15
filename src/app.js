@@ -18,6 +18,7 @@ const housesRouter = require('./routes/api/houseapi');
 const marketPricesRouter = require('./routes/api/marketpriceapi');
 const powerPlantsRouter = require('./routes/api/powerplantapi');
 const regionsRouter = require('./routes/api/regionapi');
+const simulationsRouter = require('./routes/api/simulationapi')
 const usersRouter = require('./routes/api/userapi');
 
 // dbschema imports
@@ -80,6 +81,7 @@ app.use('/api/house', housesRouter);
 app.use('/api/marketprice', marketPricesRouter);
 app.use('/api/powerplant', powerPlantsRouter);
 app.use('/api/region', regionsRouter);
+app.use('/api/simulation', simulationsRouter);
 app.use('/api/user', usersRouter);
 
 // run simulation
