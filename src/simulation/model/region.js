@@ -51,7 +51,6 @@ module.exports = class region {
         this.regionSchema = new RegionSchema({
             timestamp: Date.now(),
             name: this.name,
-            // mathExpression: this.mathExpression,
             maxWindSpeed: this.maxWindSpeed,
             minWindSpeed: this.minWindSpeed,
             currentWindSpeed: this.currentWindSpeed,

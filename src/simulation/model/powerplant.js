@@ -100,15 +100,10 @@ module.exports = class powerplant {
             region: this.region.getName(),
             marketPrice: this.marketPrice,
             battery: this.battery,
-            // mathExpression: this.mathExpression,
             maxProduction: this.maxProduction,
             minProduction: this.minProduction,
             currentProduction: this.currentProduction,
-            // conversionRate: this.conversionRate,
-            // acceleration: this.acceleration,
             statusMessage: this.statusMessage,
-            // startUp: this.startUp,
-            // powerOutage: this.powerOutage
         }); 
 
         this.powerPlantSchema.save((err) => {
