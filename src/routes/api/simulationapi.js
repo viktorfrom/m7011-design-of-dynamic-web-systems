@@ -6,19 +6,46 @@ const Simulation = require('../../simulation/model/simulation.js');
 
 prompt.start();
 
-router.get('/users/productionControl', async (req, res) => {
+router.post('/users/productionControl', auth.ensureAuthenticated, auth.check_user, async (req, res, next) => {
     try {
-        console.log(Simulation.init.powerPlant.maxProduction);
-        Simulation.init.powerPlant.maxProduction = 0;
-        console.log(Simulation.init.powerPlant.maxProduction);
-        return res.json({
-            message: 'test'
-          });
+        const {
+            number
+        } = req.body
+
+        if (Math.sign(number)) {
+            res.redirect('/dashboard/manager?production=true');
+        } else {
+            Simulation.init.powerPlant.maxProduction = parseInt(number, 10);
+
+            if (!(Simulation.init.powerPlant.statusMessage == "START UP SEQUENCE INITIATED" ||
+                    Simulation.init.powerPlant.statusMessage == "BLACKOUT: START UP SEQUENCE INITIATED" ||
+                    Simulation.init.powerPlant.statusMessage == "BLACKOUT: SHUTDOWN SEQUENCE INITIATED")) {
+                Simulation.init.powerPlant.currentProduction = parseInt(number, 10);
+            }
+
+            Simulation.init.powerPlant.manualControl = true;
+        }
+
+        res.redirect('/dashboard/manager?production=false');
     } catch (err) {
         res.json({
             message: err
         });
+    }
+});
 
+router.post('/users/productionReset', auth.ensureAuthenticated, auth.check_user, async (req, res, next) => {
+    try {
+        Simulation.init.powerPlant.maxProduction = parseInt(30, 10);
+
+        Simulation.init.powerPlant.statusMessage = "FULLY OPERATIONAL";
+        Simulation.init.powerPlant.manualControl = false;
+
+        res.redirect('/dashboard/manager');
+    } catch (err) {
+        res.json({
+            message: err
+        });
     }
 });
 
