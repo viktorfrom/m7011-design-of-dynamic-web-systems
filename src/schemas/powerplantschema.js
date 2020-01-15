@@ -23,10 +23,12 @@ const PowerPlantSchema = mongoose.Schema({
     },
     maxProduction: {
         type: Number,
+        min: 0,
         required: true
     },
     minProduction: {
         type: Number,
+        min: 0,
         required: true
     },
     currentProduction: {
