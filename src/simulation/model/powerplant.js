@@ -14,13 +14,14 @@ module.exports = class powerplant {
         this.mathExpression = new MathExpression();
         this.maxProduction = 30;
         this.minProduction = 0;
-        this.currentProduction = 0; 
+        this.currentProduction = 0;
         this.conversionRate = 0.7;
         this.acceleration = 1.5;
-        this.statusMessage = "FULLY OPERATIONAL";
+        this.statusMessage = "";
         this.startUp = true;
         this.powerOutage = false;
         this.count = 0;
+        this.manualControl = false;
     }
 
     setCurrentProduction(power) {
@@ -76,12 +77,12 @@ module.exports = class powerplant {
     }
 
     startUpSeq() {
-        this.setCurrentProduction(this.currentProduction + this.acceleration + 
+        this.setCurrentProduction(this.currentProduction + this.acceleration +
             this.mathExpression.normalDistribution(0, 0.1));
     }
 
     shutdownSeq() {
-        this.setCurrentProduction(this.currentProduction - this.acceleration + 
+        this.setCurrentProduction(this.currentProduction - this.acceleration +
             this.mathExpression.normalDistribution(0, 0.1));
     }
 
@@ -104,10 +105,10 @@ module.exports = class powerplant {
             minProduction: this.minProduction,
             currentProduction: this.currentProduction,
             statusMessage: this.statusMessage,
-        }); 
+        });
 
         this.powerPlantSchema.save((err) => {
-            if(err) throw err;
+            if (err) throw err;
 
         });
     }
@@ -115,8 +116,8 @@ module.exports = class powerplant {
     status() {
         console.log("Power plant: " + this.name + ", Status: " + this.statusMessage + "\n" +
             "Current production = " + this.currentProduction.toPrecision(5) + " kWh" + ", Battery capacity: " +
-            this.battery.getCurrentCapacity().toPrecision(3) + "/" + this.battery.getMaxCapacity().toPrecision(3)
-             + " Ah" + "\n");
+            this.battery.getCurrentCapacity().toPrecision(3) + "/" + this.battery.getMaxCapacity().toPrecision(3) +
+            " Ah" + "\n");
     }
 
     electricityProduction() {
@@ -126,6 +127,9 @@ module.exports = class powerplant {
         this.marketPrice.setTotalProduction(this.currentProduction);
         this.marketPrice.setMaxProduction(this.maxProduction);
 
+        if (this.statusMessage == "FULLY OPERATIONAL" && this.manualControl) {
+            this.statusMessage += ": MANUAL CONTROL";
+        };
         this.setPowerPlantSchema();
         // this.startUpSeq();
         // this.shutdownSeq();
