@@ -53,7 +53,7 @@ module.exports = class init {
                     }
                 }
 
-                this.powerPlant = new PowerPlant("GLE Power Station", this.marketPrice, this.regions[0], 0, 30);
+                this.powerPlant = new PowerPlant("GLE Power Station", this.marketPrice, this.regions[0], 0, 500);
 
                 if (users) {
                     for (const user of users) {
