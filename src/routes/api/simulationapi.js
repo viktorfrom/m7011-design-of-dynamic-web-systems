@@ -12,7 +12,7 @@ router.post('/users/productionControl', auth.ensureAuthenticated, auth.check_use
             number
         } = req.body
 
-        if (Math.sign(number)) {
+        if (Math.sign(number) == -1 || Math.sign(number) == -0) {
             res.redirect('/dashboard/manager?production=true');
         } else {
             Simulation.init.powerPlant.maxProduction = parseInt(number, 10);
@@ -26,7 +26,7 @@ router.post('/users/productionControl', auth.ensureAuthenticated, auth.check_use
             Simulation.init.powerPlant.manualControl = true;
         }
 
-        res.redirect('/dashboard/manager?production=false');
+        res.redirect('/dashboard/manager');
     } catch (err) {
         res.json({
             message: err
@@ -42,6 +42,46 @@ router.post('/users/productionReset', auth.ensureAuthenticated, auth.check_user,
         Simulation.init.powerPlant.manualControl = false;
 
         res.redirect('/dashboard/manager');
+    } catch (err) {
+        res.json({
+            message: err
+        });
+    }
+});
+
+router.post('/users/marketPriceControl', auth.ensureAuthenticated, auth.check_user, async (req, res, next) => {
+    try {
+        const {
+            number
+        } = req.body
+        console.log(Simulation.init.marketPrice.maxElectricityPrice);
+        console.log(Simulation.init.marketPrice.currentPrice);
+
+        if (Math.sign(number) == -1 || Math.sign(number) == -0) {
+            res.redirect('/dashboard/marketprice?price=true');
+        } else {
+            Simulation.init.marketPrice.maxElectricityPrice = parseInt(number, 10);
+            Simulation.init.marketPrice.currentPrice = parseInt(number, 10); 
+            Simulation.init.marketPrice.manualControl = true;
+        }
+        console.log(Simulation.init.marketPrice.maxElectricityPrice);
+        console.log(Simulation.init.marketPrice.currentPrice);
+
+        res.redirect('/dashboard/marketprice');
+    } catch (err) {
+        res.json({
+            message: err
+        });
+    }
+});
+
+router.post('/users/marketPriceReset', auth.ensureAuthenticated, auth.check_user, async (req, res, next) => {
+    try {
+        Simulation.init.marketPrice.maxElectricityPrice = parseInt(100, 10);
+        Simulation.init.marketPrice.manualControl = false;
+        console.log(Simulation.init.marketPrice.maxElectricityPrice);
+
+        res.redirect('/dashboard/marketprice');
     } catch (err) {
         res.json({
             message: err
