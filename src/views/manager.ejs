@@ -53,7 +53,6 @@
         <% } %>
         <div class="container">
           <div class="container">
-
             <p class="lead mb-5">Welcome <%= user.firstName %> <%= user.lastName %></p>
             <div class="row">
               <div class="col-sm">
@@ -65,7 +64,7 @@
                     <input type='file' name='image' />
                   </div>
                   <div>
-                    <button type="submit" class="btn-sm btnwidth btn-primary mt-2">Upload image</button>
+                    <button type="submit" class="btn-sm btnwidth btn-primary mt-3">Upload image</button>
                   </div>
                 </form>
               </div>
@@ -91,19 +90,17 @@
             <div class="row">
               <div class="col">
                 <form method="POST" action="/api/simulation/users/productionControl">
-                  <label for="inputNumber" class="col-sm-2 col-form-label"></label>
                   <div>
                     <input type="number" name='number' class="form-control" placeholder="Set production"
                       value="<%= typeof number != 'undefined' ? number : '' %>">
                   </div>
                   <div>
-                    <button type="submit" class="btn-sm btn-primary mt-2">Confirm</button>
+                    <button type="submit" class="btn-sm btn-primary mt-3">Confirm</button>
                   </div>
                 </form>
               </div>
-              <div class="col-md">
+              <div class="col-md mt-1 ml-0 pl-0">
                 <form method="POST" action="/api/simulation/users/productionReset">
-                  <label for="inputNumber" class="col-sm-2 col-form-label"></label>
                   <div>
                     <button type="submit" class="btn-sm btn-primary ">Reset</button>
                   </div>

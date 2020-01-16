@@ -38,11 +38,10 @@
 
           <% if (user.role == "admin" || user.role == "manager"){ %>
           <div class="container mt-3 ">
-
             <h1 class="h2">Controls</h1>
-            <% if (query && query.production) { %>
+            <% if (query && query.price) { %>
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-              <strong>Invalid input!</strong> Production cannot be negative. 
+              <strong>Invalid input!</strong> Price cannot be negative. 
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -50,7 +49,7 @@
             <% } %>
             <div class="row">
               <div class="col">
-                <form method="POST" action="/api/simulation/users/productionControl">
+                <form method="POST" action="/api/simulation/users/marketPriceControl">
                   <label for="inputNumber" class="col-sm-2 col-form-label"></label>
                   <div>
                     <input type="number" name='number' class="form-control" placeholder="Set production"
@@ -62,7 +61,7 @@
                 </form>
               </div>
               <div class="col-md">
-                <form method="POST" action="/api/simulation/users/productionReset">
+                <form method="POST" action="/api/simulation/users/marketPriceReset">
                   <label for="inputNumber" class="col-sm-2 col-form-label"></label>
                   <div>
                     <button type="submit" class="btn-sm btn-primary ">Reset</button>
