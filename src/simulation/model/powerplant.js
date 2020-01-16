@@ -22,6 +22,7 @@ module.exports = class powerplant {
         this.powerOutage = false;
         this.count = 0;
         this.manualControl = false;
+        this.storeBatteryRatio = 0;
     }
 
     setCurrentProduction(power) {
@@ -31,7 +32,7 @@ module.exports = class powerplant {
             this.currentProduction = this.minProduction;
         } else {
             this.currentProduction = power;
-            this.battery.setCurrentCapacity(this.currentProduction * this.conversionRate);
+            this.battery.setCurrentCapacity((power / 2) * this.storeBatteryRatio);
         }
     }
 
