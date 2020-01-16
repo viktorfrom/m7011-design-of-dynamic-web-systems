@@ -13,6 +13,7 @@ module.exports = class marketprice {
         this.maxTotalProduction = 0;
         this.currentProduction = 0;
         this.currentPrice = 0;
+        this.manualControl = false;
     }
 
     setTotalProduction(totalProduction) {
@@ -73,11 +74,15 @@ module.exports = class marketprice {
     }
 
     marketPrice() {
-        this.setMarketPrice();
+        if (!this.manualControl) {
+            this.setMarketPrice();
+        };
 
         // this.status();
         this.setMarketPriceSchema();
-        this.currentPrice = 0;
+        if (!this.manualControl) {
+            this.currentPrice = 0;
+        };
         this.maxTotalProduction = 0;
         this.currentProduction = 0;
     }
