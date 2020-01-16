@@ -31,14 +31,17 @@ const HouseSchema = mongoose.Schema({
     },
     maxHouseConsumption: {
         type: Number,
+        min: 0,
         required: true
     },
     minHouseConsumption: {
         type: Number,
+        min: 0,
         required: true
     },
     houseConsumption: {
         type: Number,
+        min: 0,
         required: true
     },
     netProduction: {

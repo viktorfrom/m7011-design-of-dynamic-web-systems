@@ -11,22 +11,27 @@ const RegionSchema = mongoose.Schema({
     },
     maxWindSpeed: {
         type: Number,
+        min: 0,
         required: true
     },
     minWindSpeed: {
         type: Number,
+        min: 0,
         required: true
     },
     currentWindSpeed: {
         type: Number,
+        min: 0,
         required: true
     },
     maxTemp: {
         type: Number,
+        max: 0,
         required: true
     },
     currentTemp: {
         type: Number,
+        max: 0,
         required: true
     }
 });

@@ -12,22 +12,27 @@ const MarketPriceSchema = mongoose.Schema({
     },
     maxTotalProduction: {
         type: Number,
+        min: 0,
         required: true
     },
     minTotalProduction: {
         type: Number,
+        min: 0,
         required: true
     },
     currentProduction: {
         type: Number,
+        min: 0,
         required: true
     },
     electricityPrice: {
         type: Number,
+        min: 0,
         required: true
     },
     currentPrice: {
         type: Number,
+        min: 0,
         required: true
     }
 });

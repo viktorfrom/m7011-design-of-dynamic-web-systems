@@ -33,6 +33,7 @@ const PowerPlantSchema = mongoose.Schema({
     },
     currentProduction: {
         type: Number,
+        min: 0,
         required: true
     },
     statusMessage: {
