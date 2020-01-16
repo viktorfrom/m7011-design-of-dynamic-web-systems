@@ -81,7 +81,7 @@
             <h1 class="h2">Controls</h1>
             <% if (query && query.production) { %>
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-              <strong>Invalid input!</strong> Production cannot be negative. 
+              <strong>Invalid input!</strong> Production needs to be a interger larger than 0.
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -91,7 +91,7 @@
               <div class="col">
                 <form method="POST" action="/api/simulation/users/productionControl">
                   <div>
-                    <input type="number" name='number' class="form-control" placeholder="Set production"
+                    <input type="number" name='number' class="form-control" placeholder="Set power plant production"
                       value="<%= typeof number != 'undefined' ? number : '' %>">
                   </div>
                   <div>
@@ -101,6 +101,34 @@
               </div>
               <div class="col-md mt-1 ml-0 pl-0">
                 <form method="POST" action="/api/simulation/users/productionReset">
+                  <div>
+                    <button type="submit" class="btn-sm btn-primary ">Reset</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <% if (query && query.electricityRatio) { %>
+            <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+              <strong>Invalid input!</strong> Input needs to be a number between 0.0 - 1.0
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <% } %>
+            <div class="row mt-3">
+              <div class="col">
+                <form method="POST" action="/api/simulation/users/electricityRatio">
+                  <div>
+                    <input type="text" name='number' class="form-control" placeholder="Set production transfer to battery (0 - 1) %"
+                      value="<%= typeof number != 'undefined' ? number : '' %>">
+                  </div>
+                  <div>
+                    <button type="submit" class="btn-sm btn-primary mt-3">Confirm</button>
+                  </div>
+                </form>
+              </div>
+              <div class="col-md mt-1 ml-0 pl-0">
+                <form method="POST" action="/api/simulation/users/electricityRatioReset">
                   <div>
                     <button type="submit" class="btn-sm btn-primary ">Reset</button>
                   </div>
