@@ -21,7 +21,7 @@ module.exports = class powerplant {
         this.startUp = true;
         this.powerOutage = false;
         this.manualControl = false;
-        this.storeBatteryRatio = 0;
+        this.storeBatteryRatio = 0.5;
         this.count = 0;
     }
 
