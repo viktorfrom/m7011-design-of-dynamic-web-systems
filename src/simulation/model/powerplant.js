@@ -15,14 +15,14 @@ module.exports = class powerplant {
         this.maxProduction = 30;
         this.minProduction = 0;
         this.currentProduction = 0;
-        this.conversionRate = 0.7;
+        this.conversionRate = 0.6;
         this.acceleration = 1.5;
         this.statusMessage = "";
         this.startUp = true;
         this.powerOutage = false;
-        this.count = 0;
         this.manualControl = false;
         this.storeBatteryRatio = 0;
+        this.count = 0;
     }
 
     setCurrentProduction(power) {
@@ -32,7 +32,7 @@ module.exports = class powerplant {
             this.currentProduction = this.minProduction;
         } else {
             this.currentProduction = power;
-            this.battery.setCurrentCapacity((power / 2) * this.storeBatteryRatio);
+            this.battery.setCurrentCapacity(power * this.conversionRate * this.storeBatteryRatio);
         }
     }
 
@@ -131,6 +131,7 @@ module.exports = class powerplant {
         if (this.statusMessage == "FULLY OPERATIONAL" && this.manualControl) {
             this.statusMessage += ": MANUAL CONTROL";
         };
+
         this.setPowerPlantSchema();
         // this.startUpSeq();
         // this.shutdownSeq();
