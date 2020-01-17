@@ -40,7 +40,7 @@ module.exports = class init {
         try {
             await User.find().then(users => {
 
-
+                this.postAdmin();
                 if (users.length == 0) {
                     this.regions.push(new Region("GLE-Region"));
                 }
