@@ -81,7 +81,7 @@
             <h1 class="h2">Controls</h1>
             <% if (query && query.production) { %>
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-              <strong>Invalid input!</strong> Production needs to be a interger larger than 0.
+              <strong>Invalid input!</strong> Production needs to be a interger equal or larger than 0.
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -260,15 +260,12 @@
         animateRunning();
         setInterval(animateRunning, interval * 4);
         const powerPlantStatus = document.getElementById('powerplant-status');
-
         const powerPlantName = document.getElementById('powerplant-name');
-
         const timestamp = document.getElementsByClassName('timestamp');
         const batteryCurrCapacity = document.getElementsByClassName('batteryCurrCapacity');
         const batteryMaxCapacity = document.getElementsByClassName('batteryMaxCapacity');
         const currentProduction = document.getElementsByClassName('currentProduction');
         const maxProduction = document.getElementsByClassName('maxProduction');
-
         const currentTotalProduction = document.getElementsByClassName('currentTotalProduction');
         const maxTotalProduction = document.getElementsByClassName('maxTotalProduction');
         const fetchChartData = () => {

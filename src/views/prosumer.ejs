@@ -24,6 +24,7 @@
   </style>
   <title><%= title %></title>
 </head>
+
 <body>
   <% include header.ejs %>
   <div class="container mt-4">
@@ -35,20 +36,20 @@
           <h1 class="h2">Dashboard</h1>
         </div>
         <% if (query && query.success) { %>
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Image upload successful!</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>     
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Image upload successful!</strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
         <% } %>
         <% if (query && query.failure) { %>
-          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>Invalid input!</strong> Please select a file before uploading.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>     
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>Invalid input!</strong> Please select a file before uploading.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
         <% } %>
         <div class="container">
           <p class="lead mb-5">Welcome <%= user.firstName %> <%= user.lastName %></p>
@@ -74,7 +75,51 @@
               <p>Region: <%= user.region %> </p>
             </div>
           </div>
+
+
+
+          <div class="container mt-3 "></div>
+          <h1 class="h2">Controls</h1>
+          <% if (query && query.test) { %>
+          <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+            <strong>Invalid input!</strong> Input needs to be a number between 0.0 - 1.0
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <% } %>
+          <div class="row mt-3">
+            <div class="col">
+
+              <form method="POST" action="/api/simulation/users/test">
+                <div>
+                  <input type="text" name='number' class="form-control"
+                    placeholder="Set production stored in market battery (0 - 1) %"
+                    value="<%= typeof number != 'undefined' ? number : '' %>">
+                    <input type="hidden" value=<%= user.email%> name="userEmail" />
+                </div>
+                <div>
+                  <button type="submit" class="btn-sm btn-primary mt-3">Confirm</button>
+                </div>
+              </form>
+            </div>
+            <div class="col-md mt-1 ml-0 pl-0">
+              <form method="POST" action="/api/simulation/users/testReset">
+                <div>
+                    <input type="hidden" value=<%= user.email%> name="userEmail" />
+                </div>
+                <div>
+                  <button type="submit" class="btn-sm btn-primary ">Reset</button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
+
+
+
+
+
         <div class="ml-3 mt-5">
           <p>Wind Turbine Status: <span class="badge badge-success" id='windturbine-status'></span></p>
           <p>Simulation: <span class="badge badge-success" id="running-status">Running</span></p>
@@ -107,8 +152,8 @@
               <tr>
                 <td><span class='timestamp'></span></td>
                 <td><span class='currentPower'></span> / <span class='maxPower'></span></td>
-                <td><span class='houseConsumption'></span> / <span class='maxHouseConsumption'></span</td> 
-                <td><span class='netProduction'></span></td>
+                <td><span class='houseConsumption'></span> / <span class='maxHouseConsumption'></span</td> <td><span
+                      class='netProduction'></span></td>
                 <td><span class='batteryCurrCapacity'></span> / <span class='batteryMaxCapacity'></span></td>
               </tr>
               <tr>
@@ -220,7 +265,9 @@
       const fetchChartData = () => {
         getHouses().then(houses => {
           windTurbineStatus.innerHTML = houses.statusMessage[houses.statusMessage.length - 1];
-          if (houses.statusMessage[houses.statusMessage.length - 1] == "FULLY OPERATIONAL") {
+          if (houses.statusMessage[houses.statusMessage.length - 1] == "FULLY OPERATIONAL" ||
+            houses.statusMessage[houses.statusMessage.length - 1] ==
+            "FULLY OPERATIONAL: MANUAL CONTROL") {
             windTurbineStatus.style.background = '#28A745';
           } else {
             windTurbineStatus.style.background = '#DC3545';
