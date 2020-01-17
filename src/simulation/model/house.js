@@ -21,7 +21,7 @@ module.exports = class house {
         this.conversionRate = 0.6;
         this.statusMessage = "FULLY OPERATIONAL";
         this.manualControl = false;
-        this.storeBatteryRatio = 0;
+        this.storeBatteryRatio = 0.5;
         this.count = 0;
     }
 
@@ -78,12 +78,8 @@ module.exports = class house {
 
 
             this.windTurbine.setExcessPower(this.houseConsumption);
-            // this.powerPlant.battery.setCurrentCapacity(this.windTurbine.getExcessPower() * 
-            //     this.conversionRate * this.storeBatteryRatio);
-            console.log("to local batt: " + this.windTurbine.getExcessPower() * this.conversionRate * (1 - this.storeBatteryRatio));
             this.powerPlant.battery.setCurrentCapacity(this.windTurbine.getExcessPower() * 
                 this.conversionRate * this.storeBatteryRatio);
-            console.log("to market batt: " + this.windTurbine.getExcessPower() * this.conversionRate * this.storeBatteryRatio);
             this.battery.setCurrentCapacity(this.windTurbine.getExcessPower() * 
                 this.conversionRate * (1 - this.storeBatteryRatio) );
         }
