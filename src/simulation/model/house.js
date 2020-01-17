@@ -18,7 +18,10 @@ module.exports = class house {
         this.maxHouseConsumption = 1.35;
         this.minHouseConsumption = 0;
         this.houseConsumption = 914 / 744;
+        this.conversionRate = 0.6;
         this.statusMessage = "FULLY OPERATIONAL";
+        this.manualControl = false;
+        this.storeBatteryRatio = 0;
         this.count = 0;
     }
 
@@ -32,10 +35,10 @@ module.exports = class house {
         }
     }
 
-    utilizepowerPlant() {
+    utilizePowerPlant() {
         if (this.windTurbine.getCurrentPower() < this.houseConsumption &&
             this.powerPlant.getCurrentProduction() >= 0) {
-            this.powerPlant.setCurrentCapacity(this.windTurbine.getCurrentPower() - this.houseConsumption);
+            this.powerPlant.battery.setCurrentCapacity(this.windTurbine.getCurrentPower() - this.houseConsumption);
         }
     }
 
@@ -72,8 +75,17 @@ module.exports = class house {
 
     storeExcessPower() {
         if (this.windTurbine.getCurrentPower() > this.houseConsumption) {
+
+
             this.windTurbine.setExcessPower(this.houseConsumption);
-            this.battery.setCurrentCapacity(this.windTurbine.getExcessPower() / 2);
+            // this.powerPlant.battery.setCurrentCapacity(this.windTurbine.getExcessPower() * 
+            //     this.conversionRate * this.storeBatteryRatio);
+            console.log("to local batt: " + this.windTurbine.getExcessPower() * this.conversionRate * (1 - this.storeBatteryRatio));
+            this.powerPlant.battery.setCurrentCapacity(this.windTurbine.getExcessPower() * 
+                this.conversionRate * this.storeBatteryRatio);
+            console.log("to market batt: " + this.windTurbine.getExcessPower() * this.conversionRate * this.storeBatteryRatio);
+            this.battery.setCurrentCapacity(this.windTurbine.getExcessPower() * 
+                this.conversionRate * (1 - this.storeBatteryRatio) );
         }
     }
 
@@ -130,14 +142,18 @@ module.exports = class house {
             this.mathExpression.normalDistribution(0, 0.10));
 
         this.storeExcessPower();
-        // TODO, set to 70% Battery, 30% Market
+
         this.marketPrice.setTotalProduction(this.windTurbine.getExcessPower() / 2);
         this.marketPrice.setMaxProduction(this.windTurbine.getMaxPower());
 
+        this.utilizePowerPlant();
         this.consumePowerPlantBattery();
         this.consumeLocalBattery();
         this.blackoutCondition();
 
+        if (this.statusMessage == "FULLY OPERATIONAL" && this.manualControl) {
+            this.statusMessage += ": MANUAL CONTROL";
+        };
         // this.status();
         
         this.setHouseSchema();

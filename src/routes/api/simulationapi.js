@@ -92,7 +92,7 @@ router.post('/users/marketPriceControl', auth.ensureAuthenticated, auth.check_us
             number
         } = req.body
 
-        if (Math.sign(number) == -1 || Math.sign(number) == -0) {
+        if (Math.sign(number) == -1 || number == "") {
             res.redirect('/dashboard/marketprice?price=true');
         } else {
             Simulation.init.marketPrice.maxElectricityPrice = parseInt(number, 10);
@@ -114,6 +114,56 @@ router.post('/users/marketPriceReset', auth.ensureAuthenticated, auth.check_user
         Simulation.init.marketPrice.manualControl = false;
 
         res.redirect('/dashboard/marketprice');
+    } catch (err) {
+        res.json({
+            message: err
+        });
+    }
+});
+
+router.post('/users/test', auth.ensureAuthenticated, async (req, res, next) => {
+    try {
+        const {
+            number,
+            userEmail
+        } = req.body
+
+        if (Math.sign(number) == -1 || number == "") {
+            res.redirect('/dashboard/prosumer?test=true');
+        } else {
+
+            if (number >= 0.0 && number <= 1.0) {
+                for (const house of Simulation.init.houses) {
+                    if (house.owner == userEmail) {
+                        house.storeBatteryRatio = parseFloat(number, 10);
+                        house.manualControl = true;
+                    }
+                }
+            } else {
+                res.redirect('/dashboard/prosumer?test=true');
+            }
+        }
+
+        res.redirect('/dashboard/prosumer');
+    } catch (err) {
+        res.redirect('/dashboard/prosumer?test=true');
+    }
+});
+
+router.post('/users/testReset', auth.ensureAuthenticated, async (req, res, next) => {
+    try {
+        const {
+            userEmail
+        } = req.body
+
+        for (const house of Simulation.init.houses) {
+            if (house.owner == userEmail) {
+                house.storeBatteryRatio = parseFloat(0, 10);
+                house.manualControl = false;
+            }
+        }
+
+        res.redirect('/dashboard/prosumer');
     } catch (err) {
         res.json({
             message: err
