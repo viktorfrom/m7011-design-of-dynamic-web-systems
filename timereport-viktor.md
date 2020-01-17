@@ -46,6 +46,7 @@ Viktor From, vikfro-6
 |  2019-01-13  | 11      | Prosumer picture upload, user roles, views     | 
 |  2019-01-14  | 10      | User roles, views, simulatorAPI                | 
 |  2019-01-15  | 10      | SimulatorAPI, power plant, market price        |
+|  2019-01-16  | 9       | SimulatorAPI, excess power to market, report   |
 | ------------ | ------- | ---------------------------------------------- | 
-|  Total:      | 231     |                                                |
+|  Total:      | 240     |                                                |
 
