@@ -91,7 +91,7 @@
               <div class="col">
                 <form method="POST" action="/api/simulation/users/productionControl">
                   <div>
-                    <input type="number" name='number' class="form-control" placeholder="Set power plant production"
+                    <input type="number" name='number' class="form-control" placeholder="Manually set power plant production"
                       value="<%= typeof number != 'undefined' ? number : '' %>">
                   </div>
                   <div>
@@ -119,7 +119,7 @@
               <div class="col">
                 <form method="POST" action="/api/simulation/users/electricityRatio">
                   <div>
-                    <input type="text" name='number' class="form-control" placeholder="Set production transfer to battery (0 - 1) %"
+                    <input type="text" name='number' class="form-control" placeholder="Set production transfer to market battery (0 - 1) %"
                       value="<%= typeof number != 'undefined' ? number : '' %>">
                   </div>
                   <div>
