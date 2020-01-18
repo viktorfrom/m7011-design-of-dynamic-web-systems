@@ -48,7 +48,7 @@ Viktor From, vikfro-6
 |  2019-01-15  | 10      | SimulatorAPI, power plant, market price        |
 |  2019-01-16  | 9       | SimulatorAPI, excess power to market, report   |
 |  2019-01-17  | 9       | SimulatorAPI, deploy to server, report         |
-|  2019-01-18  | 11      | Report, github release                         |
+|  2019-01-18  | 12      | Report, github release                         |
 | ------------ | ------- | ---------------------------------------------- | 
-|  Total:      | 260     |                                                |
+|  Total:      | 261     |                                                |
 
