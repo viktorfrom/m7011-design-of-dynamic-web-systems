@@ -50,5 +50,5 @@ Viktor From, vikfro-6
 |  2019-01-17  | 9       | SimulatorAPI, deploy to server, report         |
 |  2019-01-18  | 11      | Report, github release                         |
 | ------------ | ------- | ---------------------------------------------- | 
-|  Total:      | 259     |                                                |
+|  Total:      | 260     |                                                |
 
