@@ -2,15 +2,37 @@
 ###### 
 Project written in Node.js and javascript wrapped with Express framework for dynamic front end views, in connection to Design of Dynamic Web Systems course at Luleå University of Technology.
 
-https://www.ltu.se/edu/course/M70/M7011E/M7011E-Design-av-dynamiska-webbsystem-1.68712?kursView=kursplan&l=en
---------
+## Requirements
+* NodeJS 10.16+
+* MongoDB 4.2+
+* (Optional) npm 6.9+
 
-### Express Framework
+### Setup
+Run npm install once the repository has been cloned and downloaded to install necessary dependencies
+```
+npm install
+```
+Update port nr. and address, if needed, in the following files, and Fetch APIs
+```
+/src/bin/www
+/src/public/javascripts/house.js
+/src/public/javascripts/marketprice.js
+/src/public/javascripts/powerplant.js
+/src/public/javascripts/region.js
+```
+Download and install MongoDB, if needed, the database will run automatically once installed.
+### Usage
+Boot up the web server or perform JUnit testing in /src/simulation
+```
+npm start
+```
+and
+```
+npm test
+```
+## Authors
+Group: **Awesomers**
+* Viktor From - vikfro-@student.ltu.se - [viktorfrom](https://github.com/viktorfrom)
 
-https://expressjs.com/en/starter/generator.htm
--------
-
-### Mongo DB
-
-https://github.com/mongodb/homebrew-brew
--------
+## License
+Licensed under the MIT license. See [LICENSE](LICENSE) for details.
