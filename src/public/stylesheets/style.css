@@ -15,9 +15,18 @@ a {
   border-top: .05rem solid #e5e5e5;
 }
 
-.btnmargin { margin-left: 0.2rem }
+.btnreset {
+  padding-top: 32px;
+  padding-left: 0px;
+}
 
-.btnwidth { width: 45%}
+.btnmargin {
+  margin-left: 0.2rem
+}
+
+.btnwidth {
+  width: 45%
+}
 
 .center {
   display: block;
@@ -26,7 +35,7 @@ a {
   width: 50%;
 }
 
-.img-container > img{
+.img-container>img {
   max-width: 500px;
 }
 
@@ -38,4 +47,18 @@ a {
 .jumbotron {
   background-image: url("/images/road.jpg");
   background-size: cover;
+}
+
+.range-container {
+  display: flex;
+}
+
+#textInput {
+  width: 33px;
+  margin-left: 5px;
+}
+
+#textInput2 {
+  width: 33px;
+  margin-left: 5px;
 }
