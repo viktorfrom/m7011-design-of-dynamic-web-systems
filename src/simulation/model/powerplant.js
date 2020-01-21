@@ -17,11 +17,11 @@ module.exports = class powerplant {
         this.currentProduction = 0;
         this.conversionRate = 0.6;
         this.acceleration = 1.5;
+        this.storeBatteryRatio = 0.5;
         this.statusMessage = "";
         this.startUp = true;
         this.powerOutage = false;
         this.manualControl = false;
-        this.storeBatteryRatio = 0.5;
         this.count = 0;
     }
 
@@ -105,6 +105,7 @@ module.exports = class powerplant {
             maxProduction: this.maxProduction,
             minProduction: this.minProduction,
             currentProduction: this.currentProduction,
+            batteryRatio: this.storeBatteryRatio,
             statusMessage: this.statusMessage,
         });
 

@@ -36,6 +36,12 @@ const PowerPlantSchema = mongoose.Schema({
         min: 0,
         required: true
     },
+    batteryRatio: {
+        type: Number,
+        min: 0.0,
+        max: 1.0,
+        required: true
+    },
     statusMessage: {
         type: String,
         required: true
