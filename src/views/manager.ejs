@@ -79,34 +79,50 @@
           </div>
           <div class="container mt-3 ">
             <h1 class="h2">Controls</h1>
-            <% if (query && query.production) { %>
+
+
+
+
+
+            <!-- <% if (query && query.production) { %>
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
               <strong>Invalid input!</strong> Production needs to be a interger equal or larger than 0.
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <% } %>
+            <% } %> -->
+
+
+
             <div class="row">
               <div class="col">
                 <form method="POST" action="/api/simulation/users/productionControl">
-                  <div>
-                    <input type="number" name='number' class="form-control" placeholder="Manually set power plant production"
-                      value="<%= typeof number != 'undefined' ? number : '' %>">
+                  <div class="form-group">
+                    <label for="productionControl">Manually set prower plant production, (0 - 30 kWh). </label>
+                    <div class="range-container">
+                      <input type="range" class="form-control-range" id="powerPlantProductionRange" name="number"
+                        min="0" max="30" onchange="updateTextInput(this.value);">
+                      <input type="text" id="textInput">
+                    </div>
                   </div>
                   <div>
-                    <button type="submit" class="btn-sm btn-primary mt-3">Confirm</button>
+                    <button type="submit" class="btn-sm btn-primary">Confirm</button>
                   </div>
                 </form>
               </div>
-              <div class="col-md mt-1 ml-0 pl-0">
+              <div class="col-md btnreset pl-0">
                 <form method="POST" action="/api/simulation/users/productionReset">
                   <div>
-                    <button type="submit" class="btn-sm btn-primary ">Reset</button>
+                    <button type="submit" class="btn-sm btn-primary">Reset</button>
                   </div>
                 </form>
               </div>
             </div>
+
+
+
+
             <% if (query && query.electricityRatio) { %>
             <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
               <strong>Invalid input!</strong> Input needs to be a number between 0.0 - 1.0
@@ -118,16 +134,20 @@
             <div class="row mt-3">
               <div class="col">
                 <form method="POST" action="/api/simulation/users/electricityRatio">
-                  <div>
-                    <input type="text" name='number' class="form-control" placeholder="Set production transfer to market battery (0 - 1) %"
-                      value="<%= typeof number != 'undefined' ? number : '' %>">
+                  <div class="form-group">
+                    <label for="productionControl">Set battery transfer to market battery, (0 - 100 %). </label>
+                    <div class="range-container">
+                      <input type="range" class="form-control-range" id="powerPlantProductionRange2" name="number"
+                        min="0" max="100" onchange="updateTextInput2(this.value);">
+                      <input type="text" id="textInput2">
+                    </div>
                   </div>
                   <div>
-                    <button type="submit" class="btn-sm btn-primary mt-3">Confirm</button>
+                    <button type="submit" class="btn-sm btn-primary">Confirm</button>
                   </div>
                 </form>
               </div>
-              <div class="col-md mt-1 ml-0 pl-0">
+              <div class="col-md btnreset pl-0">
                 <form method="POST" action="/api/simulation/users/electricityRatioReset">
                   <div>
                     <button type="submit" class="btn-sm btn-primary ">Reset</button>
@@ -135,6 +155,10 @@
                 </form>
               </div>
             </div>
+
+
+
+
           </div>
         </div>
         <div class="ml-3 mt-5">
@@ -313,6 +337,29 @@
         fetchChartData();
         setInterval(fetchChartData, 3000);
       })
+
+
+      const powerPlantProductionRange = document.getElementById('powerPlantProductionRange');
+      const powerPlantProductionRange2 = document.getElementById('powerPlantProductionRange2');
+      const fetchLastProdValue = () => {
+        getLatestProductionValue().then(powerPlant => {
+          powerPlantProductionRange.value = powerPlant.currentProduction;
+          updateTextInput(powerPlant.currentProduction);
+
+          powerPlantProductionRange2.value = powerPlant.batteryRatio;
+          updateTextInput2(powerPlant.batteryRatio);
+        });
+
+      }
+      fetchLastProdValue();
+
+      function updateTextInput(val) {
+        document.getElementById('textInput').value = val;
+      }
+
+      function updateTextInput2(val) {
+        document.getElementById('textInput2').value = val;
+      }
     </script>
 </body>
 
