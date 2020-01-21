@@ -21,6 +21,37 @@ router.get('/:marketPriceId', auth.ensureAuthenticated ,auth.check_user, async (
     }
 });
 
+// get latest market price value
+router.get('/users/latestMarketPriceValue', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
+    try {
+        const marketPrices = await MarketPrice.find().sort({
+            timestamp: -1
+        }).limit(10);
+
+        marketPrices.sort((a, b) => {
+            if (a.timestamp < b.timestamp) {
+                return -1;
+            } else if (a.timestamp > b.timestamp) {
+                return 1;
+            }
+            return 0;
+        });
+
+        const currentPrice = marketPrices.map(x => x.currentPrice);
+
+        const result = {
+            currentPrice: Math.floor(currentPrice[9])
+        };
+
+        res.json(result);
+    } catch (err) {
+        res.json({
+            message: err
+        });
+    }
+    return;
+});
+
 // get 10 last market prices
 router.get('/users/marketprices', auth.ensureAuthenticated, async (req, res) => {
     try {

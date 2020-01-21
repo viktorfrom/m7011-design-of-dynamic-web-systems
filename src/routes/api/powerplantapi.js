@@ -21,6 +21,39 @@ router.get('/:powerPlantId', auth.ensureAuthenticated, auth.check_user, async (r
     }
 });
 
+// get latest production value
+router.get('/users/latestProductionValue', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
+    try {
+        const powerPlants = await PowerPlant.find().sort({
+            timestamp: -1
+        }).limit(10);
+
+        powerPlants.sort((a, b) => {
+            if (a.timestamp < b.timestamp) {
+                return -1;
+            } else if (a.timestamp > b.timestamp) {
+                return 1;
+            }
+            return 0;
+        });
+
+        const currentProduction = powerPlants.map(x => x.currentProduction);
+        const batteryRatio = powerPlants.map(x => x.batteryRatio);
+
+        const result = {
+            currentProduction: Math.floor(currentProduction[9]),
+            batteryRatio: batteryRatio[9] * 100
+        };
+
+        res.json(result);
+    } catch (err) {
+        res.json({
+            message: err
+        });
+    }
+    return;
+});
+
 
 // get 10 last power plants
 router.get('/users/powerplants', auth.ensureAuthenticated, auth.check_user, async (req, res) => {

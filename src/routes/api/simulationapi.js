@@ -12,19 +12,20 @@ router.post('/users/productionControl', auth.ensureAuthenticated, auth.check_use
             number
         } = req.body
 
-        if (Math.sign(number) == -1 || number == "") {
-            res.redirect('/dashboard/manager?production=true');
-        } else {
-            Simulation.init.powerPlant.maxProduction = parseInt(number, 10);
+        console.log("test " + number);
+        console.log("parse " + parseInt(number, 10));
+        Simulation.init.powerPlant.maxProduction = parseInt(number, 10);
 
-            if (!(Simulation.init.powerPlant.statusMessage == "START UP SEQUENCE INITIATED" ||
-                    Simulation.init.powerPlant.statusMessage == "BLACKOUT: START UP SEQUENCE INITIATED" ||
-                    Simulation.init.powerPlant.statusMessage == "BLACKOUT: SHUTDOWN SEQUENCE INITIATED")) {
+        if (!(Simulation.init.powerPlant.statusMessage == "START UP SEQUENCE INITIATED" ||
+                Simulation.init.powerPlant.statusMessage == "BLACKOUT: START UP SEQUENCE INITIATED" ||
+                Simulation.init.powerPlant.statusMessage == "BLACKOUT: SHUTDOWN SEQUENCE INITIATED")) {
                 Simulation.init.powerPlant.currentProduction = parseInt(number, 10);
-            }
-
-            Simulation.init.powerPlant.manualControl = true;
+                console.log("asdasd")
         }
+
+        Simulation.init.powerPlant.manualControl = true;
+
+        // res.status(500).send({ error: "boo:(" });
 
         res.redirect('/dashboard/manager');
     } catch (err) {
@@ -52,18 +53,11 @@ router.post('/users/electricityRatio', auth.ensureAuthenticated, auth.check_user
         const {
             number
         } = req.body
+        console.log("asdasd "  + number / 100);
 
-        if (Math.sign(number) == -1 || number == "") {
-            res.redirect('/dashboard/manager?electricityRatio=true');
-        } else {
-            if (number >= 0.0 && number <= 1.0) {
-                Simulation.init.powerPlant.storeBatteryRatio = parseFloat(number, 10);
-                Simulation.init.powerPlant.manualControl = true;
+        Simulation.init.powerPlant.storeBatteryRatio = parseFloat(number / 100, 10);
+        Simulation.init.powerPlant.manualControl = true;
 
-            } else {
-                res.redirect('/dashboard/manager?electricityRatio=true');
-            }
-        }
 
         res.redirect('/dashboard/manager');
     } catch (err) {
@@ -91,14 +85,11 @@ router.post('/users/marketPriceControl', auth.ensureAuthenticated, auth.check_us
         const {
             number
         } = req.body
+        console.log("asdasd " + number);
 
-        if (Math.sign(number) == -1 || number == "") {
-            res.redirect('/dashboard/marketprice?price=true');
-        } else {
-            Simulation.init.marketPrice.maxElectricityPrice = parseInt(number, 10);
-            Simulation.init.marketPrice.currentPrice = parseInt(number, 10);
-            Simulation.init.marketPrice.manualControl = true;
-        }
+        Simulation.init.marketPrice.maxElectricityPrice = parseInt(number, 10);
+        Simulation.init.marketPrice.currentPrice = parseInt(number, 10);
+        Simulation.init.marketPrice.manualControl = true;
 
         res.redirect('/dashboard/marketprice');
     } catch (err) {
