@@ -112,27 +112,10 @@ router.get('/signin', function (req, res, next) {
 });
 
 router.post('/signin', (req, res, next) => {
-  try {
-    User.findOne({
-      email: req.body.email
-    }).then(user => {
-      if (user.role == "admin" || user.role == "manager") {
         passport.authenticate('local', {
-          successRedirect: req.query.redirect ? req.query.redirect : '/dashboard/manager',
+          successRedirect: req.query.redirect ? req.query.redirect : '/dashboard',
           failureRedirect: '/users/signin?failure=true'
-        })(req, res, next);
-      } else {
-        passport.authenticate('local', {
-          successRedirect: req.query.redirect ? req.query.redirect : '/dashboard/prosumer',
-          failureRedirect: '/users/signin?failure=true'
-        })(req, res, next);
-      }
-    }).catch(err => {
-      res.redirect('/users/signin?failure=true');
-    });
-  } catch (err) {
-    res.redirect('/users/signin?failure=true');
-  }
+        })(req, res, next)
 });
 
 router.get('/signout', (req, res) => {
