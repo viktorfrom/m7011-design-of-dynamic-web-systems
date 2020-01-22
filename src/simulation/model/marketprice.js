@@ -10,7 +10,7 @@ module.exports = class marketprice {
         this.minTotalProduction = 0;
         this.electricityPrice = 0.4825; // 48.25 öre/kWh
         this.minElectricityPrice = 0;
-        this.maxElectricityPrice = 50;
+        this.maxElectricityPrice = 100;
         this.maxTotalProduction = 0;
         this.currentProduction = 0;
         this.currentPrice = 0;
@@ -44,12 +44,12 @@ module.exports = class marketprice {
     }
 
     setMarketPrice() {
+        this.currentPrice = 1 / (10 * (this.currentProduction / this.maxTotalProduction) * this.electricityPrice);
+
         if (this.currentPrice >= this.maxElectricityPrice) {
             this.currentPrice = this.maxElectricityPrice;
-        } else if(this.currentPrice < this.minElectricityPrice) {
+        } else if(this.currentPrice <= this.minElectricityPrice) {
             this.currentPrice = this.minElectricityPrice;
-        } else {
-            this.currentPrice = 1 / (10 * (this.currentProduction / this.maxTotalProduction) * this.electricityPrice);
         }
     }
 
