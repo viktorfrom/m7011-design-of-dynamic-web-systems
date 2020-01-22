@@ -79,13 +79,14 @@
           <h1 class="h2">Controls</h1>
           <div class="row mt-3">
             <div class="col">
-              <form method="POST" action="/api/simulation/users/test">
+              <form method="POST" action="/api/simulation/users/houseElectricityRatio">
                 <div class="form-group">
                   <label for="houseControl">Manually set power plant production, (0 - 30 kWh). </label>
                   <div class="range-container">
                     <input type="range" class="form-control-range" id="houseBatteryRatioRange" name="number" min="0"
                       max="100" onchange="updateTextInput(this.value);">
                     <input type="text" id="textInput">
+                    <input type="hidden" value=<%= user.email%> name="userEmail" />
                   </div>
                 </div>
                 <div>
@@ -94,7 +95,7 @@
               </form>
             </div>
             <div class="col-md btnreset pl-0">
-              <form method="POST" action="/api/simulation/users/testReset">
+              <form method="POST" action="/api/simulation/users/resetHouseElectricityRatio">
                 <div>
                   <input type="hidden" value=<%= user.email%> name="userEmail" />
                 </div>

@@ -24,23 +24,18 @@ router.get('/:houseId', auth.ensureAuthenticated, auth.check_user, async (req, r
 // get latest battery ratio
 router.get('/users/latestBatteryRatio', auth.ensureAuthenticated, async (req, res) => {
     try {
-        const houses = await House.find().sort({
+        const house  = await House.find({
+            owner: req.user.email
+        }).sort({
             timestamp: -1
-        }).limit(10);
+        }).limit(1);
 
-        houses.sort((a, b) => {
-            if (a.timestamp < b.timestamp) {
-                return -1;
-            } else if (a.timestamp > b.timestamp) {
-                return 1;
-            }
-            return 0;
-        });
 
-        const batteryRatio = houses.map(x => x.batteryRatio);
+
+        const batteryRatio = house.map(x => x.batteryRatio);
 
         const result = {
-            batteryRatio: batteryRatio[9] * 100
+            batteryRatio: batteryRatio[0] * 100
         };
 
         res.json(result);
@@ -73,7 +68,7 @@ router.get('/users/houses', auth.ensureAuthenticated, async (req, res) => {
         });
 
         const timestamp = houses.map(x => moment(x.timestamp).format('YYYY-MM-DD hh:mm:ss'));
-        
+
         const maxCapacity = houses.map(x => x.battery.maxCapacity);
         const currentCapacity = houses.map(x => x.battery.currentCapacity);
 
@@ -93,7 +88,7 @@ router.get('/users/houses', auth.ensureAuthenticated, async (req, res) => {
 
             currentPower: currentPower,
             maxPower: maxPower,
-            
+
             maxHouseConsumption: maxHouseConsumption,
             houseConsumption: houseConsumption,
             netProduction: netProduction,

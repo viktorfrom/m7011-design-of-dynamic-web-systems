@@ -19,17 +19,17 @@ router.post('/users/productionControl', auth.ensureAuthenticated, auth.check_use
         if (!(Simulation.init.powerPlant.statusMessage == "START UP SEQUENCE INITIATED" ||
                 Simulation.init.powerPlant.statusMessage == "BLACKOUT: START UP SEQUENCE INITIATED" ||
                 Simulation.init.powerPlant.statusMessage == "BLACKOUT: SHUTDOWN SEQUENCE INITIATED")) {
-                Simulation.init.powerPlant.currentProduction = parseInt(number, 10);
-                console.log("asdasd")
+            Simulation.init.powerPlant.currentProduction = parseInt(number, 10);
+            console.log("asdasd")
         }
 
         Simulation.init.powerPlant.manualControl = true;
 
         // res.status(500).send({ error: "boo:(" });
 
-        res.redirect('/dashboard/manager');
+        res.redirect('/dashboard/powerplant');
     } catch (err) {
-        res.redirect('/dashboard/manager');
+        res.redirect('/dashboard/powerplant');
     }
 });
 
@@ -40,7 +40,7 @@ router.post('/users/productionReset', auth.ensureAuthenticated, auth.check_user,
         Simulation.init.powerPlant.statusMessage = "FULLY OPERATIONAL";
         Simulation.init.powerPlant.manualControl = false;
 
-        res.redirect('/dashboard/manager');
+        res.redirect('/dashboard/powerplant');
     } catch (err) {
         res.json({
             message: err
@@ -53,26 +53,27 @@ router.post('/users/electricityRatio', auth.ensureAuthenticated, auth.check_user
         const {
             number
         } = req.body
-        console.log("asdasd "  + number / 100);
+        console.log("asdasd " + number / 100);
+        // TODO, USER EMAIL TO LOCATE CORRECT VALUE
 
         Simulation.init.powerPlant.storeBatteryRatio = parseFloat(number / 100, 10);
         Simulation.init.powerPlant.manualControl = true;
 
 
-        res.redirect('/dashboard/manager');
+        res.redirect('/dashboard/powerplant');
     } catch (err) {
-        res.redirect('/dashboard/manager');
+        res.redirect('/dashboard/powerplant');
     }
 });
 
 router.post('/users/electricityRatioReset', auth.ensureAuthenticated, auth.check_user, async (req, res, next) => {
     try {
-        Simulation.init.powerPlant.storeBatteryRatio = parseFloat(0, 10);
+        Simulation.init.powerPlant.storeBatteryRatio = parseFloat(0.5, 10);
 
         Simulation.init.powerPlant.statusMessage = "FULLY OPERATIONAL";
         Simulation.init.powerPlant.manualControl = false;
 
-        res.redirect('/dashboard/manager');
+        res.redirect('/dashboard/powerplant');
     } catch (err) {
         res.json({
             message: err
@@ -104,7 +105,7 @@ router.post('/users/marketPriceReset', auth.ensureAuthenticated, auth.check_user
         Simulation.init.marketPrice.maxElectricityPrice = parseInt(100, 10);
         Simulation.init.marketPrice.manualControl = false;
 
-        res.redirect('/dashboard/marketprice');
+        res.redirect('/dashboard/markcetprice');
     } catch (err) {
         res.json({
             message: err
@@ -112,36 +113,28 @@ router.post('/users/marketPriceReset', auth.ensureAuthenticated, auth.check_user
     }
 });
 
-router.post('/users/test', auth.ensureAuthenticated, async (req, res, next) => {
+router.post('/users/houseElectricityRatio', auth.ensureAuthenticated, async (req, res, next) => {
     try {
         const {
             number,
             userEmail
         } = req.body
 
-        if (Math.sign(number) == -1 || number == "") {
-            res.redirect('/dashboard/');
-        } else {
 
-            if (number >= 0.0 && number <= 1.0) {
-                for (const house of Simulation.init.houses) {
-                    if (house.owner == userEmail) {
-                        house.storeBatteryRatio = parseFloat(number, 10);
-                        house.manualControl = true;
-                    }
-                }
-            } else {
-                res.redirect('/dashboard/');
+        for (const house of Simulation.init.houses) {
+            if (house.owner == userEmail) {
+                house.storeBatteryRatio = parseFloat(number / 100, 10);
+                house.manualControl = true;
             }
         }
 
-        res.redirect('/dashboard/prosumer');
+        res.redirect('/dashboard/');
     } catch (err) {
         res.redirect('/dashboard/');
     }
 });
 
-router.post('/users/testReset', auth.ensureAuthenticated, async (req, res, next) => {
+router.post('/users/resetHouseElectricityRatio', auth.ensureAuthenticated, async (req, res, next) => {
     try {
         const {
             userEmail
@@ -149,12 +142,12 @@ router.post('/users/testReset', auth.ensureAuthenticated, async (req, res, next)
 
         for (const house of Simulation.init.houses) {
             if (house.owner == userEmail) {
-                house.storeBatteryRatio = parseFloat(0, 10);
+                house.storeBatteryRatio = parseFloat(0.5, 10);
                 house.manualControl = false;
             }
         }
 
-        res.redirect('/dashboard/prosumer');
+        res.redirect('/dashboard/');
     } catch (err) {
         res.json({
             message: err
