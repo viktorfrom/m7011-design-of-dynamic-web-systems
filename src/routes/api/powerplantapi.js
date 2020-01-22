@@ -56,7 +56,7 @@ router.get('/users/latestProductionValue', auth.ensureAuthenticated, auth.check_
 
 
 // get 10 last power plants
-router.get('/users/powerplants', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
+router.get('/users/powerplants', auth.ensureAuthenticated, async (req, res) => {
     try {
         // console.log(JSON.stringify(req.user));
         const powerPlants = await PowerPlant.find().sort({

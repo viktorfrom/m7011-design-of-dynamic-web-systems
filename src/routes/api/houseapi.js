@@ -21,6 +21,37 @@ router.get('/:houseId', auth.ensureAuthenticated, auth.check_user, async (req, r
     }
 });
 
+// get latest battery ratio
+router.get('/users/latestBatteryRatio', auth.ensureAuthenticated, async (req, res) => {
+    try {
+        const houses = await House.find().sort({
+            timestamp: -1
+        }).limit(10);
+
+        houses.sort((a, b) => {
+            if (a.timestamp < b.timestamp) {
+                return -1;
+            } else if (a.timestamp > b.timestamp) {
+                return 1;
+            }
+            return 0;
+        });
+
+        const batteryRatio = houses.map(x => x.batteryRatio);
+
+        const result = {
+            batteryRatio: batteryRatio[9] * 100
+        };
+
+        res.json(result);
+    } catch (err) {
+        res.json({
+            message: err
+        });
+    }
+    return;
+});
+
 // get 10 last houses
 router.get('/users/houses', auth.ensureAuthenticated, async (req, res) => {
     try {

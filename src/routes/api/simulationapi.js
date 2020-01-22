@@ -29,7 +29,7 @@ router.post('/users/productionControl', auth.ensureAuthenticated, auth.check_use
 
         res.redirect('/dashboard/manager');
     } catch (err) {
-        res.redirect('/dashboard/manager?electricityRatio=true');
+        res.redirect('/dashboard/manager');
     }
 });
 
@@ -61,7 +61,7 @@ router.post('/users/electricityRatio', auth.ensureAuthenticated, auth.check_user
 
         res.redirect('/dashboard/manager');
     } catch (err) {
-        res.redirect('/dashboard/manager?electricityRatio=true');
+        res.redirect('/dashboard/manager');
     }
 });
 
@@ -120,7 +120,7 @@ router.post('/users/test', auth.ensureAuthenticated, async (req, res, next) => {
         } = req.body
 
         if (Math.sign(number) == -1 || number == "") {
-            res.redirect('/dashboard/prosumer?test=true');
+            res.redirect('/dashboard/');
         } else {
 
             if (number >= 0.0 && number <= 1.0) {
@@ -131,13 +131,13 @@ router.post('/users/test', auth.ensureAuthenticated, async (req, res, next) => {
                     }
                 }
             } else {
-                res.redirect('/dashboard/prosumer?test=true');
+                res.redirect('/dashboard/');
             }
         }
 
         res.redirect('/dashboard/prosumer');
     } catch (err) {
-        res.redirect('/dashboard/prosumer?test=true');
+        res.redirect('/dashboard/');
     }
 });
 

@@ -40,7 +40,7 @@ router.get('/users/latestMarketPriceValue', auth.ensureAuthenticated, auth.check
         const currentPrice = marketPrices.map(x => x.currentPrice);
 
         const result = {
-            currentPrice: Math.floor(currentPrice[9])
+            currentPrice: currentPrice[9].toPrecision(2)
         };
 
         res.json(result);
