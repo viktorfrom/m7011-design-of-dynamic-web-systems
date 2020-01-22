@@ -76,13 +76,8 @@ router.post("/image", auth.ensureAuthenticated, upload.single('image'), (req, re
                 user.image = "../" + data.image.slice(7);
 
                 user.save().then(user => {
-                            if (user.role == "admin" || user.role == "manager") {
-                                res.redirect('/dashboard/manager?success=true')
-                            } else {
-                                res.redirect('/dashboard/prosumer?success=true')
-                            }
-                        }
-                    )
+                        res.redirect('/dashboard/?success=true')
+                    })
                     .catch(err => {
                         res.json({
                             message: JSON.stringify(err)
@@ -95,11 +90,7 @@ router.post("/image", auth.ensureAuthenticated, upload.single('image'), (req, re
                 });
             })
     } catch (err) {
-        if (req.user.role == "admin" || req.user.role == "manager") {
-            res.redirect('/dashboard/manager?failure=true');
-        } else {
-            res.redirect('/dashboard/prosumer?failure=true');
-        }
+        res.redirect('/dashboard/?failure=true');
     }
 });
 
