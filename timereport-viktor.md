@@ -51,6 +51,7 @@ Viktor From, vikfro-6
 |  2019-01-18  | 12      | Report, github release                         |
 |  2019-01-20  | 5       | Replace text input with range sliders          |
 |  2019-01-21  | 6       | Redesign dashboard and views, fetch API upt.   |
+|  2019-01-22  | 5       | House dashboard, add user update/delete page   |
 | ------------ | ------- | ---------------------------------------------- | 
-|  Total:      | 272     |                                                |
+|  Total:      | 277     |                                                |
 
