@@ -21,6 +21,8 @@ module.exports = class powerplant {
         this.statusMessage = "";
         this.startUp = true;
         this.powerOutage = false;
+        this.manualShutdown = false;
+        this.manualStartUp = false;
         this.manualControl = false;
         this.count = 0;
     }
@@ -126,6 +128,30 @@ module.exports = class powerplant {
         this.initStartUp();
         this.PowerPlantStatus();
 
+        if (this.startUp == false && this.manualStartUp == false && this.manualShutdown) {
+            this.shutdownSeq();
+            this.statusMessage = "SHUTDOWN SEQUENCE INITIATED";
+            this.count += 1;
+
+            if (this.count >= 10) {
+                this.statusMessage = "POWER PLANT OFFLINE";
+                this.manualShutdown = false;
+                this.count = 0;
+            }
+        }
+
+        if (this.startUp == false && this.manualShutdown == false && this.manualStartUp) {
+            this.startUpSeq();
+            this.statusMessage = "START UP SEQUENCE INITIATED";
+            this.count += 1;
+
+            if (this.count >= 10) {
+                this.statusMessage = "FULLY OPERATIONAL";
+                this.manualStartUp = false;
+                this.count = 0;
+            }
+        }
+
         this.marketPrice.setTotalProduction(this.currentProduction);
         this.marketPrice.setMaxProduction(this.maxProduction);
 
@@ -133,9 +159,11 @@ module.exports = class powerplant {
             this.statusMessage += ": MANUAL CONTROL";
         };
 
+        if(this.statusMessage == "POWER PLANT OFFLINE") {
+            this.currentProduction = 0;
+        }
+
         this.setPowerPlantSchema();
-        // this.startUpSeq();
-        // this.shutdownSeq();
         // this.status();
     }
 }

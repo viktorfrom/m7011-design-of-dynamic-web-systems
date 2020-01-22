@@ -12,18 +12,22 @@ router.post('/users/productionControl', auth.ensureAuthenticated, auth.check_use
             number
         } = req.body
 
-        console.log("test " + number);
-        console.log("parse " + parseInt(number, 10));
-        Simulation.init.powerPlant.maxProduction = parseInt(number, 10);
+        const statusMessage = Simulation.init.powerPlant.statusMessage;
 
-        if (!(Simulation.init.powerPlant.statusMessage == "START UP SEQUENCE INITIATED" ||
-                Simulation.init.powerPlant.statusMessage == "EMERGENCY START UP SEQUENCE INITIATED" ||
-                Simulation.init.powerPlant.statusMessage == "EMERGENCY SHUTDOWN SEQUENCE INITIATED")) {
-            Simulation.init.powerPlant.currentProduction = parseInt(number, 10);
-            console.log("asdasd")
+        if (statusMessage == "START UP SEQUENCE INITIATED" ||
+            statusMessage == "EMERGENCY START UP SEQUENCE INITIATED" ||
+            statusMessage == "EMERGENCY SHUTDOWN SEQUENCE INITIATED" ||
+            statusMessage == "SHUTDOWN SEQUENCE INITIATED") {
+
+            res.redirect('/dashboard/powerplant?sequence=true');
+
+        } else if (statusMessage == "POWER PLANT OFFLINE") {
+            res.redirect('/dashboard/powerplant?offline=true');
+
+        } else {
+            Simulation.init.powerPlant.maxProduction = parseInt(number, 10);
+            Simulation.init.powerPlant.manualControl = true;
         }
-
-        Simulation.init.powerPlant.manualControl = true;
 
         // res.status(500).send({ error: "boo:(" });
 
@@ -48,13 +52,64 @@ router.post('/users/productionReset', auth.ensureAuthenticated, auth.check_user,
     }
 });
 
+
+router.post('/users/productionShutdown', auth.ensureAuthenticated, auth.check_user, async (req, res, next) => {
+    try {
+
+        const statusMessage = Simulation.init.powerPlant.statusMessage;
+
+        if (statusMessage == "START UP SEQUENCE INITIATED" ||
+            statusMessage == "EMERGENCY START UP SEQUENCE INITIATED" ||
+            statusMessage == "EMERGENCY SHUTDOWN SEQUENCE INITIATED" ||
+            statusMessage == "SHUTDOWN SEQUENCE INITIATED") {
+
+            res.redirect('/dashboard/powerplant?sequence=true');
+        } else if (statusMessage == "POWER PLANT OFFLINE") {
+            res.redirect('/dashboard/powerplant?offline=true');
+
+        } else {
+            Simulation.init.powerPlant.manualShutdown = true;
+        }
+
+        res.redirect('/dashboard/powerplant');
+    } catch (err) {
+        res.json({
+            message: err
+        });
+    }
+});
+
+router.post('/users/productionStartUp', auth.ensureAuthenticated, auth.check_user, async (req, res, next) => {
+    try {
+
+        const statusMessage = Simulation.init.powerPlant.statusMessage;
+
+        if (statusMessage == "START UP SEQUENCE INITIATED" ||
+            statusMessage == "EMERGENCY START UP SEQUENCE INITIATED" ||
+            statusMessage == "EMERGENCY SHUTDOWN SEQUENCE INITIATED" ||
+            statusMessage == "SHUTDOWN SEQUENCE INITIATED") {
+
+            res.redirect('/dashboard/powerplant?sequence=true');
+        } else if (statusMessage == "FULLY OPERATIONAL") {
+            res.redirect('/dashboard/powerplant?operational=true');
+
+        } else {
+            Simulation.init.powerPlant.manualStartUp = true;
+        }
+
+        res.redirect('/dashboard/powerplant');
+    } catch (err) {
+        res.json({
+            message: err
+        });
+    }
+});
+
 router.post('/users/electricityRatio', auth.ensureAuthenticated, auth.check_user, async (req, res, next) => {
     try {
         const {
             number
         } = req.body
-        console.log("asdasd " + number / 100);
-        // TODO, USER EMAIL TO LOCATE CORRECT VALUE
 
         Simulation.init.powerPlant.storeBatteryRatio = parseFloat(number / 100, 10);
         Simulation.init.powerPlant.manualControl = true;
@@ -86,7 +141,6 @@ router.post('/users/marketPriceControl', auth.ensureAuthenticated, auth.check_us
         const {
             number
         } = req.body
-        console.log("asdasd " + number);
 
         Simulation.init.marketPrice.maxElectricityPrice = parseInt(number, 10);
         Simulation.init.marketPrice.currentPrice = parseInt(number, 10);
