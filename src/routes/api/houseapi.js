@@ -30,8 +30,6 @@ router.get('/users/latestBatteryRatio', auth.ensureAuthenticated, async (req, re
             timestamp: -1
         }).limit(1);
 
-
-
         const batteryRatio = house.map(x => x.batteryRatio);
 
         const result = {
