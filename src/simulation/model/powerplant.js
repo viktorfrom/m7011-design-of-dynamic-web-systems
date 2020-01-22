@@ -42,7 +42,8 @@ module.exports = class powerplant {
         if (this.powerOutage == false) {
             this.setCurrentProduction(this.currentProduction + this.mathExpression.normalDistribution(0, 0.1));
 
-            if (this.mathExpression.getRandomNum(100) <= 2) {
+            if (this.mathExpression.getRandomNum(100) <= 2 && this.manualStartUp == false &&
+                this.manualShutdown == false && this.statusMessage == "FULLY OPERATIONAL") {
                 this.statusMessage = "EMERGENCY SHUTDOWN SEQUENCE INITIATED";
                 this.powerOutage = true;
             }
@@ -89,6 +90,34 @@ module.exports = class powerplant {
             this.mathExpression.normalDistribution(0, 0.1));
     }
 
+    manualStartUpSeq() {
+        if (this.startUp == false && this.manualShutdown == false && this.manualStartUp) {
+            this.startUpSeq();
+            this.statusMessage = "START UP SEQUENCE INITIATED";
+            this.count += 1;
+
+            if (this.count >= 10) {
+                this.statusMessage = "FULLY OPERATIONAL";
+                this.manualStartUp = false;
+                this.count = 0;
+            }
+        }
+    }
+
+    manualShutdownSeq() {
+        if (this.startUp == false && this.manualStartUp == false && this.manualShutdown) {
+            this.shutdownSeq();
+            this.statusMessage = "SHUTDOWN SEQUENCE INITIATED";
+            this.count += 1;
+
+            if (this.count >= 10) {
+                this.statusMessage = "POWER PLANT OFFLINE";
+                this.manualShutdown = false;
+                this.count = 0;
+            }
+        }
+    }
+
     getName() {
         return this.name;
     }
@@ -128,29 +157,8 @@ module.exports = class powerplant {
         this.initStartUp();
         this.PowerPlantStatus();
 
-        if (this.startUp == false && this.manualStartUp == false && this.manualShutdown) {
-            this.shutdownSeq();
-            this.statusMessage = "SHUTDOWN SEQUENCE INITIATED";
-            this.count += 1;
-
-            if (this.count >= 10) {
-                this.statusMessage = "POWER PLANT OFFLINE";
-                this.manualShutdown = false;
-                this.count = 0;
-            }
-        }
-
-        if (this.startUp == false && this.manualShutdown == false && this.manualStartUp) {
-            this.startUpSeq();
-            this.statusMessage = "START UP SEQUENCE INITIATED";
-            this.count += 1;
-
-            if (this.count >= 10) {
-                this.statusMessage = "FULLY OPERATIONAL";
-                this.manualStartUp = false;
-                this.count = 0;
-            }
-        }
+        this.manualStartUpSeq();
+        this.manualShutdownSeq();
 
         this.marketPrice.setTotalProduction(this.currentProduction);
         this.marketPrice.setMaxProduction(this.maxProduction);
@@ -159,7 +167,7 @@ module.exports = class powerplant {
             this.statusMessage += ": MANUAL CONTROL";
         };
 
-        if(this.statusMessage == "POWER PLANT OFFLINE") {
+        if (this.statusMessage == "POWER PLANT OFFLINE") {
             this.currentProduction = 0;
         }
 
