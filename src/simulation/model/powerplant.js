@@ -41,18 +41,18 @@ module.exports = class powerplant {
             this.setCurrentProduction(this.currentProduction + this.mathExpression.normalDistribution(0, 0.1));
 
             if (this.mathExpression.getRandomNum(100) <= 2) {
-                this.statusMessage = "BLACKOUT: SHUTDOWN SEQUENCE INITIATED";
+                this.statusMessage = "EMERGENCY SHUTDOWN SEQUENCE INITIATED";
                 this.powerOutage = true;
             }
 
         } else if (this.powerOutage == true && this.count <= 10) {
             this.shutdownSeq();
-            this.statusMessage = "BLACKOUT: SHUTDOWN SEQUENCE INITIATED";
+            this.statusMessage = "EMERGENCY SHUTDOWN SEQUENCE INITIATED";
             this.count += 1;
 
         } else if (this.powerOutage == true && this.count >= 10) {
             this.startUpSeq();
-            this.statusMessage = "BLACKOUT: START UP SEQUENCE INITIATED";
+            this.statusMessage = "EMERGENCY START UP SEQUENCE INITIATED";
             this.count += 1;
 
             if (this.count >= 20) {

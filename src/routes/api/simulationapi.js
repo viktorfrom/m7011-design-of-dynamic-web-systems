@@ -17,8 +17,8 @@ router.post('/users/productionControl', auth.ensureAuthenticated, auth.check_use
         Simulation.init.powerPlant.maxProduction = parseInt(number, 10);
 
         if (!(Simulation.init.powerPlant.statusMessage == "START UP SEQUENCE INITIATED" ||
-                Simulation.init.powerPlant.statusMessage == "BLACKOUT: START UP SEQUENCE INITIATED" ||
-                Simulation.init.powerPlant.statusMessage == "BLACKOUT: SHUTDOWN SEQUENCE INITIATED")) {
+                Simulation.init.powerPlant.statusMessage == "EMERGENCY START UP SEQUENCE INITIATED" ||
+                Simulation.init.powerPlant.statusMessage == "EMERGENCY SHUTDOWN SEQUENCE INITIATED")) {
             Simulation.init.powerPlant.currentProduction = parseInt(number, 10);
             console.log("asdasd")
         }
