@@ -43,7 +43,7 @@
               <div class="col">
                 <form method="POST" action="/api/simulation/users/productionControl">
                   <div class="form-group">
-                    <label for="productionControl">Manually set power plant production, (0 - 30 kWh). </label>
+                    <label for="productionControl">Set power plant production, (0 - 30 kWh). </label>
                     <div class="range-container">
                       <input type="range" class="form-control-range" id="powerPlantProductionRange" name="number"
                         min="0" max="30" onchange="updateTextInput(this.value);">
@@ -67,7 +67,7 @@
               <div class="col">
                 <form method="POST" action="/api/simulation/users/electricityRatio">
                   <div class="form-group">
-                    <label for="productionControl">Set battery transfer to market battery, (0 - 100 %). </label>
+                    <label for="productionControl">Set production to power plant battery, (0 - 100 %). </label>
                     <div class="range-container">
                       <input type="range" class="form-control-range" id="powerPlantProductionRange2" name="number"
                         min="0" max="100" onchange="updateTextInput2(this.value);">

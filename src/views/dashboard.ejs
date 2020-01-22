@@ -81,7 +81,7 @@
             <div class="col">
               <form method="POST" action="/api/simulation/users/houseElectricityRatio">
                 <div class="form-group">
-                  <label for="houseControl">Manually set power plant production, (0 - 30 kWh). </label>
+                  <label for="houseControl">Set production to power plant battery, (0 - 100 %). </label>
                   <div class="range-container">
                     <input type="range" class="form-control-range" id="houseBatteryRatioRange" name="number" min="0"
                       max="100" onchange="updateTextInput(this.value);">
