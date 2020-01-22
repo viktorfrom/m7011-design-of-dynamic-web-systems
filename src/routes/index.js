@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../config/auth.js')
-// const {
-//   ensureAuthenticated
-// } = require('../config/auth');
 
 router.get('/', function (req, res, next) {
   res.render('index', {
@@ -25,16 +22,17 @@ router.get('/aboutus', function (req, res, next) {
   });
 });
 
-router.get('/dashboard/manager', auth.ensureAuthenticated, auth.check_user, function (req, res, next) {
-  res.render('manager', {
+
+router.get('/dashboard', auth.ensureAuthenticated, function (req, res, next) {
+  res.render('dashboard', {
     title: 'Green Lean Electrics',
     query: req.query ? req.query : null,
     user: req.user
   });
 });
 
-router.get('/dashboard/prosumer', auth.ensureAuthenticated, function (req, res, next) {
-  res.render('prosumer', {
+router.get('/dashboard/powerplant', auth.ensureAuthenticated, function (req, res, next) {
+  res.render('powerplant', {
     title: 'Green Lean Electrics',
     query: req.query ? req.query : null,
     user: req.user
