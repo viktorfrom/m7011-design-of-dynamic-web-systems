@@ -49,6 +49,8 @@ Viktor From, vikfro-6
 |  2019-01-16  | 9       | SimulatorAPI, excess power to market, report   |
 |  2019-01-17  | 9       | SimulatorAPI, deploy to server, report         |
 |  2019-01-18  | 12      | Report, github release                         |
+|  2019-01-20  | 5       | Replace text input with range sliders          |
+|  2019-01-21  | 6       | Redesign dashboard and views, fetch API upt.   |
 | ------------ | ------- | ---------------------------------------------- | 
-|  Total:      | 261     |                                                |
+|  Total:      | 272     |                                                |
 
