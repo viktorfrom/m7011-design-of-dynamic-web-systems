@@ -37,9 +37,47 @@
         </div>
         <% if (user.role == "admin" || user.role == "manager"){ %>
         <div class="container">
+          <% if (query && query.sequence) { %>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong>Invalid request!</strong> Power plant sequence in progress! 
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>     
+          <% } %>
+          <% if (query && query.operational) { %>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong>Invalid request!</strong> Power plant fully operational! 
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>     
+          <% } %>
+          <% if (query && query.offline) { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>Invalid request!</strong> Power plant offline!
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>     
+          <% } %>
           <div class="container mt-3 ">
             <h1 class="h2">Controls</h1>
-            <div class="row">
+            <p> Manually shutdown or start up power plant. </p>
+            <div class="btn-group" role="group">
+              <form method="POST" action="/api/simulation/users/productionStartUp">
+                <div>
+                  <button type="submit" class="btn-sm btn-primary">Start Up</button>
+                </div>
+              </form>
+              </form>
+              <form method="POST" action="/api/simulation/users/productionShutdown">
+                <div>
+                  <button type="submit" class="btn-sm btn-warning ml-1">Shutdown</button>
+                </div>
+              </form>
+            </div>
+            <div class="row mt-3">
               <div class="col">
                 <form method="POST" action="/api/simulation/users/productionControl">
                   <div class="form-group">
@@ -266,8 +304,6 @@
         fetchChartData();
         setInterval(fetchChartData, 3000);
       })
-
-
       const powerPlantProductionRange = document.getElementById('powerPlantProductionRange');
       const powerPlantProductionRange2 = document.getElementById('powerPlantProductionRange2');
       const fetchLastProdValue = () => {
@@ -280,11 +316,9 @@
         });
       }
       fetchLastProdValue();
-
       function updateTextInput(val) {
         document.getElementById('textInput').value = val;
       }
-
       function updateTextInput2(val) {
         document.getElementById('textInput2').value = val;
       }

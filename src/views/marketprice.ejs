@@ -172,7 +172,6 @@
         setTimeout(() => {
           runningStatus.innerHTML = 'Running...'
         }, interval * 3);
-
       };
       animateRunning();
       setInterval(animateRunning, interval * 4);
@@ -195,7 +194,6 @@
                 label: 'Market price (Swedish krona)',
                 backgroundColor: 'rgba(255, 206, 86, 0.2)',
                 borderColor: 'rgba(255, 206, 86, 1)',
-
                 data: marketPrices.currentPrice,
                 fill: true,
               }
@@ -216,7 +214,6 @@
         });
       }
       fetchLastProdValue();
-
       function updateTextInput(val) {
         document.getElementById('textInput').value = val;
       }
