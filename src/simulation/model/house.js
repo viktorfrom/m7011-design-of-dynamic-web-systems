@@ -110,6 +110,7 @@ module.exports = class house {
             minHouseConsumption: this.minHouseConsumption,
             houseConsumption: this.houseConsumption,
             netProduction: this.windTurbine.getCurrentPower() - this.houseConsumption,
+            batteryRatio: this.storeBatteryRatio,
             statusMessage: this.statusMessage
         }); 
 

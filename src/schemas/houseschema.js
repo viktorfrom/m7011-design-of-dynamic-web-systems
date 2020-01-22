@@ -48,6 +48,12 @@ const HouseSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    batteryRatio: {
+        type: Number,
+        min: 0.0,
+        max: 1.0,
+        required: true
+    },
     statusMessage: {
         type: String,
         required: true
