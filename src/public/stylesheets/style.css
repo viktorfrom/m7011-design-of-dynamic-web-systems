@@ -25,7 +25,15 @@ a {
 }
 
 .btnwidth {
+  width: 47%
+}
+
+.btnwidth2 {
   width: 45%
+}
+
+.delbtn {
+  margin-top: -19px
 }
 
 .center {
