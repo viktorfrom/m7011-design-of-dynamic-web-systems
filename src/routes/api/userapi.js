@@ -105,7 +105,7 @@ router.post('/deleteUser', auth.ensureAuthenticated, async (req, res) => {
         if (userRole == "admin" || userRole == "manager") {
             res.redirect('/dashboard/profile?role=true');
         } else {
-            await User.remove({
+            await User.deleteOne({
                 email: userEmail
             });
 
