@@ -155,6 +155,10 @@ module.exports = class house {
         
         this.setHouseSchema();
 
+        if (this.statusMessage == "WIND TURBINE BROKEN") {
+            this.windTurbine.currentPower = 0;
+        }
+
         this.windTurbine.setExcessPowerZero();
     }
 }
