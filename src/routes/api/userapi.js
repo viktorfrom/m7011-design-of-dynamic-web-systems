@@ -76,7 +76,7 @@ router.post("/image", auth.ensureAuthenticated, upload.single('image'), (req, re
                 user.image = "../" + data.image.slice(7);
 
                 user.save().then(user => {
-                        res.redirect('/dashboard/?success=true')
+                        res.redirect('/dashboard/profile?success=true')
                     })
                     .catch(err => {
                         res.json({
@@ -90,9 +90,34 @@ router.post("/image", auth.ensureAuthenticated, upload.single('image'), (req, re
                 });
             })
     } catch (err) {
-        res.redirect('/dashboard/?failure=true');
+        res.redirect('/dashboard/profile?failure=true');
     }
 });
+
+// delete user 
+router.post('/deleteUser', auth.ensureAuthenticated, async (req, res) => {
+    try {
+        const {
+            userEmail,
+            userRole
+        } = req.body
+
+        if (userRole == "admin" || userRole == "manager") {
+            res.redirect('/dashboard/profile?role=true');
+        } else {
+            await User.remove({
+                email: userEmail
+            });
+
+            res.redirect('/users/signin')
+        }
+
+    } catch (err) {
+        res.json({
+            message: err
+        });
+    }
+})
 
 // update user
 router.patch('/:userId', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
@@ -116,5 +141,7 @@ router.patch('/:userId', auth.ensureAuthenticated, auth.check_user, async (req, 
         });
     }
 });
+
+
 
 module.exports = router;

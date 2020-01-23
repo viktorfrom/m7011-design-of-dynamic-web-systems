@@ -54,4 +54,13 @@ router.get('/dashboard/marketprice', auth.ensureAuthenticated, function (req, re
   });
 });
 
+router.get('/dashboard/profile', auth.ensureAuthenticated, function (req, res, next) {
+  res.render('profile', {
+    title: 'Green Lean Electrics',
+    query: req.query ? req.query : null,
+    user: req.user
+  });
+});
+
+
 module.exports = router;
