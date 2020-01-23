@@ -73,8 +73,8 @@ module.exports = class init {
     postAdmin() {
         const newUser = new User({
             timestamp: Date.now(),
-            firstName: "admin",
-            lastName: "admin",
+            firstName: "Admin",
+            lastName: "Admin",
             email: "admin@test.com",
             role: "manager",
             password: "admin",
