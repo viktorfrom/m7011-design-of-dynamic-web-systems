@@ -35,22 +35,6 @@
           class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2">Dashboard</h1>
         </div>
-        <% if (query && query.success) { %>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-          <strong>Image upload successful!</strong>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <% } %>
-        <% if (query && query.failure) { %>
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          <strong>Invalid input!</strong> Please select a file before uploading.
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <% } %>
         <div class="container">
           <p class="lead mb-5">Welcome <%= user.firstName %> <%= user.lastName %></p>
           <div class="row">
@@ -58,14 +42,6 @@
               <div class="img-container">
                 <img class="img-fd mx-auto img mb-3" title="House" src=<%= user.image %> alt="Image of users house">
               </div>
-              <form method="POST" action="/api/user/image" enctype="multipart/form-data">
-                <div>
-                  <input type='file' name='image' />
-                </div>
-                <div>
-                  <button type="submit" class="btn-sm btnwidth btn-primary mt-2">Upload image</button>
-                </div>
-              </form>
             </div>
             <div class="col-sm">
               <p>First Name: <%= user.firstName %> </p>
