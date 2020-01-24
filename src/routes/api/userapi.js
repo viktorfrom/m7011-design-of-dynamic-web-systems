@@ -120,21 +120,35 @@ router.post('/deleteUser', auth.ensureAuthenticated, async (req, res) => {
 })
 
 // update user
-router.patch('/:userId', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
+router.post('/updateUser', auth.ensureAuthenticated, async (req, res) => {
     try {
-        const userUpdate = await User.updateOne({
-            _id: req.params.userId
-        }, {
-            $set: {
-                firstName: req.user.firstName,
-                lastName: req.user.lastName,
-                email: req.user.email,
-                region: req.user.region,
-                password: req.user.password,
-                image: data.image
-            }
-        });
-        res.json(userUpdate);
+        const {
+            firstName,
+            lastName,
+            userEmail,
+            region,
+            newFirstName,
+            newLastName,
+            newRegion
+        } = req.body
+
+        if (newFirstName == "" && newLastName == "" && newRegion == "") {
+            res.redirect('/dashboard/profile?updateFail=true')
+        } else {
+            await User.updateOne({
+                email: userEmail
+            }, {
+                $set: {
+                    firstName: newFirstName ? newFirstName : firstName,
+                    lastName: newLastName ? newLastName : lastName,
+                    region: newRegion ? newRegion : region
+                }
+            });
+        }
+
+        res.redirect('/dashboard/profile?update=true')
+
+        // res.json(userUpdate);
     } catch (err) {
         res.json({
             message: err
@@ -142,6 +156,17 @@ router.patch('/:userId', auth.ensureAuthenticated, auth.check_user, async (req, 
     }
 });
 
+// update password
+router.post('/updatePassword', auth.ensureAuthenticated, async (req, res) => {
+    try {
+        console.log("asdasd")
+        res.redirect('/dashboard/profile')
+    } catch (err) {
+        res.json({
+            message: err
+        });
+    }
+});
 
 
 module.exports = router;
