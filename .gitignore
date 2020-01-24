@@ -2,6 +2,8 @@
 ./simulation/package-lock.json
 node_modules
 .DS_store
-uploads/
+
+uploads/*
+!uploads/.gitkeep 
 
 timereport-anders.md
