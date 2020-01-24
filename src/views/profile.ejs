@@ -75,6 +75,22 @@
                     </button>
                 </div>
                 <% } %>
+                <% if (query && query.passwords) { %>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Invalid input!</strong> Passwords does not match.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <% } %>
+                <% if (query && query.passwordUpdated) { %>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Password update successful!</strong> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <% } %>
                 <div class="container">
                     <div class="row">
                         <div class="col-sm mt-3">
@@ -135,8 +151,6 @@
                     </div>
                     <button type="submit" class="btn-sm btnwidth2 btn-primary mt-2 ml-3">Update</button>
                 </form>
-
-
                 <h1 class="h2 mt-4">Update password</h1>
                 <form class="row text-center col-8 d-flex flex-column justify-content-center" method="POST"
                     action="/api/user/updatePassword">
@@ -145,35 +159,26 @@
                         <div class="form-group row">
                             <label for="inputPassword" class="col-sm-2 col-form-label"></label>
                             <div class="col-sm-12">
-                            <input type="password" name='password' class="form-control" placeholder="Password">
+                                <input type="password" name='password' class="form-control" placeholder="Password">
                             </div>
                         </div>
                         <div class="form-group row">
-
                             <label for="inputPassword" class="col-sm-2 col-form-label"></label>
                             <div class="col-sm-12">
-                            <input type="password" name='password2' class="form-control" placeholder="Confirm">
+                                <input type="password" name='password2' class="form-control" placeholder="Confirm">
                             </div>
                         </div>
-
-
                         <div class="form-group row">
                             <label for="inputPassword" class="col-sm-2 col-form-label"></label>
                             <div class="col-sm-12">
-                            <input type="password" name='oldPassword' class="form-control" placeholder="Old password">
+                                <input type="password" name='oldPassword' class="form-control"
+                                    placeholder="Old password">
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="form-group">
-                        <input type="hidden" value=<%= user.firstName%> name="firstName" />
-                        <input type="hidden" value=<%= user.lastName%> name="lastName" />
-                        <input type="hidden" value=<%= user.email%> name="userEmail" />
-                        <input type="hidden" value=<%= user.region%> name="region" />
-                    </div> -->
+                    <input type="hidden" value=<%= user.email%> name="userEmail" />
                     <button type="submit" class="btn-sm btnwidth2 btn-primary mt-2 ml-3">Update</button>
                 </form>
-
-
                 <h1 class="h2 mt-4">Delete account</h1>
                 <p class="lead">To delete your account, press the button below. NOTICE: This action can not be undone!
                 </p>

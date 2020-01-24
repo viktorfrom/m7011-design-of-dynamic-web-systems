@@ -25,7 +25,9 @@ router.get('/:regionId', auth.ensureAuthenticated, auth.check_user, async (req, 
 router.get('/users/regions', auth.ensureAuthenticated, async (req, res) => {
     try {
         // console.log(JSON.stringify(req.user));
-        const regions = await Region.find({ name: req.user.region.toLowerCase() }).sort({
+        const regions = await Region.find({
+            name: req.user.region.toLowerCase()
+        }).sort({
             timestamp: -1
         }).limit(10);
 

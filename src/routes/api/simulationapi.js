@@ -174,7 +174,6 @@ router.post('/users/houseElectricityRatio', auth.ensureAuthenticated, async (req
             userEmail
         } = req.body
 
-
         for (const house of Simulation.init.houses) {
             if (house.owner == userEmail) {
                 house.storeBatteryRatio = parseFloat(number / 100, 10);

@@ -3,6 +3,7 @@ const router = express.Router();
 const prompt = require('prompt');
 const multer = require('multer');
 const mongoose = require("mongoose");
+const bcrypt = require('bcrypt');
 
 const auth = require('../../config/auth.js')
 const User = require('../../schemas/userschema');
@@ -159,8 +160,38 @@ router.post('/updateUser', auth.ensureAuthenticated, async (req, res) => {
 // update password
 router.post('/updatePassword', auth.ensureAuthenticated, async (req, res) => {
     try {
-        console.log("asdasd")
-        res.redirect('/dashboard/profile')
+        const {
+            userEmail,
+            password,
+            password2,
+            oldPassword
+        } = req.body;
+
+        if (password == password2) {
+            await User.findOne({
+                email: userEmail
+            }).then(user => {
+                bcrypt.compare(oldPassword, user.password, (err, isMatch) => {
+                    if (err) {
+                        throw err;
+                    };
+                    if (isMatch) {
+                        bcrypt.genSalt(10, (err, salt) => {
+                            bcrypt.hash(password, salt, (err, hash) => {
+                                if (err) throw err;
+                                user.password = hash;
+                                user.save()
+                            });
+                        })
+                        res.redirect('/dashboard/profile?passwordUpdated=true');
+                    } else {
+                        res.redirect('/dashboard/profile?passwords=true');
+                    };
+                })
+            });
+        } else {
+            res.redirect('/dashboard/profile?passwords=true');
+        }
     } catch (err) {
         res.json({
             message: err
