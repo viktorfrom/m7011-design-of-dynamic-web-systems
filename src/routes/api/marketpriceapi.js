@@ -9,7 +9,7 @@ const MarketPrice = require('../../schemas/marketpriceschema');
 prompt.start();
 
 // // get single market price
-router.get('/:marketPriceId', auth.ensureAuthenticated ,auth.check_user, async (req, res) => {
+router.get('/:marketPriceId', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
     try {
         const oneMarketPrice = await MarketPrice.findById(req.params.marketPriceId);
         res.json(oneMarketPrice);

@@ -24,7 +24,7 @@ router.get('/:houseId', auth.ensureAuthenticated, auth.check_user, async (req, r
 // get latest battery ratio
 router.get('/users/latestBatteryRatio', auth.ensureAuthenticated, async (req, res) => {
     try {
-        const house  = await House.find({
+        const house = await House.find({
             owner: req.user.email
         }).sort({
             timestamp: -1
