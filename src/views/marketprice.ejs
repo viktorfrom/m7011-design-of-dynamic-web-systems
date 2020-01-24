@@ -24,6 +24,7 @@
   </style>
   <title><%= title %></title>
 </head>
+
 <body>
   <% include header.ejs %>
   <div class="container mt-4">
@@ -34,37 +35,38 @@
           class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2">Market Price</h1>
         </div>
-          <% if (user.role == "admin" || user.role == "manager"){ %>
-          <div class="container mt-3 ">
-            <h1 class="h2">Controls</h1>
-            <div class="row">
-              <div class="col">
-                <form method="POST" action="/api/simulation/users/marketPriceControl">
-                  <div class="form-group">
-                    <label for="marketControl">Set market electricity price, (0 - 100 SEK/kWh). </label>
-                    <div class="range-container">
-                      <input type="range" class="form-control-range" id="marketPriceRange" name="number"
-                        min="0" max="100" onchange="updateTextInput(this.value);">
-                      <input type="text" id="textInput">
-                    </div>
+        <% if (user.role == "admin" || user.role == "manager"){ %>
+        <div class="container mt-3 ">
+          <h1 class="h2">Controls</h1>
+          <div class="row">
+            <div class="col">
+              <form method="POST" action="/api/simulation/users/marketPriceControl">
+                <div class="form-group">
+                  <label for="marketControl">Set market electricity price, (0 - 100 SEK/kWh). </label>
+                  <div class="range-container">
+                    <input type="range" class="form-control-range" id="marketPriceRange" name="number" min="0" max="100"
+                      onchange="updateTextInput(this.value);">
+                    <input type="text" id="textInput">
                   </div>
-                  <div>
-                    <button type="submit" class="btn-sm btn-primary">Confirm</button>
-                  </div>
-                </form>
-                </form>
-              </div>
-              <div class="col-md">
-                <form method="POST" action="/api/simulation/users/marketPriceReset">
-                  <label for="inputNumber" class="col-sm-2 col-form-label"></label>
-                  <div>
-                    <button type="submit" class="btn-sm btn-primary ">Reset</button>
-                  </div>
-                </form>
-              </div>
+                </div>
+                <div>
+                  <button type="submit" class="btn-sm btn-primary">Confirm</button>
+                </div>
+              </form>
+              </form>
+            </div>
+            <div class="col-md btnreset2">
+              <form method="POST" action="/api/simulation/users/marketPriceReset">
+                <label for="inputNumber" class="col-sm-2 col-form-label"></label>
+                <div>
+                  <button type="submit" title="Set control to standard value and let simulation run on auto pilot"
+                    class="btn-sm btn-primary ">Auto</button>
+                </div>
+              </form>
             </div>
           </div>
-          <% } %> 
+        </div>
+        <% } %>
         <div class="ml-3 my-4">
           <p>Simulation: <span class="badge badge-success" id="running-status">Running</span></p>
         </div>
@@ -82,56 +84,56 @@
                 <th>Price (SEK)</th>
                 <th>Current demand (kWh)</th>
               </tr>
-              </thead>
-              <tbody>
+            </thead>
+            <tbody>
               <tr>
-                <td><span class='timestamp'></span></td>                
-                <td><span class='currentPrice'></span></td> 
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentPrice'></span></td>
                 <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
               </tr>
               <tr>
-                <td><span class='timestamp'></span></td>                
-                <td><span class='currentPrice'></span></td> 
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentPrice'></span></td>
                 <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
               </tr>
               <tr>
-                <td><span class='timestamp'></span></td>                
-                <td><span class='currentPrice'></span></td> 
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentPrice'></span></td>
                 <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
               </tr>
               <tr>
-                <td><span class='timestamp'></span></td>                
-                <td><span class='currentPrice'></span></td> 
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentPrice'></span></td>
                 <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
               </tr>
               <tr>
-                <td><span class='timestamp'></span></td>                
-                <td><span class='currentPrice'></span></td> 
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentPrice'></span></td>
                 <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
               </tr>
               <tr>
-                <td><span class='timestamp'></span></td>                
-                <td><span class='currentPrice'></span></td> 
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentPrice'></span></td>
                 <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
               </tr>
               <tr>
-                <td><span class='timestamp'></span></td>                
-                <td><span class='currentPrice'></span></td> 
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentPrice'></span></td>
                 <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
               </tr>
               <tr>
-                <td><span class='timestamp'></span></td>                
-                <td><span class='currentPrice'></span></td> 
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentPrice'></span></td>
                 <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
               </tr>
               <tr>
-                <td><span class='timestamp'></span></td>                
-                <td><span class='currentPrice'></span></td> 
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentPrice'></span></td>
                 <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
               </tr>
               <tr>
-                <td><span class='timestamp'></span></td>                
-                <td><span class='currentPrice'></span></td> 
+                <td><span class='timestamp'></span></td>
+                <td><span class='currentPrice'></span></td>
                 <td><span class='currentProduction'></span> / <span class='maxTotalProduction'></span></td>
               </tr>
             </tbody>
@@ -178,7 +180,7 @@
       const timestamp = document.getElementsByClassName('timestamp');
       const currentPrice = document.getElementsByClassName('currentPrice');
       const currentProduction = document.getElementsByClassName('currentProduction');
-      const maxTotalProduction= document.getElementsByClassName('maxTotalProduction');
+      const maxTotalProduction = document.getElementsByClassName('maxTotalProduction');
       const fetchData = () => {
         getMarketPrices().then(marketPrices => {
           for (let i = 0; i < (marketPrices.timestamp.length); i++) {
@@ -191,13 +193,12 @@
           myChart.data = {
             labels: marketPrices.timestamp,
             datasets: [{
-                label: 'Market price (Swedish krona)',
-                backgroundColor: 'rgba(255, 206, 86, 0.2)',
-                borderColor: 'rgba(255, 206, 86, 1)',
-                data: marketPrices.currentPrice,
-                fill: true,
-              }
-            ]
+              label: 'Market price (Swedish krona)',
+              backgroundColor: 'rgba(255, 206, 86, 0.2)',
+              borderColor: 'rgba(255, 206, 86, 1)',
+              data: marketPrices.currentPrice,
+              fill: true,
+            }]
           }
           myChart.update();
         });
@@ -206,17 +207,19 @@
       setInterval(fetchData, 3000)
     })
     const marketPriceRange = document.getElementById('marketPriceRange');
-      const fetchLastProdValue = () => {
-        getLatestMarketValue().then(marketPrice => {
-          console.log("asdasd " + marketPrice.currentPrice);
-          marketPriceRange.value = marketPrice.currentPrice;
-          updateTextInput(marketPrice.currentPrice);
-        });
-      }
-      fetchLastProdValue();
-      function updateTextInput(val) {
-        document.getElementById('textInput').value = val;
-      }
+    const fetchLastProdValue = () => {
+      getLatestMarketValue().then(marketPrice => {
+        console.log("asdasd " + marketPrice.currentPrice);
+        marketPriceRange.value = marketPrice.currentPrice;
+        updateTextInput(marketPrice.currentPrice);
+      });
+    }
+    fetchLastProdValue();
+
+    function updateTextInput(val) {
+      document.getElementById('textInput').value = val;
+    }
   </script>
 </body>
+
 </html>
