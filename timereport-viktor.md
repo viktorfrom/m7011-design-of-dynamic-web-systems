@@ -52,6 +52,9 @@ Viktor From, vikfro-6
 |  2019-01-20  | 5       | Replace text input with range sliders          |
 |  2019-01-21  | 6       | Redesign dashboard and views, fetch API upt.   |
 |  2019-01-22  | 7       | House dashboard, add user update/delete page   |
+|  2019-01-23  | 5       | User update credentials/password               |
+|  2019-01-24  | 5       | User update credentials/password               |
+|  2019-01-26  | 2       | Password hashing                               |
 | ------------ | ------- | ---------------------------------------------- | 
-|  Total:      | 279     |                                                |
+|  Total:      | 291     |                                                |
 
