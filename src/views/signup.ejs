@@ -20,7 +20,7 @@
   <div class="container">
     <% include ./messages %>
     <form class="row text-center col-8 mx-auto d-flex flex-column justify-content-center" method="POST"
-      action="/users/signup">
+      action="/users/signup" id="myForm">
       <div class="logo">
         <a href="/" class="go-back">
           <i class="fas fa-arrow-left"></i>
@@ -47,13 +47,13 @@
           <div class="form-group row">
             <label for="inputPassword" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-12">
-              <input type="password" name='password' class="form-control" placeholder="Password">
+              <input id="password" type="password" name='password' class="form-control" placeholder="Password">
             </div>
           </div>
           <div class="form-group row">
             <label for="inputPassword" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-12">
-              <input type="password" name='password2' class="form-control" placeholder="Confirm">
+              <input id="password2" type="password" name='password2' class="form-control" placeholder="Confirm">
             </div>
           </div>
         </div>
@@ -81,13 +81,29 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-lg btn-primary btn-block">Register</button>
+      <button onclick="customSubmit()" class="btn btn-lg btn-primary btn-block">Register</button>
       <a class="btn btn-lg btn-primary btn-block" href="/users/signin" role="button">Already a member?</a>
     </form>
   </div>
-    <footer class="blog-footer mt-5">
-      <% include footer.ejs %>
-    </footer>
+  <footer class="blog-footer mt-5">
+    <% include footer.ejs %>
+  </footer>
+  <script src='../javascripts/sha512.js'></script>
+  <script>
+    const password = document.getElementById('password');
+    const password2 = document.getElementById('password2');
+    const customSubmit = () => {
+      const hash = hex_sha512(password.value)
+      const hash2 = hex_sha512(password2.value)
+
+      password.value = hash
+      password2.value = hash2
+
+      const form = document.getElementById('myForm')
+
+      form.submit()
+    }
+  </script>
 </body>
 
 </html>

@@ -26,6 +26,7 @@ router.post('/users/productionControl', auth.ensureAuthenticated, auth.check_use
 
         } else {
             Simulation.init.powerPlant.maxProduction = parseInt(number, 10);
+            Simulation.init.powerPlant.currentProduction = parseInt(number, 10);
             Simulation.init.powerPlant.manualControl = true;
         }
 

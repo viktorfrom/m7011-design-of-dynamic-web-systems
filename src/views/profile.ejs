@@ -85,7 +85,7 @@
                 <% } %>
                 <% if (query && query.passwordUpdated) { %>
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Password update successful!</strong> 
+                    <strong>Password update successful!</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -153,31 +153,31 @@
                 </form>
                 <h1 class="h2 mt-4">Update password</h1>
                 <form class="row text-center col-8 d-flex flex-column justify-content-center" method="POST"
-                    action="/api/user/updatePassword">
+                    action="/api/user/updatePassword" id="myForm">
                     <h4 id="status" class="h3 font-weight-normal status d-none"></h4>
                     <div class="col-6">
                         <div class="form-group row">
                             <label for="inputPassword" class="col-sm-2 col-form-label"></label>
                             <div class="col-sm-12">
-                                <input type="password" name='password' class="form-control" placeholder="Password">
+                                <input id="password" type="password" name='password' class="form-control" placeholder="Password">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputPassword" class="col-sm-2 col-form-label"></label>
                             <div class="col-sm-12">
-                                <input type="password" name='password2' class="form-control" placeholder="Confirm">
+                                <input id="password2" type="password" name='password2' class="form-control" placeholder="Confirm">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputPassword" class="col-sm-2 col-form-label"></label>
                             <div class="col-sm-12">
-                                <input type="password" name='oldPassword' class="form-control"
+                                <input id="oldPassword" type="password" name='oldPassword' class="form-control"
                                     placeholder="Old password">
                             </div>
                         </div>
                     </div>
                     <input type="hidden" value=<%= user.email%> name="userEmail" />
-                    <button type="submit" class="btn-sm btnwidth2 btn-primary mt-2 ml-3">Update</button>
+                    <button onclick="customSubmit()" class="btn-sm btnwidth2 btn-primary mt-2 ml-3">Update</button>
                 </form>
                 <h1 class="h2 mt-4">Delete account</h1>
                 <p class="lead">To delete your account, press the button below. NOTICE: This action can not be undone!
@@ -218,6 +218,24 @@
     <footer class="blog-footer mt-5">
         <% include footer.ejs %>
     </footer>
+    <script src='../javascripts/sha512.js'></script>
+    <script>
+        const password = document.getElementById('password');
+        const password2 = document.getElementById('password2');
+        const oldPassword = document.getElementById('oldPassword');
+        const customSubmit = () => {
+            const hash = hex_sha512(password.value)
+            const hash2 = hex_sha512(password2.value)
+            const hash3 = hex_sha512(oldPassword.value)
+
+            password.value = hash
+            password2.value = hash2
+            oldPassword.value = hash3
+
+            const form = document.getElementById('myForm')
+
+            form.submit()
+        }
     </script>
 </body>
 
