@@ -41,6 +41,7 @@ router.post('/users/productionControl', auth.ensureAuthenticated, auth.check_use
 router.post('/users/productionReset', auth.ensureAuthenticated, auth.check_user, async (req, res, next) => {
     try {
         Simulation.init.powerPlant.maxProduction = parseInt(30, 10);
+        Simulation.init.powerPlant.storeBatteryRatio = parseFloat(0.5, 10);
 
         Simulation.init.powerPlant.statusMessage = "FULLY OPERATIONAL";
         Simulation.init.powerPlant.manualControl = false;
@@ -52,7 +53,6 @@ router.post('/users/productionReset', auth.ensureAuthenticated, auth.check_user,
         });
     }
 });
-
 
 router.post('/users/productionShutdown', auth.ensureAuthenticated, auth.check_user, async (req, res, next) => {
     try {
@@ -119,21 +119,6 @@ router.post('/users/electricityRatio', auth.ensureAuthenticated, auth.check_user
         res.redirect('/dashboard/powerplant');
     } catch (err) {
         res.redirect('/dashboard/powerplant');
-    }
-});
-
-router.post('/users/electricityRatioReset', auth.ensureAuthenticated, auth.check_user, async (req, res, next) => {
-    try {
-        Simulation.init.powerPlant.storeBatteryRatio = parseFloat(0.5, 10);
-
-        Simulation.init.powerPlant.statusMessage = "FULLY OPERATIONAL";
-        Simulation.init.powerPlant.manualControl = false;
-
-        res.redirect('/dashboard/powerplant');
-    } catch (err) {
-        res.json({
-            message: err
-        });
     }
 });
 
