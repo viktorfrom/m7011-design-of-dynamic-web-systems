@@ -41,6 +41,7 @@ a {
   margin-top: -19px
 }
 
+
 .center {
   display: block;
   margin-left: auto;
@@ -64,6 +65,7 @@ a {
 
 .range-container {
   display: flex;
+  width: 432px;
 }
 
 #textInput {
