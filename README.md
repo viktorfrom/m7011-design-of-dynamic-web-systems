@@ -20,6 +20,14 @@ Update port nr. and address, if needed, in the following files, and Fetch APIs
 /src/public/javascripts/powerplant.js
 /src/public/javascripts/region.js
 ```
+Navigate to the folder named 'public'
+```
+/m7011e/src/public
+```
+and create a new directory named 'uploads' for user images to be uploaded
+```
+mkdir uploads
+```
 Download and install MongoDB, if needed, the database will run automatically once installed.
 ### Usage
 Boot up the web server or perform JUnit testing in /src/simulation
