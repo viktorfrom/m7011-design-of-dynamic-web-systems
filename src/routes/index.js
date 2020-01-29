@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../config/auth.js')
+const moment = require('moment');
+const User = require('../schemas/userschema.js');
 
 router.get('/', function (req, res, next) {
   res.render('index', {
@@ -21,7 +23,6 @@ router.get('/aboutus', function (req, res, next) {
     user: req.user
   });
 });
-
 
 router.get('/dashboard', auth.ensureAuthenticated, function (req, res, next) {
   res.render('dashboard', {
@@ -62,5 +63,19 @@ router.get('/dashboard/profile', auth.ensureAuthenticated, function (req, res, n
   });
 });
 
+
+router.get('/dashboard/userStatus', auth.ensureAuthenticated, auth.check_user, async function (req, res, next) {
+  const allUsers = await User.find();
+
+  res.render('userStatus', {
+    title: 'Green Lean Electrics',
+    query: req.query ? req.query : null,
+    user: req.user,
+    users: allUsers.map(user => {
+      user.isLoggedIn = user && user.loggedIn && moment(user.loggedIn).add(5, "minutes") >= moment()
+      return user;
+    })
+  });
+});
 
 module.exports = router;
