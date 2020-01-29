@@ -33,6 +33,9 @@ const UserSchema = mongoose.Schema({
   image: {
     data: Buffer,
     type: String
+  },
+  loggedIn: {
+    type: Date
   }
 });
 
