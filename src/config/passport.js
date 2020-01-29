@@ -20,7 +20,12 @@ module.exports = function (passport) {
             throw err;
           };
           if (isMatch) {
-            return done(null, user);
+            user.loggedIn = Date.now();
+            return user.save().then(_ => {
+              return done(null, user);
+            }).catch(err => {
+              console.log(err)
+            })
           } else {
             return done(null, false);
           };
