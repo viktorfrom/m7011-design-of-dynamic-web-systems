@@ -55,6 +55,7 @@ Viktor From, vikfro-6
 |  2019-01-23  | 5       | User update credentials/password               |
 |  2019-01-24  | 5       | User update credentials/password               |
 |  2019-01-26  | 2       | Password hashing                               |
+|  2019-01-28  | 3       | Add user status page                           |
 | ------------ | ------- | ---------------------------------------------- | 
-|  Total:      | 291     |                                                |
+|  Total:      | 294     |                                                |
 
