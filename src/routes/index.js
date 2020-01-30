@@ -32,6 +32,16 @@ router.get('/dashboard', auth.ensureAuthenticated, function (req, res, next) {
   });
 });
 
+router.get('/prosumerDashboard/:userId', auth.ensureAuthenticated, auth.check_user, async function (req, res, next) {
+  const oneUser = await User.findById(req.params.userId);
+
+  res.render('dashboard', {
+    title: 'Green Lean Electrics',
+    query: req.query ? req.query : null,
+    user: oneUser
+  });
+});
+
 router.get('/dashboard/powerplant', auth.ensureAuthenticated, function (req, res, next) {
   res.render('powerplant', {
     title: 'Green Lean Electrics',
@@ -63,6 +73,15 @@ router.get('/dashboard/profile', auth.ensureAuthenticated, function (req, res, n
   });
 });
 
+router.get('/prosumerProfile/:userId', auth.ensureAuthenticated, auth.check_user, async function (req, res, next) {
+  const oneUser = await User.findById(req.params.userId);
+
+  res.render('profile', {
+    title: 'Green Lean Electrics',
+    query: req.query ? req.query : null,
+    user: oneUser
+  });
+});
 
 router.get('/dashboard/userStatus', auth.ensureAuthenticated, auth.check_user, async function (req, res, next) {
   const allUsers = await User.find();

@@ -199,5 +199,32 @@ router.post('/updatePassword', auth.ensureAuthenticated, async (req, res) => {
     }
 });
 
+router.post('/prosumerDashboard', auth.ensureAuthenticated, auth.check_user, async (req, res, next) => {
+    try {
+        const {
+            userId
+        } = req.body
+
+        res.redirect('/prosumerDashboard/' + userId);
+    } catch (err) {
+        res.json({
+            message: err
+        });
+    }
+})
+
+router.post('/prosumerProfile', auth.ensureAuthenticated, auth.check_user, async (req, res, next) => {
+    try {
+        const {
+            userId
+        } = req.body
+
+        res.redirect('/prosumerProfile/' + userId);
+    } catch (err) {
+        res.json({
+            message: err
+        });
+    }
+})
 
 module.exports = router;

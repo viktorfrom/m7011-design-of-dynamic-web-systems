@@ -60,6 +60,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Manage</th>
                             <th scope="col">Block user</th>
                             <th scope="col">Activity</th>
                         </tr>
@@ -68,23 +69,20 @@
                         <% for(const [i, user] of users.entries()) { %>
                         <tr>
                             <th scope="row"><%= i + 1 %></th>
-
-
                             <td>
                                 <form method="POST" action="/api/user/prosumerDashboard">
-                                    <a href="#" onclick="$(this).closest('form').submit()"><%= user.firstName%> <%= user.lastName%></a>
-                                        <!-- <button type="submit" title="Block user from selling electricity to the market."
-                                            class="btn-sm btn-warning"></button> -->
-                                    <input type="hidden" value=<%= user%> name="user" />
-                                    <!-- <input type="hidden" value=<%= user.lastName%> name="lastName" />
-                                    <input type="hidden" value=<%= user.email%> name="userEmail" />
-                                    <input type="hidden" value=<%= user.region%> name="region" />
-                                    <input type="hidden" value=<%= user.image%> name="image" /> -->
+                                    <a href="#" onclick="$(this).closest('form').submit()"><%= user.firstName%>
+                                        <%= user.lastName%></a>
+                                    <input type="hidden" value=<%= user._id%> name="userId" />
                                 </form>
                             </td>
-
-
                             <td><%= user.email%></td>
+                            <td>
+                                <form method="POST" action="/api/user/prosumerProfile">
+                                    <a href="#" onclick="$(this).closest('form').submit()">Update credentials</a>
+                                    <input type="hidden" value=<%= user._id%> name="userId" />
+                                </form>
+                            </td>
                             <td>
                                 <form method="POST" action="/api/simulation/users/userBlock">
                                     <div>
