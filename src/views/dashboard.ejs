@@ -35,12 +35,28 @@
           class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2">Dashboard</h1>
         </div>
+        <% if (query && query.userBlock) { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>User blocked!</strong> Production can not be send to market.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <% } %>
+        <% if (query && query.batteryRatio) { %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Request successful!</strong> Production to market ratio has been updated. 
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <% } %>
         <div class="container">
           <p class="lead mb-5">Welcome <%= user.firstName %> <%= user.lastName %></p>
           <div class="row">
             <div class="col-sm">
               <div class="img-container">
-                <img class="img-fd mx-auto img mb-3" title="House" src=<%= user.image %> alt="Image of users house">
+                <img class="img-fd mx-auto img mb-3" title="Profile" src=<%= user.image %> alt="Profile image">
               </div>
             </div>
             <div class="col-sm">
@@ -76,7 +92,8 @@
                   <input type="hidden" value=<%= user.email%> name="userEmail" />
                 </div>
                 <div>
-                  <button type="submit" title="Reset slider input and allow the house battery to run on auto-pilot" class="btn-sm btn-primary">Auto</button>
+                  <button type="submit" title="Reset slider input and allow the house battery to run on auto-pilot"
+                    class="btn-sm btn-primary">Auto</button>
                 </div>
               </form>
             </div>

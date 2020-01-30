@@ -162,12 +162,16 @@ router.post('/users/houseElectricityRatio', auth.ensureAuthenticated, async (req
 
         for (const house of Simulation.init.houses) {
             if (house.owner == userEmail) {
-                house.storeBatteryRatio = parseFloat(number / 100, 10);
-                house.manualControl = true;
+                if (house.statusMessage == "BLOCKED") {
+                    res.redirect('/dashboard/?userBlock=true');
+                } else {
+                    house.storeBatteryRatio = parseFloat(number / 100, 10);
+                    house.manualControl = true;
+                }
             }
         }
 
-        res.redirect('/dashboard/');
+        res.redirect('/dashboard/?batteryRatio=true');
     } catch (err) {
         res.redirect('/dashboard/');
     }
@@ -187,6 +191,31 @@ router.post('/users/resetHouseElectricityRatio', auth.ensureAuthenticated, async
         }
 
         res.redirect('/dashboard/');
+    } catch (err) {
+        res.json({
+            message: err
+        });
+    }
+});
+
+router.post('/users/userBlock', auth.ensureAuthenticated, auth.check_user, async (req, res, next) => {
+    try {
+        const {
+            userEmail,
+            userRole
+        } = req.body
+
+        if (userRole == "admin" || userRole == "manager") {
+            res.redirect('/dashboard/userStatus?role=true');
+        } else {
+            for (const house of Simulation.init.houses) {
+                if (house.owner == userEmail) {
+                    house.blocked = true;
+                }
+            }
+        }
+
+        res.redirect('/dashboard/userStatus?userBlock=true');
     } catch (err) {
         res.json({
             message: err

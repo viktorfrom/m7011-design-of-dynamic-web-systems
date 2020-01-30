@@ -21,6 +21,8 @@ module.exports = class house {
         this.conversionRate = 0.6;
         this.statusMessage = "FULLY OPERATIONAL";
         this.manualControl = false;
+        this.blocked = false;
+        this.blockCount = 0;
         this.storeBatteryRatio = 0.5;
         this.count = 0;
     }
@@ -43,7 +45,7 @@ module.exports = class house {
     }
 
     consumePowerPlantBattery() {
-        if (this.powerPlant.getCurrentProduction() == 0 && 
+        if (this.powerPlant.getCurrentProduction() == 0 &&
             this.windTurbine.getCurrentPower() < this.houseConsumption &&
             this.powerPlant.battery.getCurrentCapacity() > 0) {
             this.powerPlant.battery.setCurrentCapacity(this.windTurbine.getCurrentPower() - this.houseConsumption);
@@ -51,10 +53,10 @@ module.exports = class house {
     }
 
     consumeLocalBattery() {
-        if (this.powerPlant.getCurrentProduction() == 0 && 
-            this.windTurbine.getCurrentPower() < this.houseConsumption && 
+        if (this.powerPlant.getCurrentProduction() == 0 &&
+            this.windTurbine.getCurrentPower() < this.houseConsumption &&
             this.powerPlant.battery.getCurrentCapacity() <= 0) {
-                this.battery.setCurrentCapacity(this.windTurbine.getCurrentPower() - this.houseConsumption);
+            this.battery.setCurrentCapacity(this.windTurbine.getCurrentPower() - this.houseConsumption);
         }
     }
 
@@ -62,7 +64,7 @@ module.exports = class house {
         if (this.windTurbine.getBrokenStatus() == true) {
             this.statusMessage = "WIND TURBINE BROKEN";
 
-        } else if (this.powerPlant.getCurrentProduction() == 0 && 
+        } else if (this.powerPlant.getCurrentProduction() == 0 &&
             this.powerPlant.battery.getCurrentCapacity() <= 0 &&
             this.windTurbine.getCurrentPower() < this.houseConsumption && this.battery.getCurrentCapacity() <= 0) {
             this.statusMessage = "BLACKOUT: POWER OUTAGE";
@@ -78,10 +80,22 @@ module.exports = class house {
 
 
             this.windTurbine.setExcessPower(this.houseConsumption);
-            this.powerPlant.battery.setCurrentCapacity(this.windTurbine.getExcessPower() * 
+            this.powerPlant.battery.setCurrentCapacity(this.windTurbine.getExcessPower() *
                 this.conversionRate * this.storeBatteryRatio);
-            this.battery.setCurrentCapacity(this.windTurbine.getExcessPower() * 
-                this.conversionRate * (1 - this.storeBatteryRatio) );
+            this.battery.setCurrentCapacity(this.windTurbine.getExcessPower() *
+                this.conversionRate * (1 - this.storeBatteryRatio));
+        }
+    }
+
+    blockStatus() {
+        if (this.blockCount > 9 && this.blocked) {
+            this.storeBatteryRatio = 0.5;
+            this.blockCount = 0;
+            this.blocked = false;
+        } else if (this.blocked) {
+            this.statusMessage = "BLOCKED";
+            this.storeBatteryRatio = 0.0;
+            this.blockCount += 1;
         }
     }
 
@@ -112,18 +126,18 @@ module.exports = class house {
             netProduction: this.windTurbine.getCurrentPower() - this.houseConsumption,
             batteryRatio: this.storeBatteryRatio,
             statusMessage: this.statusMessage
-        }); 
+        });
 
         this.houseSchema.save((err) => {
-            if(err) throw err;
+            if (err) throw err;
 
         });
     }
 
     status() {
-        console.log("House owner: " + this.owner + ", region: " + this.region.getName() + 
-            ", Wind speed: " + this.region.getWindSpeed().toPrecision(3) + " m/s," + " Temp: " + 
-            this.region.getTemp().toPrecision(3) + " °C," + " Status: " + this.statusMessage +  "\n" + 
+        console.log("House owner: " + this.owner + ", region: " + this.region.getName() +
+            ", Wind speed: " + this.region.getWindSpeed().toPrecision(3) + " m/s," + " Temp: " +
+            this.region.getTemp().toPrecision(3) + " °C," + " Status: " + this.statusMessage + "\n" +
             "Power output: " + this.windTurbine.getCurrentPower().toPrecision(3) + " kWh" +
             ", (Excess power " + this.windTurbine.getExcessPower().toPrecision(3) + ")" +
             ", Battery capacity: " + this.battery.getCurrentCapacity().toPrecision(3) + "/" +
@@ -133,11 +147,12 @@ module.exports = class house {
 
     electricityConsumption() {
         this.windTurbine.windTurbineStatus(this.region.getWindSpeed());
-        
-        this.setHouseConsumption(this.houseConsumption * 
+
+        this.setHouseConsumption(this.houseConsumption *
             this.mathExpression.getTempIncrease(this.region.getTemp()) +
             this.mathExpression.normalDistribution(0, 0.10));
 
+        // if statusmessage == blocked  
         this.storeExcessPower();
 
         this.marketPrice.setTotalProduction(this.windTurbine.getExcessPower() / 2);
@@ -152,7 +167,9 @@ module.exports = class house {
             this.statusMessage += ": MANUAL CONTROL";
         };
         // this.status();
-        
+
+        this.blockStatus();
+
         this.setHouseSchema();
 
         if (this.statusMessage == "WIND TURBINE BROKEN") {

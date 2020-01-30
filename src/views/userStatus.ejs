@@ -35,22 +35,66 @@
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">User status</h1>
                 </div>
+                <% if (query && query.userBlock) { %>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>User has been blocked!</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <% } %>
+                <% if (query && query.role) { %>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Invalid input!</strong> Admin or managers can not be blocked from market.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <% } %>
+                <p>List of registered users to the website and their log in status. Block users from selling to the
+                    market.</p>
                 <% if(users) { %>
-                <table class="table mt-3">
+                <table class="table table-hover border-bottom mt-3">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Block user</th>
+                            <th scope="col">Activity</th>
                         </tr>
                     </thead>
                     <tbody>
                         <% for(const [i, user] of users.entries()) { %>
                         <tr>
                             <th scope="row"><%= i + 1 %></th>
-                            <td><%= user.firstName%></td>
-                            <td>Otto</td>
+
+
+                            <td>
+                                <form method="POST" action="/api/user/prosumerDashboard">
+                                    <a href="#" onclick="$(this).closest('form').submit()"><%= user.firstName%> <%= user.lastName%></a>
+                                        <!-- <button type="submit" title="Block user from selling electricity to the market."
+                                            class="btn-sm btn-warning"></button> -->
+                                    <input type="hidden" value=<%= user%> name="user" />
+                                    <!-- <input type="hidden" value=<%= user.lastName%> name="lastName" />
+                                    <input type="hidden" value=<%= user.email%> name="userEmail" />
+                                    <input type="hidden" value=<%= user.region%> name="region" />
+                                    <input type="hidden" value=<%= user.image%> name="image" /> -->
+                                </form>
+                            </td>
+
+
+                            <td><%= user.email%></td>
+                            <td>
+                                <form method="POST" action="/api/simulation/users/userBlock">
+                                    <div>
+                                        <button type="submit" title="Block user from selling electricity to the market."
+                                            class="btn-sm btn-warning">Block</button>
+                                        <input type="hidden" value=<%= user.email%> name="userEmail" />
+                                        <input type="hidden" value=<%= user.role%> name="userRole" />
+                                    </div>
+                                </form>
+                            </td>
                             <td>
                                 <% if (user.isLoggedIn) { %>
                                 <span class="badge badge-success">Online</span>
