@@ -8,17 +8,27 @@ const House = require('../../schemas/houseschema');
 
 prompt.start();
 
-// // get single house
-router.get('/:houseId', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
+// get single house
+router.get('/users/oneHouse/:userEmail', auth.ensureAuthenticated, auth.check_user, async (req, res) => {
     try {
-        const oneHouse = await House.findById(req.params.houseId);
-        res.json(oneHouse);
+        // console.log(JSON.stringify(req.user));
+        const house = await House.findOne({
+            owner: req.params.userEmail
+        }).sort({
+            timestamp: -1
+        })
+
+        const result = {
+            statusMessage: house.statusMessage
+        };
+
+        res.json(result);
     } catch (err) {
         res.json({
             message: err
         });
-
     }
+    return
 });
 
 // get latest battery ratio
@@ -46,14 +56,16 @@ router.get('/users/latestBatteryRatio', auth.ensureAuthenticated, async (req, re
 });
 
 // get 10 last houses
-router.get('/users/houses', auth.ensureAuthenticated, async (req, res) => {
+router.get('/users/houses/:userEmail', auth.ensureAuthenticated, async (req, res) => {
     try {
         // console.log(JSON.stringify(req.user));
         const houses = await House.find({
-            owner: req.user.email
+            owner: req.params.userEmail
         }).sort({
             timestamp: -1
         }).limit(10);
+
+        // console.log(houses[0])
 
         houses.sort((a, b) => {
             if (a.timestamp < b.timestamp) {

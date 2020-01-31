@@ -197,8 +197,10 @@
     </div>
   </div>
   <footer class="blog-footer mt-5">
+
     <% include footer.ejs %>
   </footer>
+  <div id="userEmail" data-email=<%= user.email %>></div>
   <script src='../javascripts/house.js'></script>
   <script>
     document.addEventListener('DOMContentLoaded', (event) => {
@@ -242,7 +244,7 @@
       const houseConsumption = document.getElementsByClassName('houseConsumption');
       const netProduction = document.getElementsByClassName('netProduction');
       const fetchChartData = () => {
-        getHouses().then(houses => {
+        getHouses(document.getElementById('userEmail').dataset.email).then(houses => {
           windTurbineStatus.innerHTML = houses.statusMessage[houses.statusMessage.length - 1];
           if (houses.statusMessage[houses.statusMessage.length - 1] == "FULLY OPERATIONAL" ||
             houses.statusMessage[houses.statusMessage.length - 1] ==
