@@ -90,40 +90,28 @@
                                 </form>
                             </td>
                             <td>
-                                <span class="badge badge-success" id='houseStatus-'></span>
-                                <div id="userEmail" data-email=<%= user.email %>></div>
+                                <span class="badge badge-success" id='houseStatus<%= user.id %>'></span>
                                 <script src='../javascripts/house.js'></script>
                                 <script>
                                     document.addEventListener('DOMContentLoaded', (event) => {
-                                        const userEmail = document.getElementById('userEmail').dataset.email;
-                                        const houseStatus = document.getElementById('houseStatus-');
-                                        houseStatus.id += userEmail;
-
-
-                                        console.log(houseStatus.id)
-                                        const fetchHouseStatus = () => {
-                                            getHouse(document.getElementById('userEmail').dataset.email)
+                                        const  getStatusFor<%= user.id %> = () => {
+                                            getHouse('<%= user.email %>')
                                                 .then(house => {
+                                                    const houseStatus = document.getElementById('houseStatus<%= user.id %>')
                                                     houseStatus.innerHTML = house.statusMessage;
-                                                    if (house.statusMessage == "FULLY OPERATIONAL" ||
-                                                        house.statusMessage ==
-                                                        "FULLY OPERATIONAL: MANUAL CONTROL") {
+                                                    const online = house.statusMessage == "FULLY OPERATIONAL" 
+                                                                || house.statusMessage == "FULLY OPERATIONAL: MANUAL CONTROL"
+                                                    if (online) {
                                                         houseStatus.style.background = '#28A745';
                                                     } else {
                                                         houseStatus.style.background = '#DC3545';
                                                     }
                                                 });
                                         }
-                                        fetchHouseStatus();
-
-                                        setInterval(fetchHouseStatus, 3000);
+                                        getStatusFor<%= user.id %>()
+                                        setInterval(getStatusFor<%= user.id %>, 3000)
                                     })
                                 </script>
-
-
-
-
-
                             </td>
                             <td>
                                 <form method="POST" action="/api/simulation/users/userBlock">

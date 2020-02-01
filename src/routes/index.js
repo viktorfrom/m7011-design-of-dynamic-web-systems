@@ -28,6 +28,7 @@ router.get('/dashboard', auth.ensureAuthenticated, function (req, res, next) {
   res.render('dashboard', {
     title: 'Green Lean Electrics',
     query: req.query ? req.query : null,
+    activeUser: req.user,
     user: req.user
   });
 });
@@ -38,6 +39,7 @@ router.get('/prosumerDashboard/:userId', auth.ensureAuthenticated, auth.check_us
   res.render('dashboard', {
     title: 'Green Lean Electrics',
     query: req.query ? req.query : null,
+    activeUser: req.user,
     user: oneUser
   });
 });
@@ -46,6 +48,7 @@ router.get('/dashboard/powerplant', auth.ensureAuthenticated, function (req, res
   res.render('powerplant', {
     title: 'Green Lean Electrics',
     query: req.query ? req.query : null,
+    activeUser: req.user,
     user: req.user
   });
 });
@@ -53,6 +56,7 @@ router.get('/dashboard/powerplant', auth.ensureAuthenticated, function (req, res
 router.get('/dashboard/region', auth.ensureAuthenticated, function (req, res, next) {
   res.render('region', {
     title: 'Green Lean Electrics',
+    activeUser: req.user,
     user: req.user
   });
 });
@@ -61,6 +65,7 @@ router.get('/dashboard/marketprice', auth.ensureAuthenticated, function (req, re
   res.render('marketprice', {
     title: 'Green Lean Electrics',
     query: req.query ? req.query : null,
+    activeUser: req.user,
     user: req.user
   });
 });
@@ -69,6 +74,7 @@ router.get('/dashboard/profile', auth.ensureAuthenticated, function (req, res, n
   res.render('profile', {
     title: 'Green Lean Electrics',
     query: req.query ? req.query : null,
+    activeUser: req.user,
     user: req.user
   });
 });
@@ -79,6 +85,7 @@ router.get('/prosumerProfile/:userId', auth.ensureAuthenticated, auth.check_user
   res.render('profile', {
     title: 'Green Lean Electrics',
     query: req.query ? req.query : null,
+    activeUser: req.user,
     user: oneUser
   });
 });
@@ -89,6 +96,7 @@ router.get('/dashboard/userStatus', auth.ensureAuthenticated, auth.check_user, a
   res.render('userStatus', {
     title: 'Green Lean Electrics',
     query: req.query ? req.query : null,
+    activeUser: req.user,
     user: req.user,
     users: allUsers.map(user => {
       user.isLoggedIn = user && user.loggedIn && moment(user.loggedIn).add(5, "minutes") >= moment()
